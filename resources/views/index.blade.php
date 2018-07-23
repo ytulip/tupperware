@@ -118,17 +118,19 @@
                         // console.log(urls);
                         // console.log(current);
 
-                        current = pageConfig.imagePrefix + current;
+                        var urlArr = [];
                         $(urls).each(function(ind,obj){
-                            urls[ind] = pageConfig.imagePrefix + obj;
+                            urlArr.push(pageConfig.imagePrefix + obj);
                         });
 
-                        // console.log(urls);
-                        // console.log(current);
+                        var currentUlr = pageConfig.imagePrefix + current;
+
+                        // console.log(currentUlr);
+                        // console.log(urlArr);
 
                         wx.previewImage({
-                            current: current,
-                            urls: urls
+                            current: currentUlr,
+                            urls: urlArr
                         });
                     }
                 }
