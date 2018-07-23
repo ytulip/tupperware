@@ -17,3 +17,5 @@ Route::get('/', function () {
 Route::get('hello',function(){
 	return 'hello';
 });
+
+Route::controller('index','IndexController');
