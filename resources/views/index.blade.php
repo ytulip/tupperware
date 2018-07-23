@@ -53,6 +53,12 @@
             height: 100%;
             position: relative;
         }
+
+        .img-liquid{
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
     </style>
 @stop
 @section('container')
@@ -71,8 +77,8 @@
                     <div class="cus-row-col-6 t-al-r"><a class="fs-14-fc-93989E">删除</a></div>
                 </div>
                 <div class="item-body" style="margin-top: 14px;">
-                    <ul class="album" v-for="subitem in item">
-                        <li><a href="javascript:play()"><div class="img-wrapper"><img v-bind:src="subitem"/></div></a></li>
+                    <ul class="album">
+                        <li  v-for="subitem in item"><a href="javascript:play()"><div class="img-wrapper img-liquid" v-bind:style="{backgroundImage:'url(' + subitem + ')'}"></div></a></li>
                         {{--<li><a href="javascript:play()"><div class="img-wrapper"><img src=""/></div></a></li>--}}
                     </ul>
                 </div>
@@ -119,7 +125,7 @@
                         $('input[name="images[]"]').replaceWith('<input type="file" name="images[]"  style="display: none" accept="image/gif,image/jpeg,image/png" multiple="multiple"/>');
                         if(data.status) {
 //                            $('.essay_img').find('img').attr('src',data.data[0]); 'http://static.liaoliaoy.com/' + data.data[0];
-                            listVue.list.push([data.data]);
+                            listVue.list.push(data.data);
                         } else {
                             alert(data.desc);
                         }
