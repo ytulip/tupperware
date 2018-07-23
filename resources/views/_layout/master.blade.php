@@ -17,6 +17,7 @@
 <script src="/js/plugin/layer_mobile/layer.js?v={{env('VERSION')}}"></script>
 <script src="/js/common.js?v={{env('VERSION')}}"></script>
 <script src="/js/vue.js?v={{env('VERSION')}}"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
     function goHref(href)
     {

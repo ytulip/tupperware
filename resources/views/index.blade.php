@@ -70,15 +70,15 @@
             </div>
         </div>
 
-        <div class="upload-list" v-for="item in list">
+        <div class="upload-list" v-for="(item,index) in list">
             <div class="upload-item">
                 <div class="item-header cus-row" style="padding: 10px 0;">
                     <div class="cus-row-col-6"><span class="fs-24-fc-232A31 fw-m">23</span><span>07月</span><span class="fs-14-fc-93989E">18:32:42</span></div>
-                    <div class="cus-row-col-6 t-al-r"><a class="fs-14-fc-93989E">删除</a></div>
+                    <div class="cus-row-col-6 t-al-r"><a class="fs-14-fc-93989E" v-on:click="remove(index)">删除</a></div>
                 </div>
                 <div class="item-body" style="margin-top: 14px;">
                     <ul class="album">
-                        <li  v-for="subitem in item"><a href="javascript:play()"><div class="img-wrapper img-liquid" v-bind:style="{backgroundImage:'url(' + subitem + ')'}"></div></a></li>
+                        <li  v-for="subitem in item" v-on:click="previewImg(item,subitem)"><a href="javascript:void(0)"><div class="img-wrapper img-liquid" v-bind:style="{backgroundImage:'url(' + subitem + ')'}"></div></a></li>
                         {{--<li><a href="javascript:play()"><div class="img-wrapper"><img src=""/></div></a></li>--}}
                     </ul>
                 </div>
@@ -97,12 +97,40 @@
 @section('script')
     <script>
 
+        var pageConfig = {
+            imagePrefix:'{{env('IMAGE_PREFIX')}}'
+        }
 
         var listVue = new Vue(
             {
                 el:"#list",
                 data:{
                     list:[]
+                },
+                methods:{
+                    remove:function(ind)
+                    {
+                        // alert(ind);
+                        /*发起删除的网络请求*/
+                        this.list.splice(ind,1);
+                    },
+                    previewImg:function (urls,current) {
+                        // console.log(urls);
+                        // console.log(current);
+
+                        current = pageConfig.imagePrefix + current;
+                        $(urls).each(function(ind,obj){
+                            urls[ind] = pageConfig.imagePrefix + obj;
+                        });
+
+                        // console.log(urls);
+                        // console.log(current);
+
+                        wx.previewImage({
+                            current: current,
+                            urls: urls
+                        });
+                    }
                 }
             }
         );
