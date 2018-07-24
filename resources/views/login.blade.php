@@ -6,6 +6,11 @@
     <style>
         html{height: 100%;font-family: PingFangSC-Regular;}
         html,body{margin: 0;padding: 0;}
+        input {
+            outline: none;
+            -webkit-appearance: none;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
     </style>
 @stop
 @section('container')
