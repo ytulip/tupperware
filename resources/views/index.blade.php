@@ -71,9 +71,9 @@
                 <div style="padding: 24px 83px;" class="t-al-c">
                     <div style="font-family: PingFangSC-Regular;font-size: 16px;color: #4E5661;word-break: keep-all">确定删除照片？</div>
                 </div>
-                <div class="cus-row" style="padding: 12px 0;border-top: 1px solid #eeeeee">
-                    <div class="cus-row-col-6 t-al-c" style="font-family: PingFangSC-Regular;font-size: 17px;color: #4E5661;letter-spacing: 0;" v-on:click="closeMask">取消</div>
-                    <div class="cus-row-col-6 t-al-c" style="font-family: PingFangSC-Regular;font-size: 17px;color: #E01885;letter-spacing: 0;" v-on:click="yes">确定</div>
+                <div class="cus-row" style="border-top: 1px solid #eeeeee">
+                    <div class="cus-row-col-6 t-al-c" style="font-family: PingFangSC-Regular;font-size: 17px;color: #4E5661;letter-spacing: 0;line-height: 48px;" v-on:click="closeMask">取消</div>
+                    <div class="cus-row-col-6 t-al-c" style="font-family: PingFangSC-Regular;font-size: 17px;color: #E01885;letter-spacing: 0;line-height: 48px;" v-on:click="yes">确定</div>
                 </div>
             </div>
         </div>
