@@ -12,6 +12,9 @@
             -webkit-appearance: none;
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
         }
+        input:focus::-webkit-input-placeholder{
+            color: transparent;
+        }
     </style>
 @stop
 @section('container')
