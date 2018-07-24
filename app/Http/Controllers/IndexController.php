@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Request;
+use App\Model\User;
 
 class IndexController extends Controller
 {
@@ -14,6 +15,17 @@ class IndexController extends Controller
     public function getLogin()
     {
         return view('login');
+    }
+
+    public function postLogin()
+    {
+        $user = User::where('work_no',\Illuminate\Support\Facades\Request::input('work_no'))->first();
+        if( !($user instanceof  User) )
+        {
+            return $this->jsonReturn(0,'工号不存在');
+        }
+
+        return $this->jsonReturn(1);
     }
 
     public function postAlbumImage()
