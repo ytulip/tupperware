@@ -4,7 +4,7 @@
 @stop
 @section('style')
     <style>
-        html{height: 100%;}
+        html{height: 100%;font-family: PingFangSC-Regular;}
         html,body{background-color: #f7f7f9;margin: 0;padding: 0;}
         .upload-item{background-color: #ffffff;margin-bottom: 24px;padding: 14px 14px 24px 14px;}
 
@@ -64,6 +64,20 @@
 @section('container')
 
     <div style="min-height: 100%;padding: 24px 0;" id="list">
+
+        <div class="" style="position: fixed;top:0;bottom: 0;right: 0;left: 0;z-index: 999;" v-if="confirmFlag">
+            <div style="position: absolute;top:0;bottom: 0;right: 0;left: 0;background-color: rgba(33,34,41,.5)"></div>
+            <div class="ab-t-t-x-y" style="background: #FFFFFF;border: 1px solid #EEEEEE;border-radius: 3px;">
+                <div style="padding: 24px 83px;" class="t-al-c">
+                    <div style="font-family: PingFangSC-Regular;font-size: 16px;color: #4E5661;word-break: keep-all">确定删除照片？</div>
+                </div>
+                <div class="cus-row" style="padding: 12px 0;border-top: 1px solid #eeeeee">
+                    <div class="cus-row-col-6 t-al-c" style="font-family: PingFangSC-Regular;font-size: 17px;color: #4E5661;letter-spacing: 0;" v-on:click="closeMask">取消</div>
+                    <div class="cus-row-col-6 t-al-c" style="font-family: PingFangSC-Regular;font-size: 17px;color: #E01885;letter-spacing: 0;">确定</div>
+                </div>
+            </div>
+        </div>
+
         <div class="ab-t-t-x-y" v-if="!list.length">
             <div>
                 <image src="/images/m/icon_pic_nor@3x.png" style="width: 261px;"/>
@@ -105,14 +119,20 @@
             {
                 el:"#list",
                 data:{
-                    list:[]
+                    list:[],
+                    confirmFlag:1
                 },
                 methods:{
                     remove:function(ind)
                     {
                         // alert(ind);
                         /*发起删除的网络请求*/
-                        this.list.splice(ind,1);
+//                        this.list.splice(ind,1);
+
+                    },
+                    closeMask:function()
+                    {
+                        this.confirmFlag = false;
                     },
                     previewImg:function (urls,current) {
                         // console.log(urls);
