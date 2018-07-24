@@ -73,12 +73,12 @@
                 </div>
                 <div class="cus-row" style="padding: 12px 0;border-top: 1px solid #eeeeee">
                     <div class="cus-row-col-6 t-al-c" style="font-family: PingFangSC-Regular;font-size: 17px;color: #4E5661;letter-spacing: 0;" v-on:click="closeMask">取消</div>
-                    <div class="cus-row-col-6 t-al-c" style="font-family: PingFangSC-Regular;font-size: 17px;color: #E01885;letter-spacing: 0;">确定</div>
+                    <div class="cus-row-col-6 t-al-c" style="font-family: PingFangSC-Regular;font-size: 17px;color: #E01885;letter-spacing: 0;" v-on:click="yes">确定</div>
                 </div>
             </div>
         </div>
 
-        <div class="ab-t-t-x-y" v-if="!list.length">
+        <div class="ab-t-t-x-y" v-if="!list.length" style="transform: translate(-50%,-100%);-webkit-transform: translate(-50%,-100%);">
             <div>
                 <image src="/images/m/icon_pic_nor@3x.png" style="width: 261px;"/>
             </div>
@@ -120,7 +120,8 @@
                 el:"#list",
                 data:{
                     list:[],
-                    confirmFlag:1
+                    confirmFlag:false,
+                    confirmInd:-1
                 },
                 methods:{
                     remove:function(ind)
@@ -128,10 +129,18 @@
                         // alert(ind);
                         /*发起删除的网络请求*/
 //                        this.list.splice(ind,1);
+                        this.confirmFlag = true;
+                        this.confirmInd = ind;
+
 
                     },
                     closeMask:function()
                     {
+                        this.confirmFlag = false;
+                    },
+                    yes:function()
+                    {
+                        this.list.splice(this.confirmInd,1);
                         this.confirmFlag = false;
                     },
                     previewImg:function (urls,current) {

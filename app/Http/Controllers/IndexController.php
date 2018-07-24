@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Request;
+
 class IndexController extends Controller
 {
     public function getIndex()
@@ -59,5 +61,11 @@ class IndexController extends Controller
         } else {
             return json_encode(['status' => 0, 'desc' => "上传异常"], JSON_UNESCAPED_UNICODE);
         }
+    }
+
+    public function anyDelete()
+    {
+        $id = Request::input('id');
+        return $this->jsonReturn(1);
     }
 }
