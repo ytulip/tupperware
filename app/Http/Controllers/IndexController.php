@@ -11,6 +11,11 @@ class IndexController extends Controller
         return view('index');
     }
 
+    public function getLogin()
+    {
+        return view('login');
+    }
+
     public function postAlbumImage()
     {
         $files = \Illuminate\Support\Facades\Request::file('images');

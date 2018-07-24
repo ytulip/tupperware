@@ -67,7 +67,7 @@
 
         <div class="" style="position: fixed;top:0;bottom: 0;right: 0;left: 0;z-index: 999;" v-if="confirmFlag">
             <div style="position: absolute;top:0;bottom: 0;right: 0;left: 0;background-color: rgba(33,34,41,.5)"></div>
-            <div class="ab-t-t-x-y" style="background: #FFFFFF;border: 1px solid #EEEEEE;border-radius: 3px;">
+            <div class="ab-t-t-x-y" style="background: #FFFFFF;border: 1px solid #EEEEEE;border-radius: 3px;transform: translate(-50%,-100%);-webkit-transform: translate(-50%,-100%);">
                 <div style="padding: 24px 83px;" class="t-al-c">
                     <div style="font-family: PingFangSC-Regular;font-size: 16px;color: #4E5661;word-break: keep-all">确定删除照片？</div>
                 </div>
@@ -80,7 +80,7 @@
 
         <div class="ab-t-t-x-y" v-if="!list.length" style="transform: translate(-50%,-100%);-webkit-transform: translate(-50%,-100%);">
             <div>
-                <image src="/images/m/icon_pic_nor@3x.png" style="width: 261px;"/>
+                <image src="/images/m/icon_pic_nor@3x.png" style="width: 199px;"/>
             </div>
         </div>
 
