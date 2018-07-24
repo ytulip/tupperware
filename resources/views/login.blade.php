@@ -7,6 +7,7 @@
         html{height: 100%;font-family: PingFangSC-Regular;}
         html,body{margin: 0;padding: 0;}
         input {
+            caret-color: #E01885;
             outline: none;
             -webkit-appearance: none;
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -20,7 +21,7 @@
 
     <div style="padding: 0 24px;margin-top: 76px;">
         <div>
-            <input placeholder="输入工号ID" style="display:inline-block;line-height: 44px;font-size: 17px;color: #93989E;letter-spacing: 0;background: #F7F7F9;border: 1px solid #EEEEEE;border-radius: 100px;width: 100%;text-align: center;box-sizing: border-box;padding: 0;"/>
+            <input placeholder="输入工号ID" style="display:inline-block;line-height: 18px;font-size: 17px;color: #93989E;letter-spacing: 0;background: #F7F7F9;border: 1px solid #EEEEEE;border-radius: 100px;width: 100%;text-align: center;box-sizing: border-box;padding: 13px 0;"/>
         </div>
         <div style="margin-top: 32px;">
             <a class="t-al-c" style="display: inline-block;width: 100%;background: #E01885;box-shadow: 0 2px 8px 0 rgba(224,24,133,0.36);border-radius: 100px;line-height: 44px;font-size: 17px;color: #FFFFFF;letter-spacing: 0;">进入</a>
