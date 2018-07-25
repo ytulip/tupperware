@@ -17,5 +17,9 @@ Route::get('/', function () {
 Route::get('hello',function(){
 	return 'hello';
 });
-
+Route::controller('passport','PassportController');
 Route::controller('index','IndexController');
+Route::group(['prefix'=>'admin','namespace'=>'Admin','middleware'=>['admin.check']], function()
+{
+    Route::controller('index','IndexController');
+});

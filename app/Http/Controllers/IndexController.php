@@ -80,6 +80,10 @@ class IndexController extends Controller
         $result = false;
         foreach ($files as $key => $file) {
             //$iamgeTempPath = $file->getRealPath(); //临时文件的绝对路径
+
+
+            //这里应该要去翻转图片吧
+
             if ($file->move('imgsys/' . $this->getCurrentDayTime() . '/', $imagesInfo[$key])) {
                 $result = true;
                 $res[] = '/imgsys/' . $this->getCurrentDayTime() . '/' . $imagesInfo[$key];
