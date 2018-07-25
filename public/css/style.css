@@ -369,3 +369,4 @@ input::-webkit-input-placeholder{color: #bebebe;  }
 .btn4{background: #E01885;box-shadow: 0 2px 8px 0 rgba(224,24,133,0.36);border-radius: 100px;font-family: PingFangSC-Regular;font-size: 17px; color: #FFFFFF; letter-spacing: 0;display: inline-block;line-height: 44px;padding: 0 26px;}
 
 .fw-m{font-weight: 600;}
+.vue-dpn{display: none;}

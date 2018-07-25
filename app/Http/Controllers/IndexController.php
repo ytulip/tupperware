@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Request;
+use App\Model\Record;
 use App\Model\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -14,7 +15,22 @@ class IndexController extends Controller
         if(!Auth::check()){
             return Redirect::to('index/login');
         }
-        return view('index');
+        //获取list列表
+        $list = Record::where('user_id',Auth::id())->where('is_delete',0)->orderBy('id','desc')->get();
+        $recordArr = [];
+        foreach ( $list as $key=>$record)
+        {
+            $urls = [];
+            if($record->img1) $urls[] = $record->img1;
+            if($record->img2) $urls[] = $record->img2;
+            $recordArr[] = ["urls"=>$urls,"attach_msg"=>[
+                'id'=>$record->id,
+                'day'=>date('d',strtotime($record->created_at)),
+                'm'=>date('m',strtotime($record->created_at)),
+                'his'=>date('h:i:s',strtotime($record->created_at))
+            ]];
+        }
+        return view('index')->with('recordArr',$recordArr);
     }
 
     public function getLogin()
@@ -90,9 +106,17 @@ class IndexController extends Controller
         }
         if ($result) {
 
+            $record = new Record();
+            $record->user_id = Auth::id();
+            foreach ($res as $key=>$item)
+            {
+                $key = 'img' . ($key + 1);
+                $record->$key= $item;
+            }
+            $record->save();
 
             //保存数据
-            return json_encode(['status' => 1, 'data' => $res]);
+            return json_encode(['status' => 1, 'data' => $res, 'attach_msg'=>['id'=>$record->id,'day'=>date('d',strtotime($record->created_at)),'m'=>date('m',strtotime($record->created_at)),'his'=>date('h:i:s',strtotime($record->created_at))]]);
         } else {
             return json_encode(['status' => 0, 'desc' => "上传异常"], JSON_UNESCAPED_UNICODE);
         }
@@ -100,7 +124,16 @@ class IndexController extends Controller
 
     public function anyDelete()
     {
-        $id = Request::input('id');
+        $id = \Illuminate\Support\Facades\Request::input('id');
+        $record = Record::find($id);
+        if( !($record instanceof  Record) )
+        {
+            return $this->jsonReturn(0);
+        }
+
+        $record->is_delete = 1;
+        $record->save();
+
         return $this->jsonReturn(1);
     }
 }

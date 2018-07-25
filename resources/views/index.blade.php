@@ -63,7 +63,7 @@
 @stop
 @section('container')
 
-    <div style="min-height: 100%;padding: 24px 0;" id="list">
+    <div style="min-height: 100%;padding: 24px 0;" id="list" class="vue-dpn">
 
         <div class="" style="position: fixed;top:0;bottom: 0;right: 0;left: 0;z-index: 999;" v-if="confirmFlag">
             <div style="position: absolute;top:0;bottom: 0;right: 0;left: 0;background-color: rgba(33,34,41,.5)"></div>
@@ -87,12 +87,12 @@
         <div class="upload-list" v-for="(item,index) in list">
             <div class="upload-item">
                 <div class="item-header cus-row" style="padding: 10px 0;">
-                    <div class="cus-row-col-6"><span class="fs-24-fc-232A31 fw-m">23</span><span>07月</span><span class="fs-14-fc-93989E">18:32:42</span></div>
-                    <div class="cus-row-col-6 t-al-r"><a class="fs-14-fc-93989E" v-on:click="remove(index)">删除</a></div>
+                    <div class="cus-row-col-6"><span class="fs-24-fc-232A31 fw-m">@{{  item.attach_msg.y }}</span><span>@{{ item.attach_msg.m }}月</span><span class="fs-14-fc-93989E">@{{ item.attach_msg.his }}</span></div>
+                    <div class="cus-row-col-6 t-al-r"><a class="fs-14-fc-93989E" v-on:click="remove(index,item.attach_msg.id)">删除</a></div>
                 </div>
                 <div class="item-body" style="margin-top: 14px;">
                     <ul class="album">
-                        <li  v-for="subitem in item" v-on:click="previewImg(item,subitem)"><a href="javascript:void(0)"><div class="img-wrapper img-liquid" v-bind:style="{backgroundImage:'url(' + subitem + ')'}"></div></a></li>
+                        <li  v-for="subitem in item.urls" v-on:click="previewImg(item,subitem)"><a href="javascript:void(0)"><div class="img-wrapper img-liquid" v-bind:style="{backgroundImage:'url(' + subitem + ')'}"></div></a></li>
                         {{--<li><a href="javascript:play()"><div class="img-wrapper"><img src=""/></div></a></li>--}}
                     </ul>
                 </div>
@@ -112,27 +112,32 @@
     <script>
 
         var pageConfig = {
-            imagePrefix:'{{env('IMAGE_PREFIX')}}'
+            imagePrefix:'{{env('IMAGE_PREFIX')}}',
+            list:{!! json_encode($recordArr) !!}
         }
 
         var listVue = new Vue(
             {
                 el:"#list",
                 data:{
-                    list:[],
+                    list:pageConfig.list,
                     confirmFlag:false,
-                    confirmInd:-1
+                    confirmInd:-1,
+                    confirmId:0
+                },
+                created:function()
+                {
+                  $('.vue-dpn').removeClass('vue-dpn');
                 },
                 methods:{
-                    remove:function(ind)
+                    remove:function(ind,id)
                     {
                         // alert(ind);
                         /*发起删除的网络请求*/
 //                        this.list.splice(ind,1);
                         this.confirmFlag = true;
                         this.confirmInd = ind;
-
-
+                        this.confirmId = id;
                     },
                     closeMask:function()
                     {
@@ -142,6 +147,7 @@
                     {
                         this.list.splice(this.confirmInd,1);
                         this.confirmFlag = false;
+                        $.get('/index/delete',{id:this.confirmId});
                     },
                     previewImg:function (urls,current) {
                         // console.log(urls);
@@ -184,7 +190,7 @@
                         $('input[name="images[]"]').replaceWith('<input type="file" name="images[]"  style="display: none" accept="image/gif,image/jpeg,image/png" multiple="multiple"/>');
                         if(data.status) {
 //                            $('.essay_img').find('img').attr('src',data.data[0]); 'http://static.liaoliaoy.com/' + data.data[0];
-                            listVue.list.push(data.data);
+                            listVue.list.unshift({urls:data.data,attach_msg:data.attach_msg});
                         } else {
                             alert(data.desc);
                         }
