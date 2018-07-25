@@ -188,6 +188,9 @@
                         } else {
                             alert(data.desc);
                         }
+                    },
+                    error:function(){
+                        alert('网络异常');
                     }
                 });
             }

@@ -39,6 +39,12 @@ class IndexController extends Controller
 
     public function postAlbumImage()
     {
+        if( !Auth::check() )
+        {
+            return $this->jsonReturn(0,'用户信息丢失');
+        }
+
+
         $files = \Illuminate\Support\Facades\Request::file('images');
         $count = count($files);
         if (!in_array($count,[1,2])) {
@@ -83,6 +89,9 @@ class IndexController extends Controller
 //            }
         }
         if ($result) {
+
+
+            //保存数据
             return json_encode(['status' => 1, 'data' => $res]);
         } else {
             return json_encode(['status' => 0, 'desc' => "上传异常"], JSON_UNESCAPED_UNICODE);
