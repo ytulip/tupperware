@@ -11,6 +11,7 @@ abstract class Controller extends BaseController
     use DispatchesJobs, ValidatesRequests;
 
     private $currentDateTime = null;
+    private $dayTime = null;
 
     /**
      * @desc model验证，如果如果验证未通过返回一个ResourceError对象
@@ -40,6 +41,17 @@ abstract class Controller extends BaseController
         }
 
         $this->currentDateTime = date('Y-m-d H:i:s');
+        return $this->currentDateTime;
+    }
+
+    protected function getCurrentDayTime()
+    {
+        if ( $this->currentDateTime )
+        {
+            return $this->currentDateTime;
+        }
+
+        $this->currentDateTime = date('Ymd');
         return $this->currentDateTime;
     }
 

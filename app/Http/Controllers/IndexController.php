@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Request;
 use App\Model\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class IndexController extends Controller
 {
     public function getIndex()
     {
+        if(!Auth::check()){
+            return Redirect::to('index/login');
+        }
         return view('index');
     }
 
@@ -24,6 +29,10 @@ class IndexController extends Controller
         {
             return $this->jsonReturn(0,'工号不存在');
         }
+
+        //尝试用用户ID登录
+//        if(Auth::attempt(['id' => Request::input('phone'), 'password' => Request::input('password')]))
+        Auth::loginUsingId($user->id);
 
         return $this->jsonReturn(1);
     }
@@ -49,9 +58,9 @@ class IndexController extends Controller
         $result = false;
         foreach ($files as $key => $file) {
             //$iamgeTempPath = $file->getRealPath(); //临时文件的绝对路径
-            if ($file->move('imgsys', $imagesInfo[$key])) {
+            if ($file->move('imgsys/' . $this->getCurrentDayTime() . '/', $imagesInfo[$key])) {
                 $result = true;
-                $res[] = '/imgsys/' . $imagesInfo[$key];
+                $res[] = '/imgsys/' . $this->getCurrentDayTime() . '/' . $imagesInfo[$key];
             } else {
                 $result = false;
                 break;
