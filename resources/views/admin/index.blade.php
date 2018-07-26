@@ -1,4 +1,4 @@
-@extends('admin.master',['headerTitle'=>'资产管理 <span class="title-gap">></span> 提货记录'])
+@extends('admin.master',['headerTitle'=>''])
 @section('left_content')
     <div class="mt-32 padding-col">
 
@@ -6,19 +6,19 @@
 
         <div class="row">
             <div class="col-md-4 col-lg-4" onclick="goHref('/admin/index/users?get_status=1')">
-                <div class="block-card">
+                <div class="block-card border-style1">
                     <p class="t-al-c fs-32-fc-232A31">34188</p>
                     <div class="t-al-c fs-14-fc-93989e"><span style="background: #E01885;box-shadow: 0 2px 4px 0 rgba(224,24,133,0.40);width: 8px;height: 8px;display: inline-block;border-radius: 8px;margin-right: 8px;vertical-align: middle;"></span><span style="display: inline-block;vertical-align: middle;">用户人数</span></div>
                 </div>
             </div>
             <div class="col-md-4 col-lg-4" onclick="goHref('/admin/index/users?get_status=2')">
-                <div class="block-card">
+                <div class="block-card border-style1">
                     <p class="t-al-c fs-32-fc-232A31">24188</p>
                     <div class="t-al-c fs-14-fc-93989e"><span style="background: #DB5DF1 ;box-shadow: 0 2px 4px 0 rgba(224,24,133,0.40);width: 8px;height: 8px;display: inline-block;border-radius: 8px;margin-right: 8px;vertical-align: middle;"></span><span style="display: inline-block;vertical-align: middle;">上传人数</span></div>
                 </div>
             </div>
             <div class="col-md-4 col-lg-4" onclick="goHref('/admin/index/users?get_status=3')">
-                <div class="block-card">
+                <div class="block-card border-style1">
                     <p class="t-al-c fs-32-fc-232A31">78%</p>
                     <div class="t-al-c fs-14-fc-93989e"><span style="background: #686CFA;box-shadow: 0 2px 4px 0 rgba(224,24,133,0.40);width: 8px;height: 8px;display: inline-block;border-radius: 8px;margin-right: 8px;vertical-align: middle;"></span><span style="display: inline-block;vertical-align: middle;">上传比例</span></div>
                 </div>

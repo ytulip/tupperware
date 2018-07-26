@@ -81,8 +81,8 @@
             <div class="col-md-6 col-lg-6">{!! $headerTitle !!}</div>
             <div class="col-md-3 col-lg-3">&nbsp;</div>
             <div class="col-md-3 col-lg-3">
-                <div style="line-height: 52px;display: inline-block;position: relative;" id="admin_user_wrap"><i  style="margin-left: 40px;position: relative;" class="fa fa-user"></i>
-
+                <div style="line-height: 52px;display: inline-block;position: relative;" id="admin_user_wrap">
+<img src="/images/statusbar_user_nor@3x.png" style="width: 30px;"/>
                     <ul style="position: absolute;z-index: 99;right:0;border:1px solid rgb(233, 233, 234);" id="admin_user_panel">
                         <li><a href="/passport/admin-login-out">退出登录</a></li>
                     </ul>
