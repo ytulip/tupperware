@@ -31,6 +31,12 @@ class IndexController extends Controller
 {
     public function getHome()
     {
-        return view('admin.index');
+//        $query = 'select users.*,upload_count from users LEFT JOIN (select count(*) as upload_count,user_id from records where is_delete = 0 GROUP BY user_id) B on B.user_id = users.id';
+//        User::leftJoin(DB::raw('select count(*) as upload_count,user_id from records where is_delete = 0 GROUP BY user_id) B on B.user_id = users.id'))
+
+        $query = User::leftJoin('user_records_view','user_records_view.user_id','=','users.id');
+
+        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
+        return view('admin.index')->with('paginate',$paginate);
     }
 }
