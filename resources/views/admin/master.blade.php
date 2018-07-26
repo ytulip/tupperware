@@ -97,7 +97,7 @@
     </div>
     <!--//content-inner-->
     <!--/sidebar-menu-->
-    <div class="sidebar-menu">
+    <div class="sidebar-menu" style="box-shadow: none;border-right:1px solid #EAEEF7; ">
         <header class="logo1" style="background-color: #ffffff;">
             <img src="/images/nav_logo_nor@3x.png" width="149px;"/>
             {{--<a href="#" class="sidebar-icon"> <span class="fa fa-bars"></span> </a>--}}

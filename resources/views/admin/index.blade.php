@@ -25,8 +25,6 @@
             </div>
         </div>
 
-        <h4>提货申请</h4>
-
         {{--<div class="row m-t-20">--}}
             {{--<div class="col-md-12 col-lg-12">--}}
                 {{--<form class="form-inline" id="search_form">--}}
@@ -91,7 +89,7 @@
             {{--</div>--}}
         {{--</div>--}}
 
-        <div class="tr-border m-t-10 fs-14-fc-4E5761 fn-fa">
+        <div class="tr-border fs-14-fc-4E5761 fn-fa" style="margin-top: 24px;">
             <div class="row" style="font-size: 0;text-align: right;">
                 <div style="position: relative;display: inline-block;">
                     <input style="background: #FCFCFC;border: 1px solid #EAEEF7;border-radius: 100px;padding: 8px 12px;" class="fs-14-fc-93989e fn-fa" placeholder="输入ID搜索"/>
