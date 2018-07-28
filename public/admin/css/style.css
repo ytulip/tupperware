@@ -2,7 +2,7 @@ html, body{
 	font-family: 'Roboto', sans-serif;
     font-size: 100%;
   	overflow-x: hidden;
-	background-color: #edecec;
+	background-color: #fcfcfc;
 }
 body a{
 	transition:0.5s all;
@@ -241,7 +241,8 @@ background-color:#00C6D7!important;
 
 .logo1 {
     width: 100%;
-    padding: 15px 14px 15px;
+    /*padding: 15px 14px 15px;*/
+    padding: 27.6px 14px 27.6px;
     box-sizing: border-box;
     background: #1b93e1;
     text-align: center;
@@ -4486,11 +4487,11 @@ label.control-label {
 .image img{
 	width:100%;
 }
-.text {
-    width: 64%;
-    float: left;
-    padding: 5em 0em 3em 0em;
-}
+/*.text {*/
+    /*width: 64%;*/
+    /*float: left;*/
+    /*padding: 5em 0em 3em 0em;*/
+/*}*/
 .text a{
 	color:#000;
 	text-decoration:undrline;
@@ -6419,4 +6420,6 @@ ul.dropdown-menu {
     padding: 7px 9px 8px 15px;
 }
 }
+
+.bg-fc{background-color: #fcfcfc !important;}
 /***responsive***/
