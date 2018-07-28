@@ -13,6 +13,7 @@ use App\Model\MonthGetGood;
 use App\Model\Order;
 use App\Model\Product;
 use App\Model\ProductAttr;
+use App\Model\Record;
 use App\Model\SignRecord;
 use App\Model\SyncModel;
 use App\Model\User;
@@ -37,6 +38,36 @@ class IndexController extends Controller
         $query = User::leftJoin('user_records_view','user_records_view.user_id','=','users.id');
 
         $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
-        return view('admin.index')->with('paginate',$paginate);
+        $provinceList = DB::select('select distinct province from users');
+        return view('admin.index')->with('paginate',$paginate)->with('provinceList',$provinceList);
+    }
+
+    public function getUserDetail()
+    {
+        $user = User::find(Request::input('id'));
+        if( !($user instanceof  User) )
+        {
+            dd('无效用户');
+        }
+        $list = Record::where('user_id',$user->id)->where('is_delete',0)->orderBy('id','desc')->get();
+        return view('admin.user_detail')->with('user',$user)->with('list',$list);
+    }
+
+    public function getRecord()
+    {
+        $record = Record::find(Request::input('id'));
+        if( !($record instanceof  Record) )
+        {
+            dd('无效记录');
+        }
+        $user = User::find($record->user_id);
+        return view('admin.record')->with('user',$user)->with('record',$record);
+    }
+
+    public function getRecords()
+    {
+        $query = Record::where('is_delete',0)->orderBy('records.id','desc')->selectRaw('*,records.created_at as upload_at')->leftJoin('users','records.user_id','=','users.id');
+        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
+        return view('admin.records')->with('paginate',$paginate);
     }
 }
