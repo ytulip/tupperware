@@ -101,11 +101,24 @@
         </div>
 
 
-        <div class="tr-border fs-14-fc-4E5761 fn-fa" style="margin-top: -1px;">
+        <div class="tr-border fs-14-fc-4E5761 fn-fa bg-fc" style="margin-top: -1px;">
             <div class="row">
                 <div class="col-md-2 col-lg-2">用户ID</div>
-                <div class="col-md-2 col-lg-2">所属省份</div>
-                <div class="col-md-2 col-lg-2">是否上传</div>
+                <div class="col-md-2 col-lg-2"><select class="selectpicker selectpicker1" title="所属省份">
+                        <option>全部</option>
+                        @foreach($provinceList as $item)
+                            <option>{{$item->province}}</option>
+                            @endforeach
+                        {{--<option>Mustard</option>--}}
+                        {{--<option>Ketchup</option>--}}
+                        {{--<option>Relish</option>--}}
+                    </select>
+                </div>
+                <div class="col-md-2 col-lg-2"><select class="selectpicker selectpicker2" title="是/否上传">
+                        <option>全部</option>
+                        <option>是</option>
+                        <option>否</option>
+                    </select></div>
                 <div class="col-md-4 col-lg-4"></div>
                 <div class="col-md-2 col-lg-2">上传次数</div>
             </div>
@@ -113,7 +126,7 @@
 
         {{--<div class="block-card">--}}
         @foreach($paginate as $item)
-            <div class="tr-border fs-14-fc-4E5761 fn-fa" style="margin-top: -1px;"><div class="row" onclick="goDetail({{$item->get_id}})">
+            <div class="tr-border fs-14-fc-4E5761 fn-fa" style="margin-top: -1px;"><div class="row" onclick="goDetail({{$item->id}})">
                 <div class="col-md-2 col-lg-2">{{$item->work_no}}</div>
                 <div class="col-md-2 col-lg-2">{{$item->province}}</div>
                 <div class="col-md-2 col-lg-2">{{$item->upload_count?'是':'否'}}</div>
@@ -136,7 +149,7 @@
     <script>
         function goDetail(id)
         {
-            location.href = '/admin/index/get-good-detail?id=' + id;
+            location.href = '/admin/index/user-detail?id=' + id;
         }
 
         function search()
@@ -146,5 +159,11 @@
             $('#search_form').submit();
 
         }
+
+        $('.selectpicker').on('changed.bs.select',function(e){
+            // console.log(e);
+            // console.log($('.selectpicker1').val());
+            location.href = '/admin/index/home?province=' + $('.selectpicker1').val() +'&is_upload=' + $('.selectpicker2').val();
+        });
     </script>
 @stop

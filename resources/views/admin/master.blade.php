@@ -9,11 +9,12 @@
     <!-- Bootstrap Core CSS -->
     <link href="/admin/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
     <!-- Custom CSS -->
-    <link href="/admin/css/style.css" rel='stylesheet' type='text/css' />
+    <link href="/admin/css/style.css?v={{env('VERSION')}}" rel='stylesheet' type='text/css' />
     <link rel="stylesheet" href="/admin/css/morris.css" type="text/css"/>
+    <link rel="stylesheet" href="/admin/css/bootstrap-select.css" type='text/css' />
     <!-- Graph CSS -->
     <link href="/admin/css/font-awesome.css" rel="stylesheet">
-    <link href="/admin/css/admin.css" rel="stylesheet">
+    <link href="/admin/css/admin.css?v={{env('VERSION')}}" rel="stylesheet">
     <link href="/js/plugin/dateinput/bootstrap-datetimepicker.css" rel="stylesheet"/>
     <!-- jQuery -->
     <script src="/admin/js/jquery-2.1.4.min.js"></script>
@@ -105,8 +106,8 @@
         <div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
         <div class="menu">
             <ul id="menu" >
-                <li id="menu-academico"><a href="/admin/index/good" class="menu-a-active"><i class="fa fa-envelope nav_icon menu-fa"></i><span>用户管理</span><div class="clearfix"></div></a></li>
-                <li id="menu-academico"><a href="/admin/index/activity-good"><i class="fa fa-envelope nav_icon menu-fa"></i><span>资料收集</span><div class="clearfix"></div></a></li>
+                 <li id="menu-academico"><a href="/admin/index/home" class="@if(!isset($block) || !$block) menu-a-active @endif"><i class="fa fa-envelope nav_icon menu-fa"></i><span>用户管理</span><div class="clearfix"></div></a></li>
+                <li id="menu-academico"><a href="/admin/index/records" class="@if( isset($block) && ($block == 1)) menu-a-active @endif"><i class="fa fa-envelope nav_icon menu-fa"></i><span>资料收集</span><div class="clearfix"></div></a></li>
             </ul>
         </div>
     </div>
@@ -145,6 +146,7 @@
 <script src="/admin/js/echarts.simple.min.js?v={{env('VERSION')}}"></script>
 <script src="/admin/js/layer/layer/layer.js"></script>
 <script src="/admin/js/common.js"></script>
+<script src="/admin/js/bootstrap-select.js"></script>
 <script>
     jQuery.browser={};(function(){jQuery.browser.msie=false; jQuery.browser.version=0;if(navigator.userAgent.match(/MSIE ([0-9]+)./)){ jQuery.browser.msie=true;jQuery.browser.version=RegExp.$1;}})();
 </script>
