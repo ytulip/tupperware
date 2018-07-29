@@ -6,6 +6,7 @@ use App\Http\Requests\Request;
 use App\Model\Record;
 use App\Model\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 
 class IndexController extends Controller
@@ -83,6 +84,8 @@ class IndexController extends Controller
 
 
             //这里应该要去翻转图片吧
+            $exif = exif_read_data($file->getPathName());
+            Log::info($exif);
 
             if ($file->move('imgsys/' . $this->getCurrentDayTime() . '/', $imagesInfo[$key])) {
                 $result = true;
