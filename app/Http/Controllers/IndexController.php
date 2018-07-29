@@ -84,9 +84,9 @@ class IndexController extends Controller
 
 
             //这里应该要去翻转图片吧
-            Log::info($file->getPathName());
-            $exif = exif_read_data($file->getPathName());
-            Log::info($exif);
+//            Log::info($file->getPathName());
+//            $exif = exif_read_data($file->getPathName());
+//            Log::info($exif);
 
             if ($file->move('imgsys/' . $this->getCurrentDayTime() . '/', $imagesInfo[$key])) {
                 $result = true;
