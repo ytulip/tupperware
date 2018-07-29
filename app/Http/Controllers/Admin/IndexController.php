@@ -51,9 +51,30 @@ class IndexController extends Controller
 
 
 
+        if( Request::input('download') )
+        {
+            $list = $query->get();
+            $dataList = [];
+            foreach ($list as $key => $item) {
+                $tempArray = array($item->work_no, $item->province,$item->upload_count?'是':'否',$item->upload_count);
+                array_push($dataList, $tempArray);
+            }
+
+
+            $data = array(
+                'title' => array('用户ID', '所属省份', '是/否上次', '上次次数'),
+                'data' => $dataList,
+                'name' => 'yonghuliebiao',
+            );
+            DownloadExcel::publicDownloadExcel($data);
+            exit;
+        }
+
         $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
+        $hasUpload = DB::table('user_records_view')->where('upload_count','>',0)->count();
         $provinceList = DB::select('select distinct province from users');
-        return view('admin.index')->with('paginate',$paginate)->with('provinceList',$provinceList);
+
+        return view('admin.index')->with('paginate',$paginate)->with('provinceList',$provinceList)->with('total',User::count())->with('hasUpload',$hasUpload);
     }
 
     public function getUserDetail()
@@ -83,6 +104,27 @@ class IndexController extends Controller
         $provinceList = DB::select('select distinct province from users');
         $query = Record::where('is_delete',0)->orderBy('records.id','desc')->selectRaw('*,records.created_at as upload_at')->leftJoin('users','records.user_id','=','users.id');
         Kit::equalQuery($query,array_only(Request::all(),['province','work_no']));
+
+
+        if( Request::input('download') )
+        {
+            $list = $query->get();
+            $dataList = [];
+            foreach ($list as $key => $item) {
+                $tempArray = array(date('Y/m/d H:i:s',strtotime($item->upload_at)),$item->work_no, $item->province);
+                array_push($dataList, $tempArray);
+            }
+
+
+            $data = array(
+                'title' => array('上传时间','用户ID', '所属省份'),
+                'data' => $dataList,
+                'name' => 'shoujiliebiao',
+            );
+            DownloadExcel::publicDownloadExcel($data);
+            exit;
+        }
+
         $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
         return view('admin.records')->with('paginate',$paginate)->with('provinceList',$provinceList);
     }

@@ -11,7 +11,7 @@
                     <a style="position: absolute;right: 10px;top:9px;" class="search_btn"><img src="/images/icon_search_nor@3x.png" width="14px"/></a>
                 </div>
 
-                <a class="btn-new" style="margin-left: 16px;">导出数据</a>
+                <a class="btn-new search_btn_download" style="margin-left: 16px;">导出数据</a>
             </div>
         </div>
 
@@ -88,6 +88,10 @@
 
         $('.search_btn').click(function(){
             location.href = '/admin/index/records?province=' + $('.selectpicker1').val() +  '&work_no=' + $('input[name="work_no"]').val();
+        });
+
+        $('.search_btn_download').click(function(){
+            location.href = '/admin/index/records?download=1&province=' + $('.selectpicker1').val() +  '&work_no=' + $('input[name="work_no"]').val();
         });
     </script>
 @stop
