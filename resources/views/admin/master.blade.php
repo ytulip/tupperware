@@ -81,11 +81,13 @@
         <div class="row header-title">
             <div class="col-md-6 col-lg-6">{!! $headerTitle !!}</div>
             <div class="col-md-3 col-lg-3">&nbsp;</div>
-            <div class="col-md-3 col-lg-3">
+            <div class="col-md-3 col-lg-3" style="text-align: right;">
                 <div style="line-height: 52px;display: inline-block;position: relative;" id="admin_user_wrap">
 <img src="/images/statusbar_user_nor@3x.png" style="width: 30px;"/>
-                    <ul style="position: absolute;z-index: 99;right:0;border:1px solid rgb(233, 233, 234);" id="admin_user_panel">
-                        <li><a href="/passport/admin-login-out">退出登录</a></li>
+                    <span class="fs-14-fc-232A31" style="margin-left: 8px;">{{\App\Util\AdminAuth::user()->email}}</span><span class="caret" style="margin-left: 8px"></span>
+                    <ul style="position: absolute;z-index: 99;right:0;border:1px solid #EAEEF7;" id="admin_user_panel">
+                        <li><a href="/admin/index/user-info" class="fs-14-fc-4E5761">个人信息</a></li>
+                        <li><a href="/passport/admin-login-out" class="fs-14-fc-4E5761">退出登录</a></li>
                     </ul>
                 </div>
             </div>
@@ -105,10 +107,12 @@
         </header>
         <div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
         <div class="menu">
+            @if(!isset($hideList))
             <ul id="menu" >
                  <li id="menu-academico"><a href="/admin/index/home" class="@if(!isset($block) || !$block) menu-a-active @endif"><i class="fa fa-envelope nav_icon menu-fa"></i><span>用户管理</span><div class="clearfix"></div></a></li>
                 <li id="menu-academico"><a href="/admin/index/records" class="@if( isset($block) && ($block == 1)) menu-a-active @endif"><i class="fa fa-envelope nav_icon menu-fa"></i><span>资料收集</span><div class="clearfix"></div></a></li>
             </ul>
+                @endif
         </div>
     </div>
     <div class="clearfix"></div>
@@ -147,6 +151,7 @@
 <script src="/admin/js/layer/layer/layer.js"></script>
 <script src="/admin/js/common.js"></script>
 <script src="/admin/js/bootstrap-select.js"></script>
+<script src="/js/vue.js"></script>
 <script>
     jQuery.browser={};(function(){jQuery.browser.msie=false; jQuery.browser.version=0;if(navigator.userAgent.match(/MSIE ([0-9]+)./)){ jQuery.browser.msie=true;jQuery.browser.version=RegExp.$1;}})();
 </script>
