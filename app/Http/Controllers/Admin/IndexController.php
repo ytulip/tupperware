@@ -102,7 +102,7 @@ class IndexController extends Controller
     public function getRecords()
     {
         $provinceList = DB::select('select distinct province from users');
-        $query = Record::where('is_delete',0)->orderBy('records.id','desc')->selectRaw('*,records.created_at as upload_at')->leftJoin('users','records.user_id','=','users.id');
+        $query = Record::where('is_delete',0)->orderBy('records.id','desc')->selectRaw('*,records.created_at as upload_at,records.id as record_id')->leftJoin('users','records.user_id','=','users.id');
         Kit::equalQuery($query,array_only(Request::all(),['province','work_no']));
 
 

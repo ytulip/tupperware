@@ -6,13 +6,17 @@
     </div>
 
     <div style="">
+        @if($record->img1)
         <div style="width: 749px;margin:0 auto;margin-top: 28px;">
             <img width="100%" src="{{$record->img1}}"/>
         </div>
+    @endif
 
+        @if($record->img1)
         <div style="width: 749px;margin:0 auto;margin-top: 28px;">
             <img width="100%" src="{{$record->img2}}"/>
         </div>
+            @endif
     </div>
 @stop
 

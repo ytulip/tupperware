@@ -34,7 +34,7 @@
 
         {{--<div class="block-card">--}}
         @foreach($paginate as $item)
-            <div class="tr-border fs-14-fc-4E5761 fn-fa" style="margin-top: -1px;"><div class="row" onclick="goDetail({{$item->id}})">
+            <div class="tr-border fs-14-fc-4E5761 fn-fa" style="margin-top: -1px;" onclick="goDetail({{$item->record_id}})"><div class="row">
                     <div class="col-md-2 col-lg-2">{{date('Y/m/d H:i:s',strtotime($item->upload_at))}}</div>
                     <div class="col-md-2 col-lg-2">{{$item->work_no}}</div>
                     <div class="col-md-2 col-lg-2">{{$item->province}}</div>
@@ -69,7 +69,7 @@
     <script>
         function goDetail(id)
         {
-            location.href = '/admin/index/user-detail?id=' + id;
+            location.href = '/admin/index/record?id=' + id;
         }
 
         function search()
