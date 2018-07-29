@@ -83,7 +83,7 @@
             <div class="col-md-3 col-lg-3">&nbsp;</div>
             <div class="col-md-3 col-lg-3" style="text-align: right;">
                 <div style="line-height: 52px;display: inline-block;position: relative;" id="admin_user_wrap">
-<img src="/images/statusbar_user_nor@3x.png" style="width: 30px;"/>
+<img src="/images/statusbar_user_nor@3x.png" style="width: 30px;" onclick="goHref('/admin/index/home')"/>
                     <span class="fs-14-fc-232A31" style="margin-left: 8px;">{{\App\Util\AdminAuth::user()->email}}</span><span class="caret" style="margin-left: 8px"></span>
                     <ul style="position: absolute;z-index: 99;right:0;border:1px solid #EAEEF7;" id="admin_user_panel">
                         <li><a href="/admin/index/user-info" class="fs-14-fc-4E5761">个人信息</a></li>

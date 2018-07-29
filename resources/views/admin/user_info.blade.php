@@ -3,7 +3,7 @@
     <div class="mt-32 padding-col">
         <div class="tr-border fs-14-fc-4E5761 fn-fa" style="margin-top: 24px;">
             <div class="row" style="font-size: 0;text-align: right;">
-                <div style="float:left;line-height: 34px;" class="fs-14-fc-232A31">基本信息</div>
+                <div style="float:left;line-height: 34px;" class="fs-16-fc-232A31">基本信息</div>
             </div>
             <div class="row" style="border-top: 1px solid #EAEEF7;margin-top: 16px;" id="user_panel">
                 <div class="cus-row-col-12">
