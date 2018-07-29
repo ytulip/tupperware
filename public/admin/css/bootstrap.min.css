@@ -6581,4 +6581,9 @@ button.close {
     display: none !important;
   }
 }
+
+.pagination > li > span
+{
+  margin-left: 0 !important;
+}
 /*# sourceMappingURL=bootstrap.css.map */
