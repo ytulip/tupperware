@@ -88,7 +88,23 @@ class IndexController extends Controller
             $exif = @exif_read_data($file->getPathName());
             Log::info($exif);
 
-            if ($file->move('imgsys/' . $this->getCurrentDayTime() . '/', $imagesInfo[$key])) {
+            $image = imagecreatefromjpeg($file->getPathName());
+
+            if(!empty($exif['Orientation'])) {
+                switch($exif['Orientation']) {
+                    case 8:
+                        $image = imagerotate($image,90,0);
+                        break;
+                    case 3:
+                        $image = imagerotate($image,180,0);
+                        break;
+                    case 6:
+                        $image = imagerotate($image,-90,0);
+                        break;
+                }
+            }
+
+            if(imagejpeg($image,'imgsys/' . $this->getCurrentDayTime() . '/' . $imagesInfo[$key])){
                 $result = true;
                 $res[] = '/imgsys/' . $this->getCurrentDayTime() . '/' . $imagesInfo[$key];
             } else {
