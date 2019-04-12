@@ -269,7 +269,7 @@
 
 
     <div style="position: fixed;top:0;right: 0;left: 0;bottom: 0;background-color:rgba(0,0,0,.6);z-index: 999;" v-if="layerSwitch">
-        <div style="background-color: #ffffff;border-radius: 8px;padding: 24px;position: absolute;transform: translate(-50%,-50%);top:50%;left: 50%;width: 80%;">
+        <div style="background-color: #ffffff;border-radius: 8px;padding: 24px;position: absolute;transform: translate(-50%,-50%);top:50%;left: 50%;width: 70%;">
 
 
             <div class="cus-row cus-row-v-m">
