@@ -246,7 +246,7 @@
         </div>
 
 
-        <div class="bill-panel" style="margin-bottom: 16px;" v-for="(item,index) in currentList" v-on:click="editProduct(item.id)">
+        <div class="bill-panel" style="margin-bottom: 16px;" v-for="(item,index) in currentList" v-on:click="editProduct(item.id)" v-if="beauty">
             <div class="row">
                 <div class="cus-row-col-6">
                     <div class="cus-row-col-6 fs-14-fc-484848 f-f-r v-a-m" style="margin-left:8px; " ><span class="short-line" style="border-right-color: #C50081;display: inline-block;vertical-align: middle;" ></span><span style="display: inline-block;vertical-align: middle;">@{{ item.work_no }}</span></div>
@@ -259,6 +259,10 @@
 
 
             <div class="fs-14-fc-7E7E7E-r m-t-10">商品名称：@{{item.province}}</div>
+        </div>
+
+        <div class="bill-panel" style="margin-bottom: 16px;" v-for="(item,index) in currentList" v-on:click="editProduct(item.id)" v-else>
+            <div class="fs-12-fc-030303" style="line-height: 16px;">@{{ item.work_no }},剩余库存<span style="color: #c50081;">@{{item.quantity}}</span>卷,@{{item.province}}</div>
         </div>
 
 
@@ -349,6 +353,7 @@
                 id:'',
                 keyword:'',
                 list:[],
+                beauty:false
             },
             created:function()
             {
