@@ -205,7 +205,7 @@
         .quantity-plus
         {
             font-family: PingFangSC-Medium;
-            font-size: 20px;
+            font-size: 14px;
             color: #212229;
         }
 
