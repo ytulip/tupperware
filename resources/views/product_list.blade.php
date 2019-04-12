@@ -450,6 +450,8 @@
                             this.quantity = this.list[i].quantity;
                             this.productId = this.list[i].work_no;
                             this.productName = this.list[i].province;
+                            this.income = this.list[i].income;
+                            this.outcome = this.list[i].outcome;
                             this.layerSwitch = true;
                             return;
                         }
@@ -461,6 +463,8 @@
                     listVue.productId = '';
                     listVue.productName = '';
                     listVue.quantity = 0;
+                    listVue.income = 0;
+                    listVue.outcome = 0;
                     listVue.id = '';
                 }
             },
