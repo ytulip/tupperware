@@ -264,7 +264,7 @@
 
             <div class="cus-row cus-row-v-m">
                 <div class="cus-row-col-6">
-                    <span class="fs-18-fc-212229-m">库存编辑</span>
+                    <span class="fs-14-fc-000000-m">库存编辑</span>
                 </div>
 
                 <div class="cus-row-col-6 t-al-r">
