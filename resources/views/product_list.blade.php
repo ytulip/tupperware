@@ -463,6 +463,7 @@
                             this.productName = this.list[i].province;
                             this.income = this.list[i].income;
                             this.outcome = this.list[i].outcome;
+                            this.bit = this.list[i].bit;
                             this.layerSwitch = true;
                             return;
                         }
@@ -476,6 +477,7 @@
                     listVue.quantity = 0;
                     listVue.income = 0;
                     listVue.outcome = 0;
+                    listVue.bit = 1;
                     listVue.id = '';
                 },
                 changeBit:function(ind)
