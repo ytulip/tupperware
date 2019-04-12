@@ -8,13 +8,13 @@
             <div class="col-md-4 col-lg-4" onclick="goHref('/admin/index/users?get_status=1')">
                 <div class="block-card border-style1">
                     <p class="t-al-c fs-32-fc-232A31">{{$total}}</p>
-                    <div class="t-al-c fs-14-fc-93989e"><span style="background: #E01885;box-shadow: 0 2px 4px 0 rgba(224,24,133,0.40);width: 8px;height: 8px;display: inline-block;border-radius: 8px;margin-right: 8px;vertical-align: middle;"></span><span style="display: inline-block;vertical-align: middle;">用户人数</span></div>
+                    <div class="t-al-c fs-14-fc-93989e"><span style="background: #E01885;box-shadow: 0 2px 4px 0 rgba(224,24,133,0.40);width: 8px;height: 8px;display: inline-block;border-radius: 8px;margin-right: 8px;vertical-align: middle;"></span><span style="display: inline-block;vertical-align: middle;">商品总数</span></div>
                 </div>
             </div>
             <div class="col-md-4 col-lg-4" onclick="goHref('/admin/index/users?get_status=2')">
                 <div class="block-card border-style1">
                     <p class="t-al-c fs-32-fc-232A31">{{$hasUpload}}</p>
-                    <div class="t-al-c fs-14-fc-93989e"><span style="background: #DB5DF1 ;box-shadow: 0 2px 4px 0 rgba(224,24,133,0.40);width: 8px;height: 8px;display: inline-block;border-radius: 8px;margin-right: 8px;vertical-align: middle;"></span><span style="display: inline-block;vertical-align: middle;">上传人数</span></div>
+                    <div class="t-al-c fs-14-fc-93989e"><span style="background: #DB5DF1 ;box-shadow: 0 2px 4px 0 rgba(224,24,133,0.40);width: 8px;height: 8px;display: inline-block;border-radius: 8px;margin-right: 8px;vertical-align: middle;"></span><span style="display: inline-block;vertical-align: middle;">有效商品</span></div>
                 </div>
             </div>
             <div class="col-md-4 col-lg-4" onclick="goHref('/admin/index/users?get_status=3')">
@@ -91,7 +91,7 @@
 
         <div class="tr-border fs-14-fc-4E5761 fn-fa" style="margin-top: 24px;">
             <div class="row" style="font-size: 0;text-align: right;">
-                <div style="float:left;margin-left: 15px;line-height: 34px;" class="fs-16-fc-232A31">用户列表</div>
+                <div style="float:left;margin-left: 15px;line-height: 34px;" class="fs-16-fc-232A31">库存列表</div>
                 <div style="position: relative;display: inline-block;">
                     <input style="background: #FCFCFC;border: 1px solid #EAEEF7;border-radius: 100px;padding: 8px 12px;" class="fs-14-fc-93989e fn-fa" placeholder="输入ID搜索" name="work_no" value="{{\Illuminate\Support\Facades\Request::input('work_no')}}"/>
                     <a style="position: absolute;right: 10px;top:9px;" class="search_btn"><img src="/images/icon_search_nor@3x.png" width="14px"/></a>
@@ -104,24 +104,11 @@
 
         <div class="tr-border fs-14-fc-4E5761 fn-fa bg-fc" style="margin-top: -1px;">
             <div class="row">
-                <div class="col-md-2 col-lg-2">用户ID</div>
-                <div class="col-md-2 col-lg-2"><select class="selectpicker selectpicker1" title="所属省份">
-                        <option @if( \Illuminate\Support\Facades\Request::input('province') == '全部' ) selected @endif>全部</option>
-                        @foreach($provinceList as $item)
-                            <option @if( \Illuminate\Support\Facades\Request::input('province') == $item->province ) selected @endif>{{$item->province}}</option>
-                            @endforeach
-                        {{--<option>Mustard</option>--}}
-                        {{--<option>Ketchup</option>--}}
-                        {{--<option>Relish</option>--}}
-                    </select>
+                <div class="col-md-2 col-lg-2">商品编码</div>
+                <div class="col-md-4 col-lg-4">商品名称
                 </div>
-                <div class="col-md-2 col-lg-2"><select class="selectpicker selectpicker2" title="是/否上传">
-                        <option @if( \Illuminate\Support\Facades\Request::input('is_upload') == '全部' ) selected @endif>全部</option>
-                        <option @if( \Illuminate\Support\Facades\Request::input('is_upload') == '已上传' ) selected @endif>已上传</option>
-                        <option @if( \Illuminate\Support\Facades\Request::input('is_upload') == '未上传' ) selected @endif>未上传</option>
-                    </select></div>
                 <div class="col-md-4 col-lg-4"></div>
-                <div class="col-md-2 col-lg-2">上传次数</div>
+                <div class="col-md-2 col-lg-2">库存</div>
             </div>
         </div>
 
@@ -129,8 +116,7 @@
         @foreach($paginate as $item)
             <div class="tr-border fs-14-fc-4E5761 fn-fa record-item" style="margin-top: -1px;" onclick="goDetail({{$item->id}})"><div class="row">
                 <div class="col-md-2 col-lg-2">{{$item->work_no}}</div>
-                <div class="col-md-2 col-lg-2">{{$item->province}}</div>
-                <div class="col-md-2 col-lg-2">{{$item->upload_count?'是':'否'}}</div>
+                <div class="col-md-4 col-lg-4">{{$item->province}}</div>
                 <div class="col-md-4 col-lg-4"></div>
                 <div class="col-md-2 col-lg-2">{{intval($item->upload_count)}}</div>
                 </div></div>

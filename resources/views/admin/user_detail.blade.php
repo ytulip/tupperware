@@ -1,8 +1,8 @@
 @extends('admin.master',['headerTitle'=>''])
 @section('left_content')
     <div class="row header-title" style="margin-top: -1px;height: 106px;padding-top: 16px;padding-bottom: 25px;">
-        <div class="fs-14-fc-4E5661">用户管理/详情</div>
-        <div class="fs-16-fc-232A31" style="margin-top: 24px;"><span>用户ID:{{$user->work_no}}</span><span style="margin-left: 35px;">所属身份:{{$user->province}}</span><span style="margin-left: 35px;">上传次数:{{count($list)}}</span></div>
+        <div class="fs-14-fc-4E5661">库存管理/详情</div>
+        <div class="fs-16-fc-232A31" style="margin-top: 24px;"><span>商品编号:{{$user->work_no}}</span><span style="margin-left: 35px;">商品名称:{{$user->province}}</span></div>
     </div>
 
     <div style="">

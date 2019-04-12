@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Request;
 use App\Model\Record;
 use App\Model\User;
+use App\Util\AdminAuth;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
@@ -13,25 +14,27 @@ class IndexController extends Controller
 {
     public function getIndex()
     {
-        if(!Auth::check()){
+        if(!AdminAuth::check()){
             return Redirect::to('index/login');
         }
+
+        return view('product_list');
         //获取list列表
-        $list = Record::where('user_id',Auth::id())->where('is_delete',0)->orderBy('id','desc')->get();
-        $recordArr = [];
-        foreach ( $list as $key=>$record)
-        {
-            $urls = [];
-            if($record->img1) $urls[] = $record->img1;
-            if($record->img2) $urls[] = $record->img2;
-            $recordArr[] = ["urls"=>$urls,"attach_msg"=>[
-                'id'=>$record->id,
-                'day'=>date('d',strtotime($record->created_at)),
-                'm'=>date('m',strtotime($record->created_at)),
-                'his'=>date('h:i:s',strtotime($record->created_at))
-            ]];
-        }
-        return view('index')->with('recordArr',$recordArr);
+//        $list = Record::where('user_id',Auth::id())->where('is_delete',0)->orderBy('id','desc')->get();
+//        $recordArr = [];
+//        foreach ( $list as $key=>$record)
+//        {
+//            $urls = [];
+//            if($record->img1) $urls[] = $record->img1;
+//            if($record->img2) $urls[] = $record->img2;
+//            $recordArr[] = ["urls"=>$urls,"attach_msg"=>[
+//                'id'=>$record->id,
+//                'day'=>date('d',strtotime($record->created_at)),
+//                'm'=>date('m',strtotime($record->created_at)),
+//                'his'=>date('h:i:s',strtotime($record->created_at))
+//            ]];
+//        }
+//        return view('index')->with('recordArr',$recordArr);
     }
 
     public function getLogin()
@@ -56,94 +59,30 @@ class IndexController extends Controller
 
     public function postAlbumImage()
     {
-        if( !Auth::check() )
+        if( !AdminAuth::check() )
         {
             return $this->jsonReturn(0,'用户信息丢失');
         }
 
+        $id = \Illuminate\Support\Facades\Request::input('id');
 
-        $files = \Illuminate\Support\Facades\Request::file('images');
-        $count = count($files);
-        if (!in_array($count,[1,2])) {
-            return json_encode(["status" => 0, "desc" => "文件个数异常"], JSON_UNESCAPED_UNICODE);
+        if( $id )
+        {
+            $user = User::find($id);
+        } else
+        {
+            $user = new User();
         }
 
-        $imagesInfo = [];
-        foreach ($files as $key => $file) {
-            $imageExtension = $file->getClientOriginalExtension(); //上传文件的后缀
-            if (!in_array($imageExtension, ['jpg', 'png', 'gif', 'jpeg'])) {
-                return json_encode(['status' => 0, 'desc' => '文件格式异常'], JSON_UNESCAPED_UNICODE);
-            }
-            $imagesInfo[] = $imageSaveName = bin2hex(base64_encode(time() . $key)) . '.' . $imageExtension; //文件保存的名字
-        }
 
-        $res = [];
-        $result = false;
-        foreach ($files as $key => $file) {
-            //$iamgeTempPath = $file->getRealPath(); //临时文件的绝对路径
+        $user->work_no =  \Illuminate\Support\Facades\Request::input('productId');
+        $user->province =  \Illuminate\Support\Facades\Request::input('productName');
+        $user->quantity =  \Illuminate\Support\Facades\Request::input('quantity');
 
+        $user->save();
 
-            //这里应该要去翻转图片吧
-            Log::info($file->getPathName());
-            $exif = @exif_read_data($file->getPathName());
-            Log::info($exif);
+        return $this->jsonReturn(1);
 
-            $image = imagecreatefromjpeg($file->getPathName());
-
-            if(!empty($exif['Orientation'])) {
-                switch($exif['Orientation']) {
-                    case 8:
-                        $image = imagerotate($image,90,0);
-                        break;
-                    case 3:
-                        $image = imagerotate($image,180,0);
-                        break;
-                    case 6:
-                        $image = imagerotate($image,-90,0);
-                        break;
-                }
-            }
-
-            if(imagejpeg($image,'imgsys/' . $this->getCurrentDayTime() . '/' . $imagesInfo[$key])){
-                $result = true;
-                $res[] = '/imgsys/' . $this->getCurrentDayTime() . '/' . $imagesInfo[$key];
-            } else {
-                $result = false;
-                break;
-            }
-
-//            $imageFileContent = file_get_contents($iamgeTempPath);
-
-            //上传OSS
-//            $oss = \App\Util\OSS\OssCommon::getInstance();
-//            $upRes = $oss->uploadFileByContent($imageFileContent,['folder' => '/',
-//                'fileName' => $imagesInfo[$key]]);
-//
-//            if(\App\Util\Kits::checkSuccessTrue($upRes)){
-//                $result = true;
-//                $res[] = $imagesInfo[$key];
-//            }
-//            else{
-//                $result = false;
-//                break;
-//            }
-        }
-        if ($result) {
-
-            $record = new Record();
-            $record->user_id = Auth::id();
-            foreach ($res as $key=>$item)
-            {
-                $key = 'img' . ($key + 1);
-                $record->$key= $item;
-            }
-            $record->save();
-
-            //保存数据
-            return json_encode(['status' => 1, 'data' => $res, 'attach_msg'=>['id'=>$record->id,'day'=>date('d',strtotime($record->created_at)),'m'=>date('m',strtotime($record->created_at)),'his'=>date('h:i:s',strtotime($record->created_at))]]);
-        } else {
-            return json_encode(['status' => 0, 'desc' => "上传异常"], JSON_UNESCAPED_UNICODE);
-        }
     }
 
     public function anyDelete()
@@ -159,5 +98,11 @@ class IndexController extends Controller
         $record->save();
 
         return $this->jsonReturn(1);
+    }
+
+
+    public function anyList()
+    {
+        return $this->jsonReturn(1,User::get());
     }
 }

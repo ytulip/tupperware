@@ -102,15 +102,15 @@
     <!--/sidebar-menu-->
     <div class="sidebar-menu" style="box-shadow: none;border-right:1px solid #EAEEF7; ">
         <header class="logo1" style="background-color: #ffffff;">
-            <img src="/images/nav_logo_nor@3x.png" width="149px;" onclick="goHref('/admin/index/home')"/>
+            <img src="/images/logo-clean.png" width="149px;" onclick="goHref('/admin/index/home')"/>
             {{--<a href="#" class="sidebar-icon"> <span class="fa fa-bars"></span> </a>--}}
         </header>
         <div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
         <div class="menu">
             @if(!isset($hideList))
             <ul id="menu" >
-                 <li id="menu-academico"><a href="/admin/index/home" class="@if(!isset($block) || !$block) menu-a-active @endif"><i class="fa fa-envelope nav_icon menu-fa"></i><span>用户管理</span><div class="clearfix"></div></a></li>
-                <li id="menu-academico"><a href="/admin/index/records" class="@if( isset($block) && ($block == 1)) menu-a-active @endif"><i class="fa fa-envelope nav_icon menu-fa"></i><span>资料收集</span><div class="clearfix"></div></a></li>
+                 <li id="menu-academico"><a href="/admin/index/home" class="@if(!isset($block) || !$block) menu-a-active @endif"><i class="fa fa-envelope nav_icon menu-fa"></i><span>库存管理</span><div class="clearfix"></div></a></li>
+                {{--<li id="menu-academico"><a href="/admin/index/records" class="@if( isset($block) && ($block == 1)) menu-a-active @endif"><i class="fa fa-envelope nav_icon menu-fa"></i><span>资料收集</span><div class="clearfix"></div></a></li>--}}
             </ul>
                 @endif
         </div>

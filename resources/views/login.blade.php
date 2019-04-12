@@ -32,13 +32,19 @@
 @stop
 @section('container')
     <header style="margin-top: 60px;line-height: 0;" class="t-al-c">
-        <img src="/images/m/login_logo_nor@3x.png" style="width: 273px;"/>
+        <img src="/images/logo.png" style="width: 273px;"/>
     </header>
 
     <form style="padding: 0 24px;margin-top: 76px;" id="data_form">
         <div>
-            <input placeholder="输入工号ID" style="display:inline-block;line-height: 18px;font-size: 17px;color: #232A31;letter-spacing: 0;background: #F7F7F9;border: 1px solid #EEEEEE;border-radius: 100px;width: 100%;text-align: center;box-sizing: border-box;padding: 13px 0;" name="work_no"/>
+            <input placeholder="输入工号姓名" style="display:inline-block;line-height: 18px;font-size: 17px;color: #232A31;letter-spacing: 0;background: #F7F7F9;border: 1px solid #EEEEEE;border-radius: 100px;width: 100%;text-align: center;box-sizing: border-box;padding: 13px 0;" name="email"/>
         </div>
+
+
+        <div style="margin-top: 20px">
+            <input placeholder="输入密码" style="display:inline-block;line-height: 18px;font-size: 17px;color: #232A31;letter-spacing: 0;background: #F7F7F9;border: 1px solid #EEEEEE;border-radius: 100px;width: 100%;text-align: center;box-sizing: border-box;padding: 13px 0;" name="password" type="password"/>
+        </div>
+
         <div style="margin-top: 32px;">
             <a class="t-al-c" style="display: inline-block;width: 100%;background: #E01885;box-shadow: 0 2px 8px 0 rgba(224,24,133,0.36);border-radius: 100px;line-height: 44px;font-size: 17px;color: #FFFFFF;letter-spacing: 0;" id="next_step">进入</a>
         </div>
@@ -50,7 +56,7 @@
         $(function () {
             new SubmitButton({
                 selectorStr:"#next_step",
-                url:'/index/login',
+                url:'/passport/admin-login',
                 data:function()
                 {
                     return $('#data_form').serialize();
