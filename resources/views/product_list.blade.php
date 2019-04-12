@@ -1,6 +1,6 @@
 @extends('_layout.master')
 @section('title')
-<title>特百惠</title>
+<title>APA</title>
 @stop
 @section('style')
 <style>
