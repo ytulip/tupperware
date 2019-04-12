@@ -269,7 +269,7 @@
 
                 <div class="cus-row-col-6 t-al-r">
                     <div class="in-bl v-a-m quantity-plus-icon" v-on:click="deQuantity"><image src="/images/icon_out_nor@3x.png" class="quantity-plus-icon"/></div>
-                    <div class="in-bl v-a-m" style="margin: 0 10px;"><input class="quantity-plus" v-model="quantity" style="display: inline-block;width: 30px;text-align: center;
+                    <div class="in-bl" style="margin: 0 10px;vertical-align: top"><input class="quantity-plus" v-model="quantity" style="display: inline-block;width: 30px;text-align: center;
     border: none;"/></div>
                     <div class="in-bl v-a-m quantity-plus-icon" v-on:click="addQuantity"><image src="/images/icon_add_nor@3x.png" class="quantity-plus-icon"/></div>
                 </div>
