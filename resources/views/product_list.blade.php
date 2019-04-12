@@ -394,7 +394,7 @@
                     });
                 },
                 deQuantity:function () {
-                    if( this.quantity > 1)
+                    if( this.quantity > 0)
                     {
                         this.quantity = this.quantity - 1;
                     }
