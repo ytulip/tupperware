@@ -85,7 +85,6 @@
     }
 </style>
     <style>
-        <style>
         html,body{
             background-color: #f9f9fb;
         }
@@ -239,6 +238,8 @@
 
 <div style="min-height: 100%;" id="list" class="vue-dpn">
 
+    <div v-if="!layerSwitch">
+
     <div style="padding: 16px;margin-top: 30px;">
         <div style="position: relative; margin-bottom: 24px;">
             <input style="background: #FCFCFC;border: 1px solid #EAEEF7;border-radius: 100px;padding: 8px 12px;width: 100%;box-sizing: border-box;" class="fs-14-fc-93989e fn-fa" placeholder="输入ID、商品名搜索" name="work_no" value="" v-model="keyword">
@@ -256,18 +257,18 @@
 
     <div style="height: 100px;"></div>
 
+    </div>
 
 
-    <div style="position: fixed;top:0;right: 0;left: 0;bottom: 0;background-color:rgba(0,0,0,.6);z-index: 999;" v-if="layerSwitch">
-        <div style="background-color: #ffffff;border-radius: 8px;padding: 24px;position: absolute;transform: translate(-50%,-50%);top:50%;left: 50%;width: 70%;">
 
-
+    <div  v-if="layerSwitch" style="padding: 16px;margin-top: 60px;">
+        <div>
             <div class="cus-row cus-row-v-m">
-                <div class="cus-row-col-6">
+                <div class="cus-row-col-4">
                     <span class="fs-14-fc-000000-m">库存编辑</span>
                 </div>
 
-                <div class="cus-row-col-6 t-al-r">
+                <div class="cus-row-col-8 t-al-r">
                     <div class="in-bl v-a-m quantity-plus-icon" v-on:click="deQuantity"><image src="/images/icon_out_nor@3x.png" class="quantity-plus-icon"/></div>
                     <div class="in-bl" style="margin: 0 10px;vertical-align: top"><input class="quantity-plus" v-model="quantity" style="display: inline-block;width: 30px;text-align: center;
     border: none;"/></div>
@@ -280,12 +281,14 @@
 
 
             <div>
-                <input placeholder="输入商品编码" style="display:inline-block;line-height: 18px;font-size: 17px;color: #232A31;letter-spacing: 0;background: #F7F7F9;border: 1px solid #EEEEEE;border-radius: 100px;width: 100%;text-align: center;box-sizing: border-box;padding: 13px 0;"  v-model="productId"/>
+                {{--<input placeholder="输入商品编码" style="display:inline-block;line-height: 18px;font-size: 17px;color: #232A31;letter-spacing: 0;background: #F7F7F9;border: 1px solid #EEEEEE;border-radius: 100px;width: 100%;text-align: center;box-sizing: border-box;padding: 13px 0;"  />--}}
+                <input style="background: #FCFCFC;border: 1px solid #EAEEF7;border-radius: 100px;padding: 8px 12px;width: 100%;box-sizing: border-box;" class="fs-14-fc-93989e fn-fa" placeholder="输入商品编码" name="work_no" value="" v-model="productId">
             </div>
 
 
             <div style="margin-top: 20px">
-                <input placeholder="输入商品名称" style="display:inline-block;line-height: 18px;font-size: 17px;color: #232A31;letter-spacing: 0;background: #F7F7F9;border: 1px solid #EEEEEE;border-radius: 100px;width: 100%;text-align: center;box-sizing: border-box;padding: 13px 0;"  v-model="productName"/>
+                {{--<input placeholder="输入商品名称" style="display:inline-block;line-height: 18px;font-size: 17px;color: #232A31;letter-spacing: 0;background: #F7F7F9;border: 1px solid #EEEEEE;border-radius: 100px;width: 100%;text-align: center;box-sizing: border-box;padding: 13px 0;"  v-model="productName"/>--}}
+                <input style="background: #FCFCFC;border: 1px solid #EAEEF7;border-radius: 100px;padding: 8px 12px;width: 100%;box-sizing: border-box;" class="fs-14-fc-93989e fn-fa" placeholder="输入商品名称" name="work_no" value="" v-model="productName">
             </div>
 
             <div style="text-align: right;">
@@ -300,11 +303,11 @@
             </div>
         </div>
     </div>
-</div>
 
-<footer style="margin-bottom: 32px;position: fixed;bottom: 0;right: 0;left: 0;z-index:99;" class="t-al-c">
-    <div class="btn4" onclick="addNew()">新增商品</div>
-</footer>
+    <footer style="margin-bottom: 32px;position: fixed;bottom: 0;right: 0;left: 0;z-index:99;" class="t-al-c" v-if="!layerSwitch">
+        <div class="btn4" v-on:click="addNew">新增商品</div>
+    </footer>
+</div>
 @stop
 
 @section('script')
@@ -315,14 +318,14 @@
         list:''
     }
 
-    function addNew()
-    {
-        listVue.layerSwitch = true;
-        listVue.productId = '';
-        listVue.productName = '';
-        listVue.quantity = 0;
-        listVue.id = '';
-    }
+    // function addNew()
+    // {
+    //     listVue.layerSwitch = true;
+    //     listVue.productId = '';
+    //     listVue.productName = '';
+    //     listVue.quantity = 0;
+    //     listVue.id = '';
+    // }
 
     var listVue = new Vue(
         {
@@ -434,6 +437,14 @@
                             return;
                         }
                     }
+                },
+                addNew:function()
+                {
+                    listVue.layerSwitch = true;
+                    listVue.productId = '';
+                    listVue.productName = '';
+                    listVue.quantity = 0;
+                    listVue.id = '';
                 }
             },
             computed:{
