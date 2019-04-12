@@ -306,6 +306,15 @@
                 <input style="background: #FCFCFC;border: 1px solid #EAEEF7;border-radius: 100px;padding: 8px 12px;width: 100%;box-sizing: border-box;" class="fs-14-fc-93989e fn-fa" placeholder="售卖价" name="work_no" value="" v-model="outcome" type="number">
             </div>
 
+            <div style="margin-top: 20px">
+                {{--<input placeholder="输入商品名称" style="display:inline-block;line-height: 18px;font-size: 17px;color: #232A31;letter-spacing: 0;background: #F7F7F9;border: 1px solid #EEEEEE;border-radius: 100px;width: 100%;text-align: center;box-sizing: border-box;padding: 13px 0;"  v-model="productName"/>--}}
+                <div class="fs-14-fc-000000-m" style="margin-bottom: 6px;">单位（卷/米）</div>
+                <select style="background: #FCFCFC;border: 1px solid #EAEEF7;border-radius: 100px;padding: 8px 12px;width: 100%;box-sizing: border-box;" class="fs-14-fc-93989e fn-fa">
+                    <option value="卷">卷</option>
+                    <option value="米">米</option>
+                </select>
+            </div>
+
             <div style="text-align: right;">
 
                 <div style="margin-top: 32px;width: 90px;display: inline-block;">
