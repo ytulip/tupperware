@@ -80,6 +80,7 @@ class IndexController extends Controller
         $user->quantity =  \Illuminate\Support\Facades\Request::input('quantity');
         $user->income =  \Illuminate\Support\Facades\Request::input('income');
         $user->outcome =  \Illuminate\Support\Facades\Request::input('outcome');
+        $user->bit =  \Illuminate\Support\Facades\Request::input('bit');
 
         $user->save();
 
