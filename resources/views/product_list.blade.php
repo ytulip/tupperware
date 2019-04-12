@@ -403,11 +403,11 @@
                 deQuantity:function () {
                     if( this.quantity > 0)
                     {
-                        this.quantity = this.quantity - 1;
+                        this.quantity = parseInt(this.quantity) - 1;
                     }
                 },
                 addQuantity:function(){
-                    this.quantity = this.quantity + 1;
+                    this.quantity = parseInt(this.quantity) + 1;
                 },
                 saveProduct:function()
                 {
