@@ -264,7 +264,7 @@
 
     </div>
 
-    <div style="margin-bottom: 100px;"></div>
+    <div style="height: 100px;"></div>
 
 
 
