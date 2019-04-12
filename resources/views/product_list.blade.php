@@ -240,7 +240,7 @@
 <div style="min-height: 100%;" id="list" class="vue-dpn">
 
     <div style="padding: 16px;">
-        <div style="position: relative; margin-bottom: 24px;">
+        <div style="position: relative; margin-bottom: 24px;padding-top: 40px;">
             <input style="background: #FCFCFC;border: 1px solid #EAEEF7;border-radius: 100px;padding: 8px 12px;width: 100%;box-sizing: border-box;" class="fs-14-fc-93989e fn-fa" placeholder="输入ID、商品名搜索" name="work_no" value="" v-model="keyword">
             <a style="position: absolute;right: 10px;top:9px;" class="search_btn"><img src="/images/icon_search_nor@3x.png" width="14px"></a>
         </div>
