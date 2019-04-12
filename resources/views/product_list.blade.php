@@ -309,10 +309,11 @@
             <div style="margin-top: 20px">
                 {{--<input placeholder="输入商品名称" style="display:inline-block;line-height: 18px;font-size: 17px;color: #232A31;letter-spacing: 0;background: #F7F7F9;border: 1px solid #EEEEEE;border-radius: 100px;width: 100%;text-align: center;box-sizing: border-box;padding: 13px 0;"  v-model="productName"/>--}}
                 <div class="fs-14-fc-000000-m" style="margin-bottom: 6px;">单位（卷/米）</div>
-                <select style="background: #FCFCFC;border: 1px solid #EAEEF7;border-radius: 100px;padding: 8px 12px;width: 100%;box-sizing: border-box;" class="fs-14-fc-93989e fn-fa">
-                    <option value="卷">卷</option>
-                    <option value="米">米</option>
-                </select>
+                <div class="cus-row" style="margin-top: 6px;">
+                    <div class="cus-row-col-6 fs-14-fc-93989e">
+                            <img :src="bit1Src" style="width: 24px;height: 24px;display: inline-block;vertical-align: middle;margin-right: 6px;" v-on:click="changeBit(1)"/>卷</div>
+                    <div class="cus-row-col-6 fs-14-fc-93989e"> <img :src="bit2Src" style="width: 24px;height: 24px;display: inline-block;vertical-align: middle;margin-right: 6px;"  v-on:click="changeBit(2)"/>米</div>
+                </div>
             </div>
 
             <div style="text-align: right;">
@@ -368,7 +369,8 @@
                 list:[],
                 beauty:false,
                 income:'',
-                outcome:''
+                outcome:'',
+                bit:''
             },
             created:function()
             {
@@ -475,6 +477,10 @@
                     listVue.income = 0;
                     listVue.outcome = 0;
                     listVue.id = '';
+                },
+                changeBit:function(ind)
+                {
+                    this.bit = ind;
                 }
             },
             computed:{
@@ -499,6 +505,22 @@
                     }
 
                     return tmpList;
+                },
+                bit1Src:function(){
+                    if( this.bit == 2)
+                    {
+                        return '/images/checkbox-blank-circle-outline.png';
+                    } else {
+                        return '/images/checkbox-marked-circle.png';
+                    }
+                },
+                bit2Src:function(){
+                    if( this.bit == 2)
+                    {
+                        return '/images/checkbox-marked-circle.png';
+                    } else {
+                        return '/images/checkbox-blank-circle-outline.png';
+                    }
                 }
             }
         }
