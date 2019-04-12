@@ -419,7 +419,7 @@
                 {
                     this.layerSwitch= false;
                     var _self = this;
-                    $.post('/index/album-image',{id:this.id,quantity:this.quantity,productId:this.productId,productName:this.productName},function(data){
+                    $.post('/index/album-image',{id:this.id,quantity:this.quantity,productId:this.productId,productName:this.productName,income:this.income,outcome:this.outcome},function(data){
                         if( data.status )
                         {
                             _self.initList();

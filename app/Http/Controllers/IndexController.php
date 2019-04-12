@@ -78,6 +78,8 @@ class IndexController extends Controller
         $user->work_no =  \Illuminate\Support\Facades\Request::input('productId');
         $user->province =  \Illuminate\Support\Facades\Request::input('productName');
         $user->quantity =  \Illuminate\Support\Facades\Request::input('quantity');
+        $user->income =  \Illuminate\Support\Facades\Request::input('income');
+        $user->outcome =  \Illuminate\Support\Facades\Request::input('outcome');
 
         $user->save();
 
