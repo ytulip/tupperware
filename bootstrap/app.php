@@ -26,6 +26,14 @@ $app = new Illuminate\Foundation\Application(
 |
 */
 
+
+if( isset($_SERVER['HTTP_HOST']) && (strpos($_SERVER['HTTP_HOST'],'aili') !== false)) {
+    Dotenv::load($app['path.base'], '.aili.env');
+} else {
+    Dotenv::load($app['path.base'], $app->environmentFile());
+}
+
+
 $app->singleton(
     Illuminate\Contracts\Http\Kernel::class,
     App\Http\Kernel::class

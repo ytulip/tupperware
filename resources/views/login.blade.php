@@ -32,7 +32,7 @@
 @stop
 @section('container')
     <header style="margin-top: 60px;line-height: 0;" class="t-al-c">
-        <img src="/images/logo.png" style="width: 273px;"/>
+        <img src="{{env('IS_AILI')?'/images/aili.jpg':'/images/logo.png'}}" style="width: 273px;"/>
     </header>
 
     <form style="padding: 0 24px;margin-top: 76px;" id="data_form">
