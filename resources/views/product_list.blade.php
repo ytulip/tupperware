@@ -1,6 +1,6 @@
 @extends('_layout.master')
 @section('title')
-<title>APA</title>
+<title>{{env('TITLE')}}</title>
 @stop
 @section('style')
 <style>
