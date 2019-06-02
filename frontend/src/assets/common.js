@@ -31,7 +31,9 @@ function dynamicHost()
     // return urlParse['origin'].replace('h5.','');
     let host = urlParse['origin'].replace('h5.','');
 
-    if( host.indexOf('localhost') )
+    console.log(host.indexOf('localhost'));
+
+    if( host.indexOf('localhost') !== -1 )
     {
         return 'http://tp.cc';
     }
