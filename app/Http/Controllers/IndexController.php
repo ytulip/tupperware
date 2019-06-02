@@ -59,10 +59,10 @@ class IndexController extends Controller
 
     public function postAlbumImage()
     {
-        if( !AdminAuth::check() )
-        {
-            return $this->jsonReturn(0,'用户信息丢失');
-        }
+//        if( !AdminAuth::check() )
+//        {
+//            return $this->jsonReturn(0,'用户信息丢失');
+//        }
 
         $id = \Illuminate\Support\Facades\Request::input('id');
 
@@ -99,6 +99,16 @@ class IndexController extends Controller
 
         $record->is_delete = 1;
         $record->save();
+
+        return $this->jsonReturn(1);
+    }
+
+
+    public function anyDeleteItem()
+    {
+        $id = \Illuminate\Support\Facades\Request::input('id');
+        $user = User::find($id);
+        $user->delete();
 
         return $this->jsonReturn(1);
     }
