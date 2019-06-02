@@ -27,7 +27,16 @@ function cusHttp(page,url,param,method)
 
 function dynamicHost()
 {
-    return 'http://tp.cc';
+    let urlParse = UrlParse(location.href,true);
+    // return urlParse['origin'].replace('h5.','');
+    let host = urlParse['origin'].replace('h5.','');
+
+    if( host.indexOf('localhost') )
+    {
+        return 'http://tp.cc';
+    }
+
+    return host;
 }
 
 
