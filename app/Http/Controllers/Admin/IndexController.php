@@ -77,6 +77,12 @@ class IndexController extends Controller
         return view('admin.index')->with('paginate',$paginate)->with('provinceList',$provinceList)->with('total',User::count())->with('hasUpload',$hasUpload);
     }
 
+
+    public function getHomeMian()
+    {
+        return $this->jsonReturn(1, [""=>[]]);
+    }
+
     public function getUserDetail()
     {
         $user = User::find(Request::input('id'));

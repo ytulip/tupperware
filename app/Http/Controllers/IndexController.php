@@ -37,6 +37,12 @@ class IndexController extends Controller
 //        return view('index')->with('recordArr',$recordArr);
     }
 
+
+    public function getHomeMain()
+    {
+        return $this->jsonReturn(1, ["banners"=>[['id'=>'1', 'url'=>env('IMAGE_PREFIX') . '/images/raya1.jpg'],['id'=>'2', 'url'=>env('IMAGE_PREFIX'). '/images/raya2.jpg']]]);
+    }
+
     public function getLogin()
     {
         return view('login');
