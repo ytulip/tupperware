@@ -40,7 +40,16 @@ class IndexController extends Controller
 
     public function getHomeMain()
     {
-        return $this->jsonReturn(1, ["banners"=>[['id'=>'1', 'url'=>env('IMAGE_PREFIX') . '/images/raya1.jpg'],['id'=>'2', 'url'=>env('IMAGE_PREFIX'). '/images/raya2.jpg']]]);
+        return $this->jsonReturn(1, ["banners"=>[['id'=>'1', 'url'=>env('IMAGE_PREFIX') . '/images/raya2.jpg'],['id'=>'2', 'url'=>env('IMAGE_PREFIX'). '/images/raya1.jpg']], "recommend_case"=>[['id'=>'1', 'url'=>env('IMAGE_PREFIX') . '/images/case1.jpg', 'text'=>'奥迪S|抹茶绿'],['id'=>'2', 'url'=>env('IMAGE_PREFIX'). '/images/case2.jpg', 'text'=>'特斯拉model s|电光绿'], ['id'=>'3', 'url'=>env('IMAGE_PREFIX'). '/images/case3.jpg', 'text'=>'奔驰S级|高级灰']]]);
+    }
+
+
+    /**
+     * 精品案例
+     */
+    public function getRecommendCase()
+    {
+        return $this->jsonReturn(1, [['id'=>'1', 'url'=>env('IMAGE_PREFIX') . '/images/raya2.jpg', 'text'=>''],['id'=>'2', 'url'=>env('IMAGE_PREFIX'). '/images/raya1.jpg', 'text'=>'']]);
     }
 
     public function getLogin()
