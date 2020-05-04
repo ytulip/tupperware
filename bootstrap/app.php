@@ -25,13 +25,8 @@ $app = new Illuminate\Foundation\Application(
 | incoming requests to this application from both the web and CLI.
 |
 */
+Dotenv::load($app['path.base'], $app->environmentFile());
 
-
-if( isset($_SERVER['HTTP_HOST']) && (strpos($_SERVER['HTTP_HOST'],'aili') !== false)) {
-    Dotenv::load($app['path.base'], '.aili.env');
-} else {
-    Dotenv::load($app['path.base'], $app->environmentFile());
-}
 
 
 $app->singleton(
