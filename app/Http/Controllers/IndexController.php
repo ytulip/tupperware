@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Request;
 use App\Model\Article;
+use App\Model\Quality;
 use App\Model\Record;
 use App\Model\User;
 use App\Util\AdminAuth;
@@ -61,6 +62,12 @@ class IndexController extends Controller
         $id = \Illuminate\Support\Facades\Request::input('id');
         $detail = Article::find($id);
         return $this->jsonReturn(1, $detail);
+    }
+
+    public function getQuality()
+    {
+        $list = Quality::where('mobile', 'like' ,"%%")->orWhere('mobile', 'like' ,"%%")->orderBy('id', 'desc')->get();
+        return $this->jsonReturn(1, $list);
     }
 
     public function getLogin()
