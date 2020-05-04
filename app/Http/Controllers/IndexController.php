@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Request;
+use App\Model\Article;
 use App\Model\Record;
 use App\Model\User;
 use App\Util\AdminAuth;
@@ -53,6 +54,13 @@ class IndexController extends Controller
     public function getRecommendCase()
     {
         return $this->jsonReturn(1, [['id'=>'1', 'url'=>env('IMAGE_PREFIX') . '/images/raya2.jpg', 'text'=>''],['id'=>'2', 'url'=>env('IMAGE_PREFIX'). '/images/raya1.jpg', 'text'=>'']]);
+    }
+
+    public function getArticle()
+    {
+        $id = \Illuminate\Support\Facades\Request::input('id');
+        $detail = Article::find($id);
+        return $this->jsonReturn(1, $detail);
     }
 
     public function getLogin()
