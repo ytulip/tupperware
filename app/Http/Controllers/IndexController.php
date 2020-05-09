@@ -21,24 +21,65 @@ class IndexController extends Controller
         }
 
         return view('product_list');
-        //获取list列表
-//        $list = Record::where('user_id',Auth::id())->where('is_delete',0)->orderBy('id','desc')->get();
-//        $recordArr = [];
-//        foreach ( $list as $key=>$record)
-//        {
-//            $urls = [];
-//            if($record->img1) $urls[] = $record->img1;
-//            if($record->img2) $urls[] = $record->img2;
-//            $recordArr[] = ["urls"=>$urls,"attach_msg"=>[
-//                'id'=>$record->id,
-//                'day'=>date('d',strtotime($record->created_at)),
-//                'm'=>date('m',strtotime($record->created_at)),
-//                'his'=>date('h:i:s',strtotime($record->created_at))
-//            ]];
-//        }
-//        return view('index')->with('recordArr',$recordArr);
     }
 
+    public function getCasesConfig()
+    {
+        $brank = [ 
+            (Object)[ 'text'=>'所有品牌',  'value'=> 0 ],
+            (Object)[ 'text'=>'奔驰',  'value'=> 1 ],
+            (Object)[ 'text'=>'宝马',  'value'=> 2 ],
+            (Object)[ 'text'=>'奥迪',  'value'=> 3 ],
+            (Object)[ 'text'=>'其它',  'value'=> 99 ]
+        ];
+        $classify = [ 
+            (Object)[ 'text'=>'所有系列',  'value'=> 0 ],
+            (Object)[ 'text'=>'亮光系列',  'value'=> 1 ],
+            (Object)[ 'text'=>'珍珠白变/电光白变系列',  'value'=> 2 ],
+            (Object)[ 'text'=>'钢琴/高亮系列',  'value'=> 3 ],
+            (Object)[ 'text'=>'陶瓷系列/电光系列',  'value'=> 4 ],
+            (Object)[ 'text'=>'亚面金属系列',  'value'=> 5 ],
+            (Object)[ 'text'=>'樱语系列',  'value'=> 6 ],
+            (Object)[ 'text'=>'金属/珠光系列',  'value'=> 7 ],
+            (Object)[ 'text'=>'超哑系列/原厂系列',  'value'=> 8 ],
+            (Object)[ 'text'=>'珊瑚系列',  'value'=> 9 ],
+            // (Object)[ 'text'=>'变色龙系列',  'value'=> 10 ],
+            // (Object)[ 'text'=>'砖石系列',  'value'=> 11 ],
+            // (Object)[ 'text'=>'镭射闪系列',  'value'=> 12 ],
+            // (Object)[ 'text'=>'彩虹电镀系列',  'value'=> 13 ],
+            // (Object)[ 'text'=>'闪耀、星空系列',  'value'=> 14 ],
+            // (Object)[ 'text'=>'3D炫彩',  'value'=> 15 ],
+            // (Object)[ 'text'=>'亚面电镀金属',  'value'=> 16 ],
+            // (Object)[ 'text'=>'自修复系列',  'value'=> 17 ],
+            // (Object)[ 'text'=>'砖石白变系列',  'value'=> 18 ],
+            // (Object)[ 'text'=>'梦幻系列',  'value'=> 19 ],
+            (Object)[ 'text'=>'其它',  'value'=> 99 ]
+        ];
+
+        $color = [ 
+            (Object)[ 'text'=>'所有颜色',  'value'=> 0 ],
+            (Object)[ 'text'=>'红色',  'value'=> 1 ],
+            (Object)[ 'text'=>'橙色',  'value'=> 2 ],
+            (Object)[ 'text'=>'黄色',  'value'=> 3 ],
+            (Object)[ 'text'=>'绿色',  'value'=> 4 ],
+            (Object)[ 'text'=>'蓝色',  'value'=> 5 ],
+            (Object)[ 'text'=>'紫色',  'value'=> 6 ],
+            (Object)[ 'text'=>'灰色',  'value'=> 7 ],
+            (Object)[ 'text'=>'白色',  'value'=> 8 ],
+            (Object)[ 'text'=>'黑色',  'value'=> 9 ],
+            (Object)[ 'text'=>'粉色',  'value'=> 10 ],
+            // (Object)[ 'text'=>'银色',  'value'=> 11 ],
+            // (Object)[ 'text'=>'蒂芙尼',  'value'=> 12 ],
+            // (Object)[ 'text'=>'玫瑰金',  'value'=> 13 ],
+            // (Object)[ 'text'=>'极光色',  'value'=> 14 ],
+            (Object)[ 'text'=>'其它',  'value'=> 99 ]
+        ];;
+        return $this->jsonReturn(1,[
+            "brank"=> $brank,
+            "classify"=> $classify,
+            "color"=> $color
+        ]);
+    }
 
     public function getHomeMain()
     {
@@ -46,6 +87,13 @@ class IndexController extends Controller
 
         $news = [['id'=>'3', 'url'=>env('IMAGE_PREFIX'). '/images/article.jpg', 'title'=>'RAYA FILM开启全国代理招募计划，还不赶紧来戳一下？'], ['id'=>'4', 'url'=>env('IMAGE_PREFIX'). '/images/easy2.jpg', 'title'=>'RAYA FILM产品系列详细介绍，快来了解一下。'] , ['id'=>'5', 'url'=>env('IMAGE_PREFIX'). '/images/easy3.jpg', 'title'=>'RAYA FILM已于2020盛大开业，落户成都']];
         return $this->jsonReturn(1, ["banners"=>[['id'=>'1', 'url'=>env('IMAGE_PREFIX') . '/images/raya2.jpg'],['id'=>'2', 'url'=>env('IMAGE_PREFIX'). '/images/raya1.jpg']], "recommend_case"=>[['id'=>'1', 'url'=>env('IMAGE_PREFIX') . '/images/case1.jpg', 'text'=>'奥迪S|抹茶绿'],['id'=>'2', 'url'=>env('IMAGE_PREFIX'). '/images/case2.jpg', 'text'=>'特斯拉model s|电光绿'], ['id'=>'3', 'url'=>env('IMAGE_PREFIX'). '/images/case3.jpg', 'text'=>'奔驰S级|高级灰']], 'news'=>$news]);
+    }
+
+    public function postCallback()
+    {
+        $data = file_get_contents("php://input");
+        Log::info($data);
+        return $this->jsonReturn(1);
     }
 
 
@@ -66,7 +114,8 @@ class IndexController extends Controller
 
     public function getQuality()
     {
-        $list = Quality::where('mobile', 'like' ,"%%")->orWhere('mobile', 'like' ,"%%")->orderBy('id', 'desc')->get();
+        $keyword = $id = \Illuminate\Support\Facades\Request::input('keyword');
+        $list = Quality::where('mobile', 'like' ,"%$keyword%")->orWhere('mobile', 'like' ,"%%")->orderBy('id', 'desc')->get();
         return $this->jsonReturn(1, $list);
     }
 
