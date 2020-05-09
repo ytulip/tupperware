@@ -89,6 +89,12 @@ class IndexController extends Controller
         return $this->jsonReturn(1, ["banners"=>[['id'=>'1', 'url'=>env('IMAGE_PREFIX') . '/images/raya2.jpg'],['id'=>'2', 'url'=>env('IMAGE_PREFIX'). '/images/raya1.jpg']], "recommend_case"=>[['id'=>'1', 'url'=>env('IMAGE_PREFIX') . '/images/case1.jpg', 'text'=>'奥迪S|抹茶绿'],['id'=>'2', 'url'=>env('IMAGE_PREFIX'). '/images/case2.jpg', 'text'=>'特斯拉model s|电光绿'], ['id'=>'3', 'url'=>env('IMAGE_PREFIX'). '/images/case3.jpg', 'text'=>'奔驰S级|高级灰']], 'news'=>$news]);
     }
 
+    public function getAllCases()
+    {
+        $list = [['id'=>'1', 'url'=>env('IMAGE_PREFIX') . '/images/case1.jpg', 'text'=>'奥迪S|抹茶绿', 'brand'=>1, 'classify'=>2, 'color'=>3],['id'=>'2', 'url'=>env('IMAGE_PREFIX'). '/images/case2.jpg', 'text'=>'特斯拉model s|电光绿', 'brand'=>3, 'classify'=>2, 'color'=>1], ['id'=>'3', 'url'=>env('IMAGE_PREFIX'). '/images/case3.jpg', 'text'=>'奔驰S级|高级灰', 'brand'=>2, 'classify'=>3, 'color'=>1]];
+        return $this->jsonReturn(1, $list);
+    }
+
     public function postCallback()
     {
         $data = file_get_contents("php://input");
