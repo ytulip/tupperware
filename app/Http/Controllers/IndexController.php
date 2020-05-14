@@ -81,6 +81,25 @@ class IndexController extends Controller
         ]);
     }
 
+    public function getDoFavor()
+    {
+        $id = \Illuminate\Support\Facades\Request::input('id');
+        $detail = Article::find($id);
+        $detial->favor = $detail->favor + 1;
+        $detail->save();
+        return $this->jsonReturn(1, $detial->favor);
+    }
+
+
+    public function getDoEyes()
+    {
+        $id = \Illuminate\Support\Facades\Request::input('id');
+        $detail = Article::find($id);
+        $detial->eyes = $detail->eyes + 1;
+        $detail->save();
+        return $this->jsonReturn(1, $detial->eyes);
+    }
+
     public function getHomeMain()
     {
 
