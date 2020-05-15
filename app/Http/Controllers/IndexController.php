@@ -85,19 +85,19 @@ class IndexController extends Controller
     {
         $id = \Illuminate\Support\Facades\Request::input('id');
         $detail = Article::find($id);
-        $detial->favor = $detail->favor + 1;
-        $detail->save();
-        return $this->jsonReturn(1, $detial->favor);
+        $new_count = $detail->favor + 1;
+        Article::where('id', '=', $id)->update(['favor'=>$new_count]);
+        return $this->jsonReturn(1, $new_count);
     }
 
 
     public function getDoEyes()
     {
         $id = \Illuminate\Support\Facades\Request::input('id');
-        $detail = Article::find($id);
-        $detial->eyes = $detail->eyes + 1;
-        $detail->save();
-        return $this->jsonReturn(1, $detial->eyes);
+        $detail = Article::where('id', '=', $id)->first();
+        $new_count = $detail->eyes + 1;
+        Article::where('id', '=', $id)->update(['eyes'=>$new_count]);
+        return $this->jsonReturn(1, $new_count);
     }
 
     public function getHomeMain()
