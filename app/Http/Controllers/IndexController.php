@@ -100,11 +100,29 @@ class IndexController extends Controller
         return $this->jsonReturn(1, $new_count);
     }
 
+    /**
+     * 所有文章列表
+     */
+    public function getArticles()
+    {
+
+    }
+
     public function getHomeMain()
     {
 
 
         $news = [['id'=>'3', 'url'=>env('IMAGE_PREFIX'). '/images/article.jpg', 'title'=>'RAYA FILM开启全国代理招募计划，还不赶紧来戳一下？'], ['id'=>'4', 'url'=>env('IMAGE_PREFIX'). '/images/easy2.jpg', 'title'=>'RAYA FILM产品系列详细介绍，快来了解一下。'] , ['id'=>'5', 'url'=>env('IMAGE_PREFIX'). '/images/easy3.jpg', 'title'=>'RAYA FILM已于2020盛大开业，落户成都']];
+
+        $news = Article::where('status',1)->where('msg_type', 1)->limit(3)->orderBy('id', 'desc')->get();
+
+        foreach ($news as $key=>$item)
+        {
+            $item->publish_time = date('m-d', strtotime($item->created_at));
+        }
+
+
+
         return $this->jsonReturn(1, ["banners"=>[['id'=>'1', 'url'=>env('IMAGE_PREFIX') . '/images/raya2.jpg'],['id'=>'2', 'url'=>env('IMAGE_PREFIX'). '/images/raya1.jpg']], "recommend_case"=>[['id'=>'1', 'url'=>env('IMAGE_PREFIX') . '/images/case1.jpg', 'text'=>'奥迪S|抹茶绿'],['id'=>'2', 'url'=>env('IMAGE_PREFIX'). '/images/case2.jpg', 'text'=>'特斯拉model s|电光绿'], ['id'=>'3', 'url'=>env('IMAGE_PREFIX'). '/images/case3.jpg', 'text'=>'奔驰S级|高级灰']], 'news'=>$news]);
     }
 
