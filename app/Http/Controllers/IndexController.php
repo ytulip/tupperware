@@ -134,6 +134,7 @@ class IndexController extends Controller
     {
         $id = \Illuminate\Support\Facades\Request::input('id');
         $detail = Article::find($id);
+        $detail->publish_time = date('m-d', strtotime($detail->created_at));
         return $this->jsonReturn(1, $detail);
     }
 
