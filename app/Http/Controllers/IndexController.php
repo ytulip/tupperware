@@ -105,7 +105,14 @@ class IndexController extends Controller
      */
     public function getArticles()
     {
+        $news = Article::where('status',1)->where('msg_type', 1)->limit(3)->orderBy('id', 'desc')->get();
 
+        foreach ($news as $key=>$item)
+        {
+            $item->publish_time = date('m-d', strtotime($item->created_at));
+        }
+
+        return $this->jsonReturn(1, $news);
     }
 
     public function getHomeMain()
