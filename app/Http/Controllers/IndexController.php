@@ -167,7 +167,14 @@ class IndexController extends Controller
     {
         $keyword = $id = \Illuminate\Support\Facades\Request::input('keyword');
         $list = Quality::where('mobile', 'like' ,"%$keyword%")->orWhere('mobile', 'like' ,"%%")->orderBy('id', 'desc')->get();
-        return $this->jsonReturn(1, $list);
+
+        if( count($list) )
+        {
+            return $this->jsonReturn(1, $list);
+        } else
+        {
+            return $this->jsonReturn(0, '查询不到质保信息');
+        }
     }
 
     public function getLogin()
