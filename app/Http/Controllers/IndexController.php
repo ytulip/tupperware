@@ -166,7 +166,7 @@ class IndexController extends Controller
     public function getQuality()
     {
         $keyword = $id = \Illuminate\Support\Facades\Request::input('keyword');
-        $list = Quality::where('mobile', 'like' ,"%$keyword%")->orWhere('mobile', 'like' ,"%%")->orderBy('id', 'desc')->get();
+        $list = Quality::where('mobile', '=' ,"$keyword")->orWhere('brand_card', '=' ,"$keyword")->orderBy('id', 'desc')->get();
 
         if( count($list) )
         {
