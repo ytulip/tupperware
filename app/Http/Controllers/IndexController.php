@@ -126,6 +126,8 @@ class IndexController extends Controller
         foreach ($news as $key=>$item)
         {
             $item->publish_time = date('m-d', strtotime($item->created_at));
+            $item->url = env('IMAGE_PREFIX') . $item->cover_img;;
+            $item->cover_img = env('IMAGE_PREFIX') . $item->cover_img;;
         }
 
 
