@@ -182,6 +182,10 @@ class IndexController extends Controller
         //只根据标题搜案例
         $keyword = $id = \Illuminate\Support\Facades\Request::input('keyword');
         $list = Article::where('title', 'like' ,"%$keyword%")->where('status', 1)->where('msg_type', 2)->orderBy('id', 'desc')->get();
+        foreach ($list as $key=>$item)
+        {
+            $list->cover_img = env('IMAGE_PREFIX') . $list->cover_img;
+        }
         return $this->jsonReturn(1, $list);
     }
 
