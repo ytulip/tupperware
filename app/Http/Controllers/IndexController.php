@@ -184,7 +184,7 @@ class IndexController extends Controller
         $list = Article::where('title', 'like' ,"%$keyword%")->where('status', 1)->where('msg_type', 2)->orderBy('id', 'desc')->get();
         foreach ($list as $key=>$item)
         {
-            $list->cover_img = env('IMAGE_PREFIX') . $list->cover_img;
+            $item->cover_img = env('IMAGE_PREFIX') . $item->cover_img;
         }
         return $this->jsonReturn(1, $list);
     }
