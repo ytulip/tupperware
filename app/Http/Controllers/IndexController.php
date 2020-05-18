@@ -177,6 +177,14 @@ class IndexController extends Controller
         }
     }
 
+    public function getSearch()
+    {
+        //只根据标题搜案例
+        $keyword = $id = \Illuminate\Support\Facades\Request::input('keyword');
+        $list = Article::where('title', 'like' ,"%$keyword%")->orderBy('id', 'desc')->get();
+        return $this->jsonReturn(1, $list);
+    }
+
     public function getLogin()
     {
         return view('login');
