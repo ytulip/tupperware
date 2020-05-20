@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Request;
 use App\Model\Article;
+use App\Model\CardBrand;
+use App\Model\CodeLibrary;
 use App\Model\Quality;
 use App\Model\Record;
 use App\Model\User;
@@ -271,5 +273,20 @@ class IndexController extends Controller
     public function anyList()
     {
         return $this->jsonReturn(1,User::get());
+    }
+
+    /**
+     * 配额
+     */
+    public function quotation()
+    {
+        $carList = CardBrand::where('prantid', 0)->get();
+        foreach( $carList as $key=>$item )
+        {
+            $carList->subList = CardBrand::where('prantid', $item->id)->get();
+        }
+        //系列列表
+        $list = CodeLibrary::where('type', 'classify')->get();
+        return $this->jsonReturn(0, ['car_list'=>$carList, 'classify'=>$list]);
     }
 }
