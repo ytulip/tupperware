@@ -278,7 +278,7 @@ class IndexController extends Controller
     /**
      * 配额
      */
-    public function quotation()
+    public function anyQuotation()
     {
         $carList = CardBrand::where('prantid', 0)->get();
         foreach( $carList as $key=>$item )
