@@ -287,6 +287,6 @@ class IndexController extends Controller
         }
         //系列列表
         $list = CodeLibrary::where('type', 'classify')->get();
-        return $this->jsonReturn(0, ['car_list'=>$carList, 'classify'=>$list]);
+        return $this->jsonReturn(1, ['car_list'=>$carList, 'classify'=>$list]);
     }
 }
