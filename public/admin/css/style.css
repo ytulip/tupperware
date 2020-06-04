@@ -6423,3 +6423,10 @@ ul.dropdown-menu {
 
 .bg-fc{background-color: #fcfcfc !important;}
 /***responsive***/
+
+.btn-default:hover{
+    background-color: #1889f9 !important;
+    color:#fff !important;
+}
+
+a{ cursor: pointer;}

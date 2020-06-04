@@ -213,34 +213,40 @@ class IndexController extends Controller
         return $this->jsonReturn(1);
     }
 
-    public function postAlbumImage()
+    public function anyAlbumImage()
     {
-//        if( !AdminAuth::check() )
-//        {
-//            return $this->jsonReturn(0,'用户信息丢失');
-//        }
-
-        $id = \Illuminate\Support\Facades\Request::input('id');
-
-        if( $id )
-        {
-            $user = User::find($id);
-        } else
-        {
-            $user = new User();
+        $files = \Illuminate\Support\Facades\Request::file('images');
+        $count = count($files);
+        if ($count != 1) {
+            return json_encode(["status" => 0, "desc" => "文件个数异常"], JSON_UNESCAPED_UNICODE);
         }
 
+        $imagesInfo = [];
+        foreach ($files as $key => $file) {
+            $imageExtension = $file->getClientOriginalExtension(); //上传文件的后缀
+            if (!in_array($imageExtension, ['jpg', 'png', 'gif', 'jpeg'])) {
+                return json_encode(['status' => 0, 'desc' => '文件格式异常'], JSON_UNESCAPED_UNICODE);
+            }
+            $imagesInfo[] = $imageSaveName = bin2hex(base64_encode(time() . $key)) . '.' . $imageExtension; //文件保存的名字
+        }
 
-        $user->work_no =  \Illuminate\Support\Facades\Request::input('productId');
-        $user->province =  \Illuminate\Support\Facades\Request::input('productName');
-        $user->quantity =  \Illuminate\Support\Facades\Request::input('quantity');
-        $user->income =  \Illuminate\Support\Facades\Request::input('income');
-        $user->outcome =  \Illuminate\Support\Facades\Request::input('outcome');
-        $user->bit =  \Illuminate\Support\Facades\Request::input('bit');
-
-        $user->save();
-
-        return $this->jsonReturn(1);
+        $res = [];
+        $result = false;
+        foreach ($files as $key => $file) {
+            //$iamgeTempPath = $file->getRealPath(); //临时文件的绝对路径
+            if ($file->move('imgsys', $imagesInfo[$key])) {
+                $result = true;
+                $res[] = '/imgsys/' . $imagesInfo[$key];
+            } else {
+                $result = false;
+                break;
+            }
+        }
+        if ($result) {
+            return json_encode(['status' => 1, 'data' => $res]);
+        } else {
+            return json_encode(['status' => 0, 'desc' => "上传异常"], JSON_UNESCAPED_UNICODE);
+        }
 
     }
 

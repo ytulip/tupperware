@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Log\Facades\Logger;
 use App\Model\Admin;
+use App\Model\Article;
 use App\Model\CashStream;
 use App\Model\Essay;
 use App\Model\InvitedCodes;
@@ -133,6 +134,40 @@ class IndexController extends Controller
 
         $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
         return view('admin.records')->with('paginate',$paginate)->with('provinceList',$provinceList);
+    }
+
+
+    public function getCase()
+    {
+        $record = Article::find(Request::input('id'));
+        if( !($record instanceof  Article) )
+        {
+            dd('无效记录');
+        }
+        return view('admin.case')->with('record',$record);
+    }
+
+    public function getCases()
+    {
+        $query = Article::where('msg_type', 2)->where('status', 1)->orderBy('id', 'desc');
+        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
+        return view('admin.cases')->with('paginate',$paginate);
+    }
+
+    public function postCase()
+    {
+        $essay = Article::find(Request::input('id'));
+        if (!$essay) {
+            $essay = new Article();
+//            $essay->sort = DB::table('essays')->max('sort') + 1;
+        }
+
+        $essay->cover_img = Request::input('cover_image');
+        $essay->title = Request::input('title');
+        $essay->content = Request::input('content');
+
+        $essay->save();
+        return $this->jsonReturn(1);
     }
 
     public function getUserInfo()
