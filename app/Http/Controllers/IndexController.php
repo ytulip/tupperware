@@ -289,7 +289,7 @@ class IndexController extends Controller
         $carList = CardBrand::where('prantid', 0)->get();
         foreach( $carList as $key=>$item )
         {
-            $carList->subList = CardBrand::where('prantid', $item->id)->get();
+            $item->subList = CardBrand::where('prantid', $item->id)->get();
         }
         //系列列表
         $list = CodeLibrary::where('type', 'classify')->get();
