@@ -139,11 +139,16 @@ class IndexController extends Controller
 
     public function getCase()
     {
+        if( Request::input('type') == 'add' )
+        {
+            return view('admin.case')->with('record', (Object)['title'=>'', 'cover_img'=>'', 'content'=>'']);
+        }
         $record = Article::find(Request::input('id'));
         if( !($record instanceof  Article) )
         {
             dd('无效记录');
         }
+
         return view('admin.case')->with('record',$record);
     }
 
@@ -159,6 +164,8 @@ class IndexController extends Controller
         $essay = Article::find(Request::input('id'));
         if (!$essay) {
             $essay = new Article();
+            $essay->status = 1;
+            $essay->msg_type = 2;
 //            $essay->sort = DB::table('essays')->max('sort') + 1;
         }
 
@@ -167,7 +174,7 @@ class IndexController extends Controller
         $essay->content = Request::input('content');
 
         $essay->save();
-        return $this->jsonReturn(1);
+        return $this->jsonReturn(1, $essay->id);
     }
 
     public function getUserInfo()

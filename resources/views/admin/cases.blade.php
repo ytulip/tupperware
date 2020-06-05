@@ -84,7 +84,8 @@
         });
 
         $('.search_btn_download').click(function(){
-            location.href = '/admin/index/records?download=1&province=' + $('.selectpicker1').val() +  '&work_no=' + $('input[name="work_no"]').val();
+            // location.href = '/admin/index/records?download=1&province=' + $('.selectpicker1').val() +  '&work_no=' + $('input[name="work_no"]').val();
+            location.href = '/admin/index/case?type=add'
         });
     </script>
 @stop

@@ -174,6 +174,11 @@ class IndexController extends Controller
         $id = \Illuminate\Support\Facades\Request::input('id');
         $detail = Article::find($id);
         $detail->publish_time = date('m-d', strtotime($detail->created_at));
+
+        //文章图片路径替换
+        $detail->content = str_replace('/ueditor/php', '', $detail->content);
+        
+
         return $this->jsonReturn(1, $detail);
     }
 
