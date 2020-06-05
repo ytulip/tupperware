@@ -139,8 +139,18 @@ class IndexController extends Controller
 
     public function getAllCases()
     {
-        $list = [['id'=>'1', 'url'=>env('IMAGE_PREFIX') . '/images/case1.jpg', 'text'=>'奥迪S|抹茶绿', 'brand'=>1, 'classify'=>2, 'color'=>3],['id'=>'2', 'url'=>env('IMAGE_PREFIX'). '/images/case2.jpg', 'text'=>'特斯拉model s|电光绿', 'brand'=>3, 'classify'=>2, 'color'=>1], ['id'=>'3', 'url'=>env('IMAGE_PREFIX'). '/images/case3.jpg', 'text'=>'奔驰S级|高级灰', 'brand'=>2, 'classify'=>3, 'color'=>1]];
-        return $this->jsonReturn(1, $list);
+//        $list = [['id'=>'1', 'url'=>env('IMAGE_PREFIX') . '/images/case1.jpg', 'text'=>'奥迪S|抹茶绿', 'brand'=>1, 'classify'=>2, 'color'=>3],['id'=>'2', 'url'=>env('IMAGE_PREFIX'). '/images/case2.jpg', 'text'=>'特斯拉model s|电光绿', 'brand'=>3, 'classify'=>2, 'color'=>1], ['id'=>'3', 'url'=>env('IMAGE_PREFIX'). '/images/case3.jpg', 'text'=>'奔驰S级|高级灰', 'brand'=>2, 'classify'=>3, 'color'=>1]];
+//        return $this->jsonReturn(1, $list);
+
+        $news = Article::where('status',1)->where('msg_type',2)->limit(3)->orderBy('id', 'desc')->get();
+
+        foreach ($news as $key=>$item)
+        {
+            $item->publish_time = date('m-d', strtotime($item->created_at));
+            $item->url = env('IMAGE_PREFIX') . $item->cover_img;;
+            $item->cover_img = env('IMAGE_PREFIX') . $item->cover_img;;
+        }
+        return $this->jsonReturn(1, $news);
     }
 
     public function postCallback()
