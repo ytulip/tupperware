@@ -94,7 +94,7 @@
                 return {title:$('input[name="title"]').val(),content:ue.getContent(),cover_image:$('.essay_img').find('img').attr('src')};
             },
             callback:function(el,val){
-                location.href = 'http://tp.cc/admin/index/case?id='  + val.data
+                location.href = '/admin/index/case?id='  + val.data
             }
         });
 
