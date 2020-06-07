@@ -1,4 +1,4 @@
-@extends('admin.master',['headerTitle'=>'','block'=>'1'])
+@extends('admin.master',['headerTitle'=>'','block'=>'3'])
 @section('left_content')
     <div class="mt-32 padding-col">
 

@@ -132,9 +132,15 @@ class IndexController extends Controller
             $item->cover_img = env('IMAGE_PREFIX') . $item->cover_img;;
         }
 
+        $cases = Article::where('status',1)->where('msg_type', 2)->limit(3)->orderBy('id', 'desc')->get();
+        foreach ($cases as $key=>$item)
+        {
+            $item->publish_time = date('m-d', strtotime($item->created_at));
+            $item->url = env('IMAGE_PREFIX') . $item->cover_img;;
+            $item->cover_img = env('IMAGE_PREFIX') . $item->cover_img;;
+        }
 
-
-        return $this->jsonReturn(1, ["banners"=>[['id'=>'1', 'url'=>env('IMAGE_PREFIX') . '/images/raya2.jpg'],['id'=>'2', 'url'=>env('IMAGE_PREFIX'). '/images/raya1.jpg']], "recommend_case"=>[['id'=>'1', 'url'=>env('IMAGE_PREFIX') . '/images/case1.jpg', 'text'=>'奥迪S|抹茶绿'],['id'=>'2', 'url'=>env('IMAGE_PREFIX'). '/images/case2.jpg', 'text'=>'特斯拉model s|电光绿'], ['id'=>'3', 'url'=>env('IMAGE_PREFIX'). '/images/case3.jpg', 'text'=>'奔驰S级|高级灰']], 'news'=>$news]);
+        return $this->jsonReturn(1, ["banners"=>[['id'=>'1', 'url'=>env('IMAGE_PREFIX') . '/images/raya2.jpg'],['id'=>'2', 'url'=>env('IMAGE_PREFIX'). '/images/raya1.jpg']], "recommend_case"=>$cases, 'news'=>$news]);
     }
 
     public function getAllCases()

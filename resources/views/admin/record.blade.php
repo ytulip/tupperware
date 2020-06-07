@@ -1,27 +1,52 @@
-@extends('admin.master',['headerTitle'=>'','block'=>'1'])
+@extends('admin.master',['headerTitle'=>'','block'=>'4'])
 @section('left_content')
-    <div class="row header-title" style="margin-top: -1px;height: 106px;padding-top: 16px;padding-bottom: 25px;">
-        <div class="fs-14-fc-4E5661">资料收集/详情</div>
-        <div class="fs-16-fc-232A31" style="margin-top: 24px;"><span>用户ID:{{$user->work_no}}</span><span style="margin-left: 35px;">所属身份:{{$user->province}}</span><span style="margin-left: 35px;">上传时间:{{date('Y/m/d',strtotime($record->created_at))}}</span></div>
+    <div class="row header-title" style="margin-top: -1px;height: 56px;padding-top: 16px;padding-bottom: 25px;">
+        <div class="fs-14-fc-4E5661">资讯管理/编辑</div>
     </div>
 
     <div style="">
-        @if($record->img1)
-        <div style="width: 749px;margin:0 auto;margin-top: 28px;">
-            <img width="100%" src="{{$record->img1}}"/>
+        <div style="width: 640px;margin: 0 auto;margin-top: 24px;">
+            <form role="form">
+                <div class="form-group">
+                    <label for="name">标题</label>
+                    <input type="text" value="{{$record->title}}" name="title" class="form-control" id="name" placeholder="请输入标题">
+                </div>
+                <div class="form-group">
+                    <label for="inputfile">封面图片</label>
+                    <div style="width: 128px;height: 128px" onclick="uploadCover()" class="essay_img">
+                        <img src="{{$record->cover_img?$record->cover_img:'/admin/images/add_img.png'}}" style="width: 100%;height: 100%;object-fit: contain"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputfile">文章内容</label>
+                    <script id="container" name="content" type="text/plain">
+这里写你的初始化内容
+</script>
+                </div>
+            </form>
+
+            <a style="display:inline-block;padding: 8px 18px;border-radius: 4px; background-color: #1889f9;color: #ffffff;" id="do_publish">提交</a>
+
         </div>
-    @endif
-a
-        @if($record->img1)
-        <div style="width: 749px;margin:0 auto;margin-top: 28px;">
-            <img width="100%" src="{{$record->img2}}"/>
-        </div>
-            @endif
+
+        <form style="display: none;" id="data-form">
+            <input type="file" name="images[]"  style="display: none" accept="image/gif,image/jpeg,image/png"/>
+
+        </form>
     </div>
 @stop
 
 @section('script')
+    <!-- 配置文件 -->
+    <script type="text/javascript" src="/admin/js/ueditor/ueditor.config.js"></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" src="/admin/js/ueditor/ueditor.all.js"></script>
     <script>
+
+        var pageConfig = {
+            content: '{!! isset($record->content)?$record->content:'' !!}'
+        }
+
         function goDetail(id)
         {
             location.href = '/admin/index/user-detail?id=' + id;
@@ -34,5 +59,70 @@ a
             $('#search_form').submit();
 
         }
+
+        var ue = UE.getEditor('container');
+        ue.ready(function() {
+            //设置编辑器的内容
+            ue.setContent(pageConfig.content);
+        });
+
+        new SubmitButton({
+            selectorStr:"#do_publish",
+            prepositionJudge:function(){
+
+                if ( !$('input[name="title"]').val() )
+                {
+                    mAlert('标题不能为空');
+                    return;
+                }
+
+                if( !$('.essay_img').find('img').attr('src') )
+                {
+                    mAlert('封面图片不能为空');
+                    return;
+                }
+
+                var content = ue.getContent();
+                if( content.length == 0 ) {
+                    mAlert('内容不能为空');
+                    return;
+                }
+
+                return true;
+            },
+            data:function(){
+                return {title:$('input[name="title"]').val(),content:ue.getContent(),cover_image:$('.essay_img').find('img').attr('src')};
+            },
+            callback:function(el,val){
+                location.href = '/admin/index/record?id='  + val.data
+            }
+        });
+
+        function uploadCover(){
+            $('input[name="images[]"]').click();
+        }
+
+
+        $('body').on('change','input[name="images[]"]',function(){
+            if(this.value){
+                var formData = new FormData($("#data-form")[0]);
+                $.ajax({
+                    url:'/index/album-image',
+                    data:formData,
+                    type:'post',
+                    contentType: false,
+                    processData: false,
+                    dataType:'json',
+                    success:function(data){
+                        $('input[name="images[]"]').replaceWith('<input type="file" name="images[]"  style="display: none" accept="image/gif,image/jpeg,image/png"/>');
+                        if(data.status) {
+                            $('.essay_img').find('img').attr('src',data.data[0]);
+                        } else {
+                            alert(data.desc);
+                        }
+                    }
+                });
+            }
+        });
     </script>
 @stop
