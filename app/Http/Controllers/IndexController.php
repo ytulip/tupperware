@@ -176,7 +176,7 @@ class IndexController extends Controller
         $detail->publish_time = date('m-d', strtotime($detail->created_at));
 
         //文章图片路径替换
-        $detail->content = str_replace('/ueditor/php', '', $detail->content);
+        $detail->content = str_replace('/ueditor/php', env('IMAGE_PREFIX'). '/ueditor/php', $detail->content);
         
 
         return $this->jsonReturn(1, $detail);
