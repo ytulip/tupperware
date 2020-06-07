@@ -177,7 +177,6 @@ class IndexController extends Controller
 
         //文章图片路径替换
         $detail->content = str_replace('/ueditor/php', env('IMAGE_PREFIX'). '/ueditor/php', $detail->content);
-        
 
         return $this->jsonReturn(1, $detail);
     }
