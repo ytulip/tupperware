@@ -115,6 +115,28 @@ class IndexController extends Controller
         return view('admin.record')->with('record',$record);
     }
 
+    public function getBanners()
+    {
+        $query = Article::where('msg_type', 3)->where('status', 1)->orderBy('id', 'desc');
+        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
+        return view('admin.banners')->with('paginate', $paginate);
+    }
+
+    public function getBanner()
+    {
+        if( Request::input('type') == 'add' )
+        {
+            return view('admin.banner')->with('record', (Object)['title'=>'', 'cover_img'=>'', 'content'=>'']);
+        }
+        $record = Article::find(Request::input('id'));
+        if( !($record instanceof  Article) )
+        {
+            dd('无效记录');
+        }
+
+        return view('admin.banner')->with('record',$record);
+    }
+
     public function getRecords()
     {
         $query = Article::where('msg_type', 1)->where('status', 1)->orderBy('id', 'desc');
@@ -184,6 +206,25 @@ class IndexController extends Controller
         $essay->cover_img = Request::input('cover_image');
         $essay->title = Request::input('title');
         $essay->content = Request::input('content');
+
+        $essay->save();
+        return $this->jsonReturn(1, $essay->id);
+    }
+
+
+    public function postBanner()
+    {
+        $essay = Article::find(Request::input('id'));
+        if (!$essay) {
+            $essay = new Article();
+            $essay->status = 1;
+            $essay->msg_type = 3;
+//            $essay->sort = DB::table('essays')->max('sort') + 1;
+        }
+
+        $essay->cover_img = Request::input('cover_image');
+        $essay->title = Request::input('title');
+        $essay->content = '';
 
         $essay->save();
         return $this->jsonReturn(1, $essay->id);
