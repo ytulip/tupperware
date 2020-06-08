@@ -423,7 +423,7 @@
             },
             callback:function(obj,data){
                 if(data.status){
-                    location.href = '/admin/index/home';
+                    location.href = '/admin/index/banners';
                 } else {
                     mAlert(data.desc);
                 }
