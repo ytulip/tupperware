@@ -8,7 +8,7 @@
         <div style="width: 640px;margin: 0 auto;margin-top: 24px;">
             <form role="form">
                 <div class="form-group">
-                    <label for="inputfile">封面图片</label>
+                    <label for="inputfile">封面图片<span style="font-size: 12px;">建议宽度(756 * 306),或相同比列</span></label>
                     <div style="width: 128px;height: 128px" onclick="uploadCover()" class="essay_img">
                         <img src="{{$record->cover_img?$record->cover_img:'/admin/images/add_img.png'}}" style="width: 100%;height: 100%;object-fit: contain"/>
                     </div>
