@@ -119,9 +119,11 @@ class IndexController extends Controller
 
     public function getHomeMain()
     {
-
-
-        $news = [['id'=>'3', 'url'=>env('IMAGE_PREFIX'). '/images/article.jpg', 'title'=>'RAYA FILM开启全国代理招募计划，还不赶紧来戳一下？'], ['id'=>'4', 'url'=>env('IMAGE_PREFIX'). '/images/easy2.jpg', 'title'=>'RAYA FILM产品系列详细介绍，快来了解一下。'] , ['id'=>'5', 'url'=>env('IMAGE_PREFIX'). '/images/easy3.jpg', 'title'=>'RAYA FILM已于2020盛大开业，落户成都']];
+        $banners = Article::where('status',1)->where('msg_type', 3)->orderBy('id', 'desc')->get();
+        foreach ($banners as $key=>$item)
+        {
+            $item->url = env('IMAGE_PREFIX') . $item->cover_img;;
+        }
 
         $news = Article::where('status',1)->where('msg_type', 1)->limit(3)->orderBy('id', 'desc')->get();
 
@@ -140,7 +142,7 @@ class IndexController extends Controller
             $item->cover_img = env('IMAGE_PREFIX') . $item->cover_img;;
         }
 
-        return $this->jsonReturn(1, ["banners"=>[['id'=>'1', 'url'=>env('IMAGE_PREFIX') . '/images/raya2.jpg'],['id'=>'2', 'url'=>env('IMAGE_PREFIX'). '/images/raya1.jpg']], "recommend_case"=>$cases, 'news'=>$news]);
+        return $this->jsonReturn(1, ["banners"=>$banners, "recommend_case"=>$cases, 'news'=>$news]);
     }
 
     public function getAllCases()
