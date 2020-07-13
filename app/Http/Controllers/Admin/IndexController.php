@@ -115,6 +115,30 @@ class IndexController extends Controller
         return view('admin.record')->with('record',$record);
     }
 
+    public function postRecord()
+    {
+//        $record = Record::find(Request::input('id'));
+//        if( !($record instanceof  Record) )
+//        {
+//            dd('无效记录');
+//        }
+//        $user = User::find($record->user_id);
+        $essay = Article::find(Request::input('id'));
+        if (!$essay) {
+            $essay = new Article();
+            $essay->status = 1;
+            $essay->msg_type = 1;
+//            $essay->sort = DB::table('essays')->max('sort') + 1;
+        }
+
+        $essay->cover_img = Request::input('cover_image');
+        $essay->title = Request::input('title');
+        $essay->content = Request::input('content');
+
+        $essay->save();
+        return $this->jsonReturn(1, $essay->id);
+    }
+
     public function getBanners()
     {
         $query = Article::where('msg_type', 3)->where('status', 1)->orderBy('id', 'desc');
