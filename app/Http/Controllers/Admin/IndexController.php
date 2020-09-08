@@ -14,6 +14,7 @@ use App\Model\MonthGetGood;
 use App\Model\Order;
 use App\Model\Product;
 use App\Model\ProductAttr;
+use App\Model\Quality;
 use App\Model\Record;
 use App\Model\SignRecord;
 use App\Model\SyncModel;
@@ -285,5 +286,49 @@ class IndexController extends Controller
 //        $user->save();
         return $this->jsonReturn(1);
 
+    }
+
+
+    public function anyQualitys()
+    {
+        $query = Quality::orderBy('id', 'desc');
+        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
+        return view('admin.qualitys')->with('paginate',$paginate);
+    }
+
+    public function getQuality()
+    {
+        if( Request::input('type') == 'add' )
+        {
+            return view('admin.quality')->with('record', (Object)['brand_card'=>'', 'car_type'=>'', 'valid_date'=>'', 'store'=>'', 'part'=>'', 'color'=>'', 'seri_no'=>'', 'quality_year'=>'']);
+        }
+        $record = Quality::find(Request::input('id'));
+        if( !($record instanceof  Quality) )
+        {
+            dd('无效记录');
+        }
+        return view('admin.quality')->with('record',$record);
+    }
+
+
+    public function postQuality()
+    {
+        $essay = Quality::find(Request::input('id'));
+        if (!$essay) {
+            $essay = new Quality();
+        }
+
+        $essay->brand_card = Request::input('brand_card');
+        $essay->car_type = Request::input('car_type');
+        $essay->valid_date = Request::input('valid_date');
+        $essay->store = Request::input('store');
+        $essay->part = Request::input('part');
+        $essay->color = Request::input('color');
+        $essay->seri_no = Request::input('seri_no');
+        $essay->quality_year = Request::input('quality_year');
+        $essay->content = Request::input('content');
+
+        $essay->save();
+        return $this->jsonReturn(1, $essay->id);
     }
 }

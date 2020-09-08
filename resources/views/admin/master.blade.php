@@ -114,7 +114,7 @@
                 <li id="menu-academico"><a href="/admin/index/cases" class="@if( isset($block) && ($block == 3)) menu-a-active @endif"><i class="fa fa-envelope nav_icon menu-fa"></i><span>精选案例</span><div class="clearfix"></div></a></li>
                 <li id="menu-academico"><a href="/admin/index/records" class="@if( isset($block) && ($block == 4)) menu-a-active @endif"><i class="fa fa-envelope nav_icon menu-fa"></i><span>资讯管理</span><div class="clearfix"></div></a></li>
                 <li id="menu-academico"><a href="/admin/index/records" class="@if( isset($block) && ($block == 5)) menu-a-active @endif"><i class="fa fa-envelope nav_icon menu-fa"></i><span>产品系列</span><div class="clearfix"></div></a></li>
-                <li id="menu-academico"><a href="/admin/index/records" class="@if( isset($block) && ($block == 6)) menu-a-active @endif"><i class="fa fa-envelope nav_icon menu-fa"></i><span>质保管理</span><div class="clearfix"></div></a></li>
+                <li id="menu-academico"><a href="/admin/index/qualitys" class="@if( isset($block) && ($block == 6)) menu-a-active @endif"><i class="fa fa-envelope nav_icon menu-fa"></i><span>质保管理</span><div class="clearfix"></div></a></li>
             </ul>
                 @endif
         </div>
