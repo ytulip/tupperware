@@ -194,6 +194,16 @@ class IndexController extends Controller
         $keyword = $id = \Illuminate\Support\Facades\Request::input('keyword');
         $list = Quality::where('mobile', '=' ,"$keyword")->orWhere('brand_card', '=' ,"$keyword")->orderBy('id', 'desc')->get();
 
+
+        //文章图片路径替换
+//        $detail->content = str_replace('/ueditor/php', env('IMAGE_PREFIX'). '/ueditor/php', $detail->content);
+
+        foreach ($list as $key=>$detail)
+        {
+            //文章图片路径替换
+            $detail->content = str_replace('/ueditor/php', env('IMAGE_PREFIX'). '/ueditor/php', $detail->content);
+        }
+
         if( count($list) )
         {
             return $this->jsonReturn(1, $list);
