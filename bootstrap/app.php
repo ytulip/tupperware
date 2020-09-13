@@ -25,7 +25,16 @@ $app = new Illuminate\Foundation\Application(
 | incoming requests to this application from both the web and CLI.
 |
 */
-Dotenv::load($app['path.base'], $app->environmentFile());
+//Dotenv::load($app['path.base'], $app->environmentFile());
+
+
+/*加载不通的数据库*/
+if ( strpos($_REQUEST['SERVER_NAME'], 'apa') !== false )
+{
+    Dotenv::load($app['path.base'], 'apa.env');
+}else{
+    Dotenv::load($app['path.base'], $app->environmentFile());
+}
 
 
 
