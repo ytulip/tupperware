@@ -29,7 +29,7 @@ $app = new Illuminate\Foundation\Application(
 
 
 /*加载不通的数据库*/
-if ( strpos($_REQUEST['SERVER_NAME'], 'apa') !== false )
+if ( strpos($_SERVER['SERVER_NAME'], 'apa') !== false )
 {
     Dotenv::load($app['path.base'], 'apa.env');
 }else{
