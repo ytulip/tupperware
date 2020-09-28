@@ -256,6 +256,8 @@ class IndexController extends Controller
         $imagesInfo = [];
         foreach ($files as $key => $file) {
             $imageExtension = $file->getClientOriginalExtension(); //上传文件的后缀
+            //文件后缀转小写
+            $imageExtension = strtolower($imageExtension);
             if (!in_array($imageExtension, ['jpg', 'png', 'gif', 'jpeg'])) {
                 return json_encode(['status' => 0, 'desc' => '文件格式异常'], JSON_UNESCAPED_UNICODE);
             }
