@@ -366,7 +366,12 @@
 
     <div style="position: fixed;left: 0;right: 0;top:0;bottom: 0;">
         <form id="data_form" style="position:absolute;top: 117px;left: 50%;-webkit-transform: translateX(-50%);transform: translateX(-50%);background: #FFFFFF;box-shadow: 0 2px 12px 0 rgba(217,184,202,0.37);border-radius: 6px;padding: 53px 30px;">
-            <div><img src="/images/logo-clean.png" width="224px"/></div>
+
+            @if(strpos($_SERVER['SERVER_NAME'], 'apa') !== false )
+                <div><img src="/images/apa_logo.png" width="224px"/></div>
+            @else
+                <div><img src="/images/logo-clean.png" width="224px"/></div>
+            @endif
 
             <div style="width: 300px;margin-top: 51px;"><input style="padding: 14px;line-height: 20px;background: #FCFCFC;border: 1px solid #DEE3ED;border-radius: 3px;width: 100%;" placeholder="输入账号" name="email"/></div>
 

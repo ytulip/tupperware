@@ -102,8 +102,12 @@
     <!--/sidebar-menu-->
     <div class="sidebar-menu" style="box-shadow: none;border-right:1px solid #EAEEF7; ">
         <header class="logo1" style="background-color: #ffffff;">
-            <img src="/images/logo-clean.png" width="149px;" onclick="goHref('/admin/index/banners')"/>
-            {{--<a href="#" class="sidebar-icon"> <span class="fa fa-bars"></span> </a>--}}
+
+            @if(strpos($_SERVER['SERVER_NAME'], 'apa') !== false )
+                <img src="/images/apa_logo.png" width="149px;" onclick="goHref('/admin/index/banners')"/>
+            @else
+                <img src="/images/logo-clean.png" width="149px;" onclick="goHref('/admin/index/banners')"/>
+            @endif
         </header>
         <div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
         <div class="menu">
