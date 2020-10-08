@@ -5,17 +5,55 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Request;
 use App\Model\Article;
 use App\Model\CardBrand;
+use App\Model\SubCarBrand;
 use App\Model\CodeLibrary;
 use App\Model\Quality;
 use App\Model\Record;
+use App\Model\php;
 use App\Model\User;
 use App\Util\AdminAuth;
+use App\Util\Kit;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 
 class IndexController extends Controller
 {
+
+    public function anyMakeBrand()
+    {
+        $content = file_get_contents('http://tp.cc/CarApi/index.php?type=brand&pagesize=1000');
+        $content = json_decode($content);
+        foreach ($content->info as $item)
+        {
+            $brand = new CardBrand();
+            $brand->car_brand = $item->name;
+            $brand->img = $item->img;
+            $brand->prantid = 0;
+            $brand->firstletter = $item->firstletter;
+            $brand->save();
+        }
+        echo 123;
+    }
+
+
+    public function anySubMakeBrand()
+    {
+        set_time_limit(3600);
+        $content = file_get_contents('http://tp.cc/CarApi/index.php?type=series&pagesize=2000');
+        $content = json_decode($content);
+        foreach ($content->info as $item)
+        {
+            $brand = new SubCarBrand();
+            $brand->car_brand = $item->name;
+            $brand->brand_id = $item->brand_id;
+            $brand->firstletter = $item->firstletter;
+            $brand->save();
+        }
+
+        echo 445;
+    }
+
     public function getIndex()
     {
         if(!AdminAuth::check()){
@@ -323,7 +361,7 @@ class IndexController extends Controller
         $carList = CardBrand::where('prantid', 0)->get();
         foreach( $carList as $key=>$item )
         {
-            $item->subList = CardBrand::where('prantid', $item->id)->get();
+            $item->subList = SubCarBrand::where('brand_id', $item->brand_id)->get();
         }
         //系列列表
         $list = CodeLibrary::where('type', 'classify')->get();
