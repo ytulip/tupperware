@@ -43,7 +43,7 @@
 
 
                 <div class="form-group">
-                    <label for="name">RAYA膜批号</label>
+                    <label for="name">膜批号</label>
                     <input type="text" value="{{$record->seri_no}}" name="seri_no" class="form-control" id="name" placeholder="请输入">
                 </div>
 

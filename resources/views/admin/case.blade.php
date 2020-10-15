@@ -17,6 +17,23 @@
                        <img src="{{$record->cover_img?$record->cover_img:'/admin/images/add_img.png'}}" style="width: 100%;height: 100%;object-fit: contain"/>
                    </div>
                </div>
+
+               <div class="form-group">
+                   <label for="inputfile">产品系列</label>
+                   <div style="width: 128px;" class="essay_img">
+                       <select class="form-control" name="classify">
+                           <option value="">
+                              请选择
+                           </option>
+                           @foreach($classify as $key=>$item)
+                               <option value="{{$item['item_value']}}" {{($record->classify == $item['item_value'] )?'selected':''}}>
+                                   {{$item['item_name']}}
+                               </option>
+                           @endforeach
+                       </select>
+                   </div>
+               </div>
+
                <div class="form-group">
                    <label for="inputfile">文章内容</label>
                    <script id="container" name="content" type="text/plain">
@@ -88,10 +105,17 @@
                     return;
                 }
 
+                var classify = $('select[name="classify"]').val()
+                if( !classify )
+                {
+                    mAlert('请选择产品系列');
+                    return;
+                }
+
                 return true;
             },
             data:function(){
-                return {title:$('input[name="title"]').val(),content:ue.getContent(),cover_image:$('.essay_img').find('img').attr('src')};
+                return {title:$('input[name="title"]').val(),content:ue.getContent(),cover_image:$('.essay_img').find('img').attr('src'), classify: $('select[name="classify"]').val()};
             },
             callback:function(el,val){
                 location.href = '/admin/index/case?id='  + val.data

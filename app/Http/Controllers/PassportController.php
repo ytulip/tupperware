@@ -47,4 +47,10 @@ class PassportController extends Controller
         $res = AdminAuth::attempt(Request::all());
         return $res;
     }
+
+    //制造汽车品牌
+    public function anyMakeBrand()
+    {
+
+    }
 }

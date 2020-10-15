@@ -7,6 +7,7 @@ use App\Log\Facades\Logger;
 use App\Model\Admin;
 use App\Model\Article;
 use App\Model\CashStream;
+use App\Model\CodeLibrary;
 use App\Model\Essay;
 use App\Model\InvitedCodes;
 use App\Model\Message;
@@ -167,32 +168,6 @@ class IndexController extends Controller
         $query = Article::where('msg_type', 1)->where('status', 1)->orderBy('id', 'desc');
         $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
         return view('admin.records')->with('paginate',$paginate);
-//        $provinceList = DB::select('select distinct province from users');
-//        $query = Record::where('is_delete',0)->orderBy('records.id','desc')->selectRaw('*,records.created_at as upload_at,records.id as record_id')->leftJoin('users','records.user_id','=','users.id');
-//        Kit::equalQuery($query,array_only(Request::all(),['province','work_no']));
-//
-//
-//        if( Request::input('download') )
-//        {
-//            $list = $query->get();
-//            $dataList = [];
-//            foreach ($list as $key => $item) {
-//                $tempArray = array(date('Y/m/d H:i:s',strtotime($item->upload_at)),$item->work_no, $item->province);
-//                array_push($dataList, $tempArray);
-//            }
-//
-//
-//            $data = array(
-//                'title' => array('上传时间','用户ID', '所属省份'),
-//                'data' => $dataList,
-//                'name' => 'shoujiliebiao',
-//            );
-//            DownloadExcel::publicDownloadExcel($data);
-//            exit;
-//        }
-//
-//        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
-//        return view('admin.records')->with('paginate',$paginate)->with('provinceList',$provinceList);
     }
 
 
@@ -200,7 +175,7 @@ class IndexController extends Controller
     {
         if( Request::input('type') == 'add' )
         {
-            return view('admin.case')->with('record', (Object)['title'=>'', 'cover_img'=>'', 'content'=>'']);
+            return view('admin.case')->with('record', (Object)['title'=>'', 'cover_img'=>'', 'content'=>'', 'classify'=>'']);
         }
         $record = Article::find(Request::input('id'));
         if( !($record instanceof  Article) )
@@ -208,7 +183,7 @@ class IndexController extends Controller
             dd('无效记录');
         }
 
-        return view('admin.case')->with('record',$record);
+        return view('admin.case')->with('record',$record)->with('classify', CodeLibrary::where('type', 'classify')->get());
     }
 
     public function getCases()
@@ -231,6 +206,7 @@ class IndexController extends Controller
         $essay->cover_img = Request::input('cover_image');
         $essay->title = Request::input('title');
         $essay->content = Request::input('content');
+        $essay->classify = Request::input('classify');
 
         $essay->save();
         return $this->jsonReturn(1, $essay->id);
