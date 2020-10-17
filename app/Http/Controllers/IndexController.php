@@ -103,7 +103,7 @@ class IndexController extends Controller
         {
 //            $item->text = $item->item_name;
 //            $item->value = $item->item_value;
-            $classify[] = (Object)[ 'text'=>$item->item_value,  'value'=> $item->item_name ];
+            $classify[] = (Object)[ 'text'=>$item->item_name,  'value'=> $item->item_value ];
         }
 
 
