@@ -65,56 +65,45 @@ class IndexController extends Controller
 
     public function getCasesConfig()
     {
-//        $brank = [
-//            (Object)[ 'text'=>'所有品牌',  'value'=> 0 ],
-//            (Object)[ 'text'=>'奔驰',  'value'=> 1 ],
-//            (Object)[ 'text'=>'宝马',  'value'=> 2 ],
-//            (Object)[ 'text'=>'奥迪',  'value'=> 3 ],
-//            (Object)[ 'text'=>'其它',  'value'=> 99 ]
-//        ];
-//        $classify = [
-//            (Object)[ 'text'=>'所有系列',  'value'=> 0 ],
-//            (Object)[ 'text'=>'亮光系列',  'value'=> 1 ],
-//            (Object)[ 'text'=>'珍珠白变/电光白变系列',  'value'=> 2 ],
-//            (Object)[ 'text'=>'钢琴/高亮系列',  'value'=> 3 ],
-//            (Object)[ 'text'=>'陶瓷系列/电光系列',  'value'=> 4 ],
-//            (Object)[ 'text'=>'亚面金属系列',  'value'=> 5 ],
-//            (Object)[ 'text'=>'樱语系列',  'value'=> 6 ],
-//            (Object)[ 'text'=>'金属/珠光系列',  'value'=> 7 ],
-//            (Object)[ 'text'=>'超哑系列/原厂系列',  'value'=> 8 ],
-//            (Object)[ 'text'=>'珊瑚系列',  'value'=> 9 ],
-//            // (Object)[ 'text'=>'变色龙系列',  'value'=> 10 ],
-//            // (Object)[ 'text'=>'砖石系列',  'value'=> 11 ],
-//            // (Object)[ 'text'=>'镭射闪系列',  'value'=> 12 ],
-//            // (Object)[ 'text'=>'彩虹电镀系列',  'value'=> 13 ],
-//            // (Object)[ 'text'=>'闪耀、星空系列',  'value'=> 14 ],
-//            // (Object)[ 'text'=>'3D炫彩',  'value'=> 15 ],
-//            // (Object)[ 'text'=>'亚面电镀金属',  'value'=> 16 ],
-//            // (Object)[ 'text'=>'自修复系列',  'value'=> 17 ],
-//            // (Object)[ 'text'=>'砖石白变系列',  'value'=> 18 ],
-//            // (Object)[ 'text'=>'梦幻系列',  'value'=> 19 ],
-//            (Object)[ 'text'=>'其它',  'value'=> 99 ]
-//        ];
+        $brank = [
+            (Object)[ 'text'=>'所有品牌',  'value'=> 0 ],
+        ];
+        $classify = [
+            (Object)[ 'text'=>'所有系列',  'value'=> 0 ],
+
+            // (Object)[ 'text'=>'变色龙系列',  'value'=> 10 ],
+            // (Object)[ 'text'=>'砖石系列',  'value'=> 11 ],
+            // (Object)[ 'text'=>'镭射闪系列',  'value'=> 12 ],
+            // (Object)[ 'text'=>'彩虹电镀系列',  'value'=> 13 ],
+            // (Object)[ 'text'=>'闪耀、星空系列',  'value'=> 14 ],
+            // (Object)[ 'text'=>'3D炫彩',  'value'=> 15 ],
+            // (Object)[ 'text'=>'亚面电镀金属',  'value'=> 16 ],
+            // (Object)[ 'text'=>'自修复系列',  'value'=> 17 ],
+            // (Object)[ 'text'=>'砖石白变系列',  'value'=> 18 ],
+            // (Object)[ 'text'=>'梦幻系列',  'value'=> 19 ],
+        ];
 
         // 获得汽车品牌
 //        CardBrand::where()
 
         // 获得产品系列
 
-        $brank = CardBrand::where('prantid', 0)->get();
-        foreach( $brank as $key=>$item )
+        $brankList = CardBrand::where('prantid', 0)->get();
+        foreach( $brankList as $key=>$item )
         {
-            $item->text = $item->car_brand;
-            $item->value = $item->id;
+//            $item->text = $item->car_brand;
+//            $item->value = $item->id;
+            $brank[] = (Object)[ 'text'=>$item->car_brand,  'value'=> $item->id ];
         }
         //系列列表
-        $classify = CodeLibrary::where('type', 'classify')->get();
+        $classifyList = CodeLibrary::where('type', 'classify')->get();
 //        return $this->jsonReturn(1, ['car_list'=>$carList, 'classify'=>$list]);
 
-        foreach ( $classify as $key=>$item)
+        foreach ( $classifyList as $key=>$item)
         {
-            $item->text = $item->item_name;
-            $item->value = $item->item_value;
+//            $item->text = $item->item_name;
+//            $item->value = $item->item_value;
+            $classify[] = (Object)[ 'text'=>$item->item_value,  'value'=> $item->item_name ];
         }
 
 
