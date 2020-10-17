@@ -175,7 +175,7 @@ class IndexController extends Controller
     {
         if( Request::input('type') == 'add' )
         {
-            return view('admin.case')->with('record', (Object)['title'=>'', 'cover_img'=>'', 'content'=>'', 'classify'=>'']);
+            return view('admin.case')->with('record', (Object)['title'=>'', 'cover_img'=>'', 'content'=>'', 'classify'=>''])->with('classify', CodeLibrary::where('type', 'classify')->get());
         }
         $record = Article::find(Request::input('id'));
         if( !($record instanceof  Article) )
