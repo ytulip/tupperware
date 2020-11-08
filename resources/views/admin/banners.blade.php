@@ -24,11 +24,15 @@
 
         {{--<div class="block-card">--}}
         @foreach($paginate as $item)
-            <div class="tr-border fs-14-fc-4E5761 fn-fa" style="margin-top: -1px;" onclick="goDetail({{$item->id}})"><div class="row">
+            <div class="tr-border fs-14-fc-4E5761 fn-fa" style="margin-top: -1px;"><div class="row">
                     <div class="col-md-4 col-lg-4">
                         <img src="{{$item->cover_img}}" style="width: 120px;height: 64px;object-fit: cover;border-radius: 8px;"/>
                     </div>
-                    <div class="col-md-4 col-lg-4" style="line-height: 64px;"><a>编辑</a></div>
+                    <div class="col-md-4 col-lg-4" style="line-height: 64px;">
+                        <a onclick="goDetail({{$item->id}})">编辑</a>
+
+                        <a onclick="deleteBanner({{$item->id}})" style="margin-left: 62px;">删除</a>
+                    </div>
                 </div></div>
         @endforeach
         {{--</div>--}}
@@ -61,6 +65,21 @@
         function goDetail(id)
         {
             location.href = '/admin/index/banner?id=' + id;
+        }
+
+        function deleteBanner(id)
+        {
+            alert('删除banner')
+
+            $.ajax({
+                url:'/admin/index/delete-banner',
+                data:{id: id},
+                type:'post',
+                dataType:'json',
+                success:function(data){
+                    location.reload()
+                }
+            });
         }
 
         function search()

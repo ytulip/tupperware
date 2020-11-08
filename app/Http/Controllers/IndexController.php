@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Request;
 use App\Model\Article;
 use App\Model\CardBrand;
+use App\Model\DomainExpires;
 use App\Model\SubCarBrand;
 use App\Model\CodeLibrary;
 use App\Model\Quality;
@@ -34,6 +35,92 @@ class IndexController extends Controller
             $brand->save();
         }
         echo 123;
+    }
+
+    public function anyDomainExpires()
+    {
+        $domainStr = 'epicka.vip,titiroba.vip,lbell.top,grde-directservice.vip,tititaus.com,oryto-onlineservice.com,abaralaservice.vip,hope-directservice.com,fkantservice.vip,digi-lifeservice.cloud,tititaus.club,lbell.me,dostyle.me,jukuner.vip,beswill.club,oreato.vip,garsumlabs.vip,widenbit.vip,comfoarray.store,ougrand.me,liuxuecheng.club,belopezz.vip,vanpad.vip,ayyie.live,eyocean.vip,evcharger.vip,somora.vip,bathebright.vip,sminiker.me,nonecho.life,jukuner.club,meisohua.vip,amir.cool,finrezio.store,519fitness.vip,naturalfeelings.online,dimore.life,othway.vip,ponlcy.store,5mayi.online,allroad.vip,roziapro.life,camecho.vip,opiqcey.cool,cantle.vip,anstop.online,cwlakon.world,zooron.vip,trubetter.vip,jison21.store,gooday.store,zooron.live,raugee.online,yqtyqs.vip,devandy.vip,mulsanne-hair.store,ornateocean.vip,alise.life,kitchenhoney.life,1000gg.vip,avhack.vip,rosoz.vip,zooron.life,sambraid.me,buyer-support.vip,accocam.life,zy-tam.vip,maying.vip,benyar.vip,s-charma.club,shinetao.vip,jauntis.vip,besdersec.vip,tsol.vip,newleray.online,lenitech.vip,aftersale.vip,cosyhomestyle.vip,easysmx01.site,korin.vip,imden.vip,smilco.vip,cdyle.vip,turelar.vip,jenuos.store,jomst.vip,ankace.store,hecmoks.vip,idoo.club,pido.club,zoeson.online,lxjys.online,futin.club,chooseen.store,comezy.store,hiadventurer.club,latme.club,nomadco.xyz,landwind.site,zhongyiwujin.club,amzgiftcard.club,jhserdstore.online,beartwo.online,crespostore.online,smarkey.online,amanbo.site,mrgkhle.online,sdghaw.online,viden.club,segoal.online,comezy.online,taythi.club,heatedjacket.online,diykit.site,lomendio.xyz,gyroor.club,wifort.club,te-rich.club,fullclean.club,lbye.club,no1accessory.store,eqss.club,ydohome.store,mobkitfp.site,drscreen.club,bethone.store,ivosy.store,samker.store,greenoble.store,lohowo.store,thxtoms.store,mnopq.store,dam-e.store,insmy.club,powlaken.store,zhenpony.online,elegantcoast.com,comlife.club,amzgo.club,movewithyou.live,artbirdfeeder.site,sailhome.store,apzek.club,runnzer.live,umthink.store,gzunelic.vip,aftersales.vip,startailgating.club,abbyhouse.online,tutudreams.site,tanzendan.co,minilife.online,Spofe.vip,bligli.vip,AOAUUKO.vip,larbois.online,yuzhik.xyz,gideal.club,philex.online,aeduqu.store,yzzcollection.online,taiyoyuyu.xyz,kaifeng.store,Siducal.store,Siducal.club,insome.xyz,fuovt.store,hytomato.club,ejservice.life,avenco.club,tutudreams.co,techwood.club,amrobt.club,ulico.store,EOVOLA.club,enlove.site,toqicam.club,mokaloo.online,xocity.site,traely.club,freegift.life,luohecam.club,amrobt.life,earller.live,genofo.online,colorfairy.online,zomao.store,AmazLit.support,Aynone.club,CalMyotis.club,yolife.vip,velovyo.vip,OTHWAY.shop,Robomann.club,cukwily.vip,yolife.store,pinkiwine.vip,bextcok.vip,INSOME.club,aynone.site,qogir.live,richsky.vip,luckyclover.vip,ergomaker.club,aynone.fun,CIXI.website,Aynone.xyz,toqi.club,luohe.fun,CIXI.site,eyekeshe.vip,vounel.vip,ptcltraps8.club,didisky.vip,shengkou.vip,teetwenties.vip,ysj123.vip,mindbeast.vip,veshely.vip,ouyide.vip,proenrichment.vip,retope.vip,swancrown.vip,wodeeou.club,nextamz.vip,jwcfitness.vip,SOIOANS.site,Cixicam.club,ielec.vip,wubowujing.me,windflyer.vip,aojoys.vip,hobest.vip,delfin.live,ohyeahtoyz.vip,fitfirst.club,larkbird.vip,arafuna.vip,smartoto.vip,AOBOTECH.online,mogotoyz.vip,geenker.vip,xsiato.vip,nebitestore.vip,gooleen.shop,aynone.online,joomfeen.vip,alonsoo.vip,rocxf.vip,NORMIToyz.vip,freenics.vip,cydzsw.vip,mjysto.vip,alptopsecurity.vip,Awolf.club,haofilm-bt.club,toqi.online,hxy.guru,lucalda-us.live,CIXI.online,betterbuy.vip,lpow.vip,metene.vip';
+
+        $domainArr = explode(',', $domainStr);
+        $i = 0;
+        foreach ($domainArr as $item) {
+            $domain = DomainExpires::where('domain_name', $item)->first();
+
+            if( $domain->status == 1 || $domain->status == 2 )
+            {
+                continue;
+            }
+
+//           $domain = new DomainExpires();
+//           $domain->domain_name = $item;
+//           $domain->save();
+
+            $API_KEY 	= "dLiMJQdQkUoQ_8y2uBgSMzwRfuDkPwA51WM";
+            $API_SECRET = "8y2zcXPkfWx4fnufXubfLZ";
+
+            $url = "https://api.godaddy.com/v1/domains/".$item;
+//youtubemyvideos.com
+            $header = array(
+                'Authorization: sso-key '.$API_KEY.':'.$API_SECRET.''
+            );
+            $ch = curl_init();
+            $timeout=60;
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER,false);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+            $result = curl_exec($ch);
+            curl_close($ch);
+//            echo $result;
+            $domainDetail = json_decode($result, true);
+
+
+//            print_r($domainDetail);
+//            var_dump($domainDetail);
+            if( isset($domainDetail['expires']) )
+            {
+                $domain->status = 1;
+                $domain->expires = substr($domainDetail['expires'], 0, 10);
+            } else {
+                $domain->status = 2;
+            }
+            $domain->result = $result;
+            $domain->save();
+//            break;
+        }
+
+        echo 123;
+        exit;
+    }
+
+
+    public function anyTestEmail()
+    {
+//设置为支持跨域
+        header("Access-Control-Allow-Origin: *");
+
+        $url = 'https://api.fengdx.com/mail-sms/message/send/mail';
+
+//merchant_id:  136970450289819648
+//merchant_secret: 8a58e481cad44297bfde0ddb92587856
+
+
+        $data = [
+            "merchant_id"=>"136970450289819648",
+            "to"=>"yizhuyanme"
+//            "nonce"=>"123456789"
+        ];
+
+        $sign = Kit::MakeSign($data);
+        var_dump($sign);
+        var_dump($data);
+
+        $data['sign'] = $sign;
+
+        return Kit::curl_post($url,$data);
+
     }
 
 
