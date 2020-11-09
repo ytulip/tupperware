@@ -107,7 +107,7 @@ class IndexController extends Controller
 //        $user = User::find($record->user_id);
         if( Request::input('type') == 'add' )
         {
-            return view('admin.case')->with('record', (Object)['title'=>'', 'cover_img'=>'', 'content'=>'']);
+            return view('admin.record')->with('record', (Object)['title'=>'', 'cover_img'=>'', 'content'=>'']);
         }
         $record = Article::find(Request::input('id'));
         if( !($record instanceof  Article) )
@@ -147,6 +147,14 @@ class IndexController extends Controller
         $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
         return view('admin.banners')->with('paginate', $paginate);
     }
+
+
+    public function postDeleteBanner()
+    {
+        Article::where('id',Request::input('id'))->delete();
+        return $this->jsonReturn(1);
+    }
+
 
     public function getBanner()
     {
