@@ -14,7 +14,7 @@ header("Access-Control-Allow-Methods: *");
 //var_dump($_REQUEST);
 //exit;
 
-$res = curl_post('http://tp.cc/index/domain-expires-list', $_REQUEST);
+$res = curl_post('http://aili.zhuyan.me/index/domain-expires-list', $_REQUEST);
 echo $res;
 exit;
 function curl_post($url="", $data="")
