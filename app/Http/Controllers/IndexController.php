@@ -15,6 +15,7 @@ use App\Model\User;
 use App\Util\AdminAuth;
 use App\Util\Kit;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 
@@ -95,32 +96,49 @@ class IndexController extends Controller
         exit;
     }
 
-
-    public function anyTestEmail()
+    public function anyDomainExpiresList()
     {
-//设置为支持跨域
-        header("Access-Control-Allow-Origin: *");
+        $endDate = date('Y-m-d', strtotime('+7 day'));
+        $domains = json_decode($_REQUEST['domains']);
 
+        $list = DomainExpires::whereIn('domain_name', $domains)->where('expires', '<', $endDate)->get();
+        return $this->jsonReturn(1, $list);
+    }
+
+    public function anyDomainMessage()
+    {
+        Log::info('域名到期提醒');
+        //过期时间
+        $startDate = date('Y-m-d');
+        $endDate = date('Y-m-d', strtotime('+7 day'));
+
+        $list = DB::select('select user_id, domain_expires.domain_name, email, domain_expires.expires from domain_expires LEFT JOIN t_domain_name_record on domain_expires.domain_name = t_domain_name_record.domain_name left join user on t_domain_name_record.user_id = `user`.id where domain_expires.expires >= "' . $startDate.'" and domain_expires.expires < " '. $endDate.' "');
+        Log::info($list);
+        foreach ( $list as $item)
+        {
+            if( $item->email ) {
+                $this->anyTestEmail($item->email, $item->domain_name, $item->expires);
+            }
+        }
+
+    }
+
+    public function anyTestEmail($email, $domainName, $expireDate)
+    {
+//        $email = 'yi@zhuyan.me';
         $url = 'https://api.fengdx.com/mail-sms/message/send/mail';
-
-//merchant_id:  136970450289819648
-//merchant_secret: 8a58e481cad44297bfde0ddb92587856
-
-
         $data = [
             "merchant_id"=>"136970450289819648",
-            "to"=>"yizhuyanme"
-//            "nonce"=>"123456789"
+            "subject"=>'域名到期提醒',
+            "to"=>$email,
+            "nonce"=>"123456789",
+            "body"=>'您的域名' . $domainName . '将于' . $expireDate . '到期，为了不影响买家注册和上评请尽快登录蜂大侠管理后台进行续费，续费方式：左侧菜单>网站管理>网站列表'
         ];
-
+        Log::info('请求数据');
+        Log::info($data);
         $sign = Kit::MakeSign($data);
-        var_dump($sign);
-        var_dump($data);
-
         $data['sign'] = $sign;
-
         return Kit::curl_post($url,$data);
-
     }
 
 
@@ -283,9 +301,6 @@ class IndexController extends Controller
 
     public function getAllCases()
     {
-//        $list = [['id'=>'1', 'url'=>env('IMAGE_PREFIX') . '/images/case1.jpg', 'text'=>'奥迪S|抹茶绿', 'brand'=>1, 'classify'=>2, 'color'=>3],['id'=>'2', 'url'=>env('IMAGE_PREFIX'). '/images/case2.jpg', 'text'=>'特斯拉model s|电光绿', 'brand'=>3, 'classify'=>2, 'color'=>1], ['id'=>'3', 'url'=>env('IMAGE_PREFIX'). '/images/case3.jpg', 'text'=>'奔驰S级|高级灰', 'brand'=>2, 'classify'=>3, 'color'=>1]];
-//        return $this->jsonReturn(1, $list);
-
         $news = Article::where('status',1)->where('msg_type',2)->orderBy('id', 'desc')->get();
 
         foreach ($news as $key=>$item)
