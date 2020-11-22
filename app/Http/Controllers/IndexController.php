@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Request;
 use App\Model\Article;
 use App\Model\CardBrand;
+use App\Model\ClassifyPrice;
 use App\Model\DomainExpires;
 use App\Model\SubCarBrand;
 use App\Model\CodeLibrary;
@@ -36,6 +37,85 @@ class IndexController extends Controller
             $brand->save();
         }
         echo 123;
+    }
+
+    public function anySearchPrice()
+    {
+        $type = \Illuminate\Support\Facades\Request::input('type');
+        $classify = \Illuminate\Support\Facades\Request::input('classify');
+        $brand = SubCarBrand::where('sub_card_brand', $type)->first();
+        if( !($brand instanceof  SubCarBrand) )
+        {
+            return $this->jsonReturn(1, '请咨询客服');
+        }
+
+        if( !$brand->price_type )
+        {
+            return $this->jsonReturn(1, '请咨询客服');
+        }
+
+        //获取classify_id
+        $classifyObj = CodeLibrary::where('item_name', $classify)->first();
+
+        $price = ClassifyPrice::where('classify_id', $classifyObj->item_value)->where('level', $brand->price_type)->first();
+
+
+        return $this->jsonReturn(1, $price->price);
+
+    }
+
+
+    public function anySetCarType()
+    {
+        set_time_limit(3600);
+        date_default_timezone_set('PRC');
+// 读取excel文件
+        try {
+//            $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
+//            $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+//            $objPHPExcel = $objReader->load($inputFileName);
+            $fileName = 'D:\22.xls';
+            $fileType = \PHPExcel_IOFactory::identify($fileName);
+            $objReader = \PHPExcel_IOFactory::createReader($fileType);
+
+//            $sheetName = array("2年级","3年级");//指定sheet名称
+//            $objReader->setLoadSheetsOnly($sheetName);//指定加载的sheet
+            $objPHPExcel = $objReader->load($fileName);
+            // 确定要读取的sheet，什么是sheet，看excel的右下角，真的不懂去百度吧
+            $sheet = $objPHPExcel->getSheet(0);
+            $highestRow = $sheet->getHighestRow();
+            $highestColumn = $sheet->getHighestColumn();
+
+//            var_dump($highestRow);
+//            var_dump($highestColumn);
+
+            for ($row = 1; $row <= $highestRow; $row++){
+// Read a row of data into an array
+                $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, NULL, TRUE, FALSE);
+//这里得到的rowData都是一行的数据，得到数据后自行处理，我们这里只打出来看看效果
+//                echo '<pre>';
+                $rowData = $rowData[0];
+//                var_dump($rowData);
+//                echo "<br>";
+//                var_dump($rowData[10]);
+//                var_dump($rowData[7]);
+                $sub = SubCarBrand::where('id', $rowData[10])->first();
+//                var_dump($sub);
+
+                $sub->price_type = $rowData[7];
+                $sub->save();
+            }
+
+            echo '44566';
+
+
+
+
+        } catch(Exception $e) {
+
+        }
+
+
     }
 
     public function anyDomainExpires()
