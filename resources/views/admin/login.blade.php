@@ -368,7 +368,7 @@
         <form id="data_form" style="position:absolute;top: 117px;left: 50%;-webkit-transform: translateX(-50%);transform: translateX(-50%);background: #FFFFFF;box-shadow: 0 2px 12px 0 rgba(217,184,202,0.37);border-radius: 6px;padding: 53px 30px;">
 
             @if(strpos($_SERVER['SERVER_NAME'], 'apa') !== false )
-                <div><img src="/images/apa_logo.png" width="224px"/></div>
+                <div><img src="/images/apa{{(strpos($_SERVER['SERVER_NAME'], 'ppf') !== false )?'_ppf':''}}_logo.png" width="224px"/></div>
             @else
                 <div><img src="/images/logo-clean.png" width="224px"/></div>
             @endif

@@ -1,37 +1,40 @@
-@extends('admin.master',['headerTitle'=>'','block'=>'1'])
+@extends('admin.master',['headerTitle'=>'','block'=>'7'])
 @section('left_content')
     <div class="mt-32 padding-col">
 
 
         <div class="tr-border fs-14-fc-4E5761 fn-fa" style="margin-top: 24px;">
             <div class="row" style="font-size: 0;text-align: right;">
-                <div style="float:left;margin-left: 15px;line-height: 34px;" class="fs-16-fc-232A31">banner管理</div>
+                <div style="float:left;margin-left: 15px;line-height: 34px;" class="fs-16-fc-232A31">车型管理</div>
                 <div style="position: relative;display: inline-block;">
                     <input style="background: #FCFCFC;border: 1px solid #EAEEF7;border-radius: 100px;padding: 8px 12px;" class="fs-14-fc-93989e fn-fa" value="{{\Illuminate\Support\Facades\Request::input('work_no')}}" name="work_no" placeholder="输入关键字搜索"/>
                     <a style="position: absolute;right: 10px;top:9px;" class="search_btn"><img src="/images/icon_search_nor@3x.png" width="14px"/></a>
                 </div>
-                <a class="btn-new search_btn_download" style="margin-left: 16px;">新增banner</a>
+{{--                <a class="btn-new search_btn_download" style="margin-left: 16px;">新增质保</a>--}}
             </div>
         </div>
 
 
         <div class="tr-border fs-14-fc-4E5761 fn-fa bg-fc" style="margin-top: -1px;">
             <div class="row">
-                <div class="col-md-4 col-lg-4">封面图片</div>
+                <div class="col-md-4 col-lg-4">车牌号码</div>
+                <div class="col-md-4 col-lg-4">状态</div>
                 <div class="col-md-4 col-lg-4">操作</div>
             </div>
         </div>
 
         {{--<div class="block-card">--}}
         @foreach($paginate as $item)
-            <div class="tr-border fs-14-fc-4E5761 fn-fa" style="margin-top: -1px;"><div class="row">
+            <div class="tr-border fs-14-fc-4E5761 fn-fa" style="margin-top: -1px;" ><div class="row">
                     <div class="col-md-4 col-lg-4">
-                        <img src="{{$item->cover_img}}" style="width: 120px;height: 64px;object-fit: cover;border-radius: 8px;"/>
+                        {{$item->car_brand}}
                     </div>
-                    <div class="col-md-4 col-lg-4" style="line-height: 64px;">
-                        <a onclick="goDetail({{$item->id}})">编辑</a>
+                    <div class="col-md-4 col-lg-4" style="line-height: 24px;">{{$item->status? '启用': '禁用'}}</div>
+                    <div class="col-md-4 col-lg-4" style="line-height: 24px;"><a href="javascript:goDetail({{$item->brand_id}}) ">编辑</a>
 
-                        <a onclick="deleteBanner({{$item->id}})" style="margin-left: 62px;">删除</a>
+
+                        <a style="margin-left: 24px;" href="javascript: setStatus({{$item->id}},{{$item->status?1:0}})">{{$item->status? '禁用': '启用'}}</a>
+
                     </div>
                 </div></div>
         @endforeach
@@ -62,22 +65,36 @@
 
 @section('script')
     <script>
-        function goDetail(id)
-        {
-            location.href = '/admin/index/banner?id=' + id;
-        }
 
-        function deleteBanner(id)
+
+        function setStatus(id, status)
         {
             $.ajax({
-                url:'/admin/index/delete-banner',
-                data:{id: id},
+                data:{
+                    id: id,
+                    status: status?'0':'1'
+                },
+                url: '/admin/index/cars',
                 type:'post',
                 dataType:'json',
                 success:function(data){
                     location.reload()
+                    // $('input[name="images[]"]').replaceWith('<input type="file" name="images[]"  style="display: none" accept="image/gif,image/jpeg,image/png"/>');
+                    // if(data.status) {
+                    //     $('.essay_img').find('img').attr('src',data.data[0]);
+                    // } else {
+                    //     alert(data.desc);
+                    // }
                 }
             });
+        }
+
+
+
+        function goDetail(id)
+        {
+            // location.href = '/admin/index/car?id=' + id;
+            window.open('/admin/index/car?id=' + id, '_blank')
         }
 
         function search()
@@ -88,11 +105,19 @@
 
         }
 
+        $('.selectpicker').on('changed.bs.select',function(e){
+            // console.log(e);
+            // console.log($('.selectpicker1').val());
+            location.href = '/admin/index/records?province=' + $('.selectpicker1').val() + '&work_no=' + $('input[name="work_no"]').val();
+        });
 
+        $('.search_btn').click(function(){
+            location.href = '/admin/index/records?province=' + $('.selectpicker1').val() +  '&work_no=' + $('input[name="work_no"]').val();
+        });
 
         $('.search_btn_download').click(function(){
             // location.href = '/admin/index/records?download=1&province=' + $('.selectpicker1').val() +  '&work_no=' + $('input[name="work_no"]').val();
-            location.href = '/admin/index/banner?type=add'
+            location.href = '/admin/index/quality?type=add'
         });
     </script>
 @stop

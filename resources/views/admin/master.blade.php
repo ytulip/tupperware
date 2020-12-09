@@ -104,7 +104,7 @@
         <header class="logo1" style="background-color: #ffffff;">
 
             @if(strpos($_SERVER['SERVER_NAME'], 'apa') !== false )
-                <img src="/images/apa_logo.png" width="149px;" onclick="goHref('/admin/index/banners')"/>
+                <img src="/images/apa{{(strpos($_SERVER['SERVER_NAME'], 'ppf') !== false )?'_ppf':''}}_logo.png" width="149px;" onclick="goHref('/admin/index/banners')"/>
             @else
                 <img src="/images/logo-clean.png" width="149px;" onclick="goHref('/admin/index/banners')"/>
             @endif
@@ -119,6 +119,9 @@
                 <li id="menu-academico"><a href="/admin/index/records" class="@if( isset($block) && ($block == 4)) menu-a-active @endif"><i class="fa fa-envelope nav_icon menu-fa"></i><span>资讯管理</span><div class="clearfix"></div></a></li>
                 <li id="menu-academico"><a href="/admin/index/records" class="@if( isset($block) && ($block == 5)) menu-a-active @endif"><i class="fa fa-envelope nav_icon menu-fa"></i><span>产品系列</span><div class="clearfix"></div></a></li>
                 <li id="menu-academico"><a href="/admin/index/qualitys" class="@if( isset($block) && ($block == 6)) menu-a-active @endif"><i class="fa fa-envelope nav_icon menu-fa"></i><span>质保管理</span><div class="clearfix"></div></a></li>
+
+
+                <li id="menu-academico"><a href="/admin/index/cars" class="@if( isset($block) && ($block == 7)) menu-a-active @endif"><i class="fa fa-envelope nav_icon menu-fa"></i><span>车型管理</span><div class="clearfix"></div></a></li>
             </ul>
                 @endif
         </div>

@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class SubCarBrand extends Model
 {
     public $table = 'sub_car_brand';
+    public $timestamps = false;
 }
