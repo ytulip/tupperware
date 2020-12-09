@@ -29,7 +29,7 @@ $app = new Illuminate\Foundation\Application(
 
 
 /*加载不通的数据库*/
-if ( strpos($_SERVER['SERVER_NAME'], 'ppf') !== false )
+if ( strpos($app['path.base'], 'ppf') !== false )
 {
     Dotenv::load($app['path.base'], 'ppf.env');
 }else if( strpos($_SERVER['SERVER_NAME'], 'apa') !== false ){
