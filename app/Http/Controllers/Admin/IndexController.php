@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Log\Facades\Logger;
 use App\Model\Admin;
 use App\Model\Article;
+use App\Model\CardBrand;
 use App\Model\CashStream;
 use App\Model\CodeLibrary;
 use App\Model\Essay;
@@ -18,6 +19,7 @@ use App\Model\ProductAttr;
 use App\Model\Quality;
 use App\Model\Record;
 use App\Model\SignRecord;
+use App\Model\SubCarBrand;
 use App\Model\SyncModel;
 use App\Model\User;
 use App\Model\UserAddress;
@@ -278,6 +280,55 @@ class IndexController extends Controller
         $query = Quality::orderBy('id', 'desc');
         $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
         return view('admin.qualitys')->with('paginate',$paginate);
+    }
+
+    public function anyCars()
+    {
+        if( isset( $_POST['id']) && $_POST['id'] )
+        {
+            $brand = CardBrand::where('id', $_POST['id'])->first();
+            if( isset( $_POST['status']) )
+            {
+                $brand->status = $_POST['status'];
+            }
+
+            if( isset( $_POST['price_type']) )
+            {
+                $brand->price_type = $_POST['price_type'];
+            }
+//            return $this->jsonReturn(1);
+            $brand->save();
+            return $this->jsonReturn(1);
+        } else {
+            $query = CardBrand::orderBy('id', 'asc');
+            $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
+            return view('admin.cars')->with('paginate', $paginate);
+        }
+    }
+
+
+    public function anyCar()
+    {
+        if( isset( $_POST['id']) && $_POST['id'] )
+        {
+            $brand = SubCarBrand::where('id', $_POST['id'])->first();
+            if( isset( $_POST['status']) )
+            {
+              $brand->status = $_POST['status'];
+            }
+
+            if( isset( $_POST['price_type']) )
+            {
+                $brand->price_type = $_POST['price_type'];
+            }
+//            return $this->jsonReturn(1);
+            $brand->save();
+            return $this->jsonReturn(1);
+        } else {
+            $query = SubCarBrand::where('brand_id', Request::input('id'));
+            $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
+            return view('admin.car')->with('paginate', $paginate)->with('car', CardBrand::where('brand_id', Request::input('id'))->first());
+        }
     }
 
     public function getQuality()
