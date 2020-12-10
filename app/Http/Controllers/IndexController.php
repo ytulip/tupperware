@@ -551,10 +551,10 @@ class IndexController extends Controller
      */
     public function anyQuotation()
     {
-        $carList = CardBrand::where('prantid', 0)->get();
+        $carList = CardBrand::where('prantid', 0)->where('status', 1)->get();
         foreach( $carList as $key=>$item )
         {
-            $item->subList = SubCarBrand::where('brand_id', $item->brand_id)->get();
+            $item->subList = SubCarBrand::where('brand_id', $item->brand_id)->where('status', 1)->get();
         }
         //系列列表
         $list = CodeLibrary::where('type', 'classify')->get();
