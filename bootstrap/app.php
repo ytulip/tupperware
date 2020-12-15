@@ -29,10 +29,10 @@ $app = new Illuminate\Foundation\Application(
 
 
 /*加载不通的数据库*/
-if ( strpos($_SERVER['SERVER_NAME'], 'ppf') !== false )
+if ( isset($_SERVER['SERVER_NAME']) && strpos($_SERVER['SERVER_NAME'], 'ppf') !== false )
 {
     Dotenv::load($app['path.base'], 'ppf.env');
-}else if( strpos($_SERVER['SERVER_NAME'], 'apa') !== false ){
+}else if( isset($_SERVER['SERVER_NAME']) && strpos($_SERVER['SERVER_NAME'], 'apa') !== false ){
     Dotenv::load($app['path.base'], 'apa.env');;
 }else{
     Dotenv::load($app['path.base'], $app->environmentFile());
