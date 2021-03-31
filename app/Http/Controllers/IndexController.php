@@ -43,7 +43,7 @@ class IndexController extends Controller
     {
         $type = \Illuminate\Support\Facades\Request::input('type');
         $classify = \Illuminate\Support\Facades\Request::input('classify');
-        $brand = SubCarBrand::where('sub_card_brand', $type)->first();
+        $brand = SubCarBrand::where('sub_card_brand', $type)->orWhere('id', $type)->first();
         if( !($brand instanceof  SubCarBrand) )
         {
             return $this->jsonReturn(1, '请咨询客服');
