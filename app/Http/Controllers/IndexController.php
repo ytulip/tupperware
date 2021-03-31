@@ -55,7 +55,7 @@ class IndexController extends Controller
         }
 
         //获取classify_id
-        $classifyObj = CodeLibrary::where('item_name', $classify)->first();
+        $classifyObj = CodeLibrary::where('item_name', $classify)->orWhere('id', $classify)->first();
 
         $price = ClassifyPrice::where('classify_id', $classifyObj->item_value)->where('level', $brand->price_type)->first();
 
