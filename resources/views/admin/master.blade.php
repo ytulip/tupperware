@@ -103,8 +103,10 @@
     <div class="sidebar-menu" style="box-shadow: none;border-right:1px solid #EAEEF7; ">
         <header class="logo1" style="background-color: #ffffff;">
 
-            @if(strpos($_SERVER['SERVER_NAME'], 'apa') !== false )
+            @if( strpos($_SERVER['SERVER_NAME'], 'apa') !== false )
                 <img src="/images/apa{{(strpos($_SERVER['SERVER_NAME'], 'ppf') !== false )?'_ppf':''}}_logo.png" width="149px;" onclick="goHref('/admin/index/banners')"/>
+            @elseif( strpos($_SERVER['SERVER_NAME'], 'vkool') !== false )
+                <img src="/images/vkool.png" width="149px;" onclick="goHref('/admin/index/banners')"/>
             @else
                 <img src="/images/logo-clean.png" width="149px;" onclick="goHref('/admin/index/banners')"/>
             @endif

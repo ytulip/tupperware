@@ -369,6 +369,8 @@
 
             @if(strpos($_SERVER['SERVER_NAME'], 'apa') !== false )
                 <div><img src="/images/apa{{(strpos($_SERVER['SERVER_NAME'], 'ppf') !== false )?'_ppf':''}}_logo.png" width="224px"/></div>
+                @elseif(strpos($_SERVER['SERVER_NAME'], 'vkool') !== false )
+                <div><img src="/images/vkool_logo.png" width="224px"/></div>
             @else
                 <div><img src="/images/logo-clean.png" width="224px"/></div>
             @endif
