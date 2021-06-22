@@ -8,6 +8,7 @@ use App\Model\Admin;
 use App\Model\Article;
 use App\Model\CardBrand;
 use App\Model\CashStream;
+use App\Model\ClassifyPrice;
 use App\Model\CodeLibrary;
 use App\Model\Essay;
 use App\Model\InvitedCodes;
@@ -178,6 +179,52 @@ class IndexController extends Controller
         $query = Article::where('msg_type', 1)->where('status', 1)->orderBy('id', 'desc');
         $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
         return view('admin.records')->with('paginate',$paginate);
+    }
+
+
+    public function getClassify()
+    {
+        $query = CodeLibrary::where('type', 'classify');
+        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
+        return view('admin.classify')->with('paginate',$paginate);
+    }
+
+
+    public function postSetClassifyPrice()
+    {
+        $id = Request::input('id');
+        $price = ClassifyPrice::where('id', intval($id))->first();
+        $price->price = Request::input('price_type');
+        $price->save();
+        return $this->jsonReturn(1);
+    }
+
+    public function getClassifyPrice()
+    {
+        $id = Request::input('id');
+        $classify = CodeLibrary::where('type', 'classify')->where('item_value', $id)->first();
+
+        if( ! ($classify instanceof  CodeLibrary) )
+        {
+            echo 'classify is not exists';
+            exit;
+        }
+
+        $itemCount = ClassifyPrice::where('classify_id', $id)->count();
+        if( !$itemCount ) {
+            //存在则创建
+            for ($i = 1; $i <= 10; $i++)
+            {
+                $price = new ClassifyPrice();
+                $price->classify_id = $id;
+                $price->level =  $i;
+                $price->save();
+            }
+        }
+
+        $query = ClassifyPrice::where('classify_id', $id)->leftJoin('code_library', 'code_library.item_value', '=', 'classify_id')->where('type', 'classify')->selectRaw('classify_price.*, item_name');
+        $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
+        return view('admin.classify_price')->with('paginate',$paginate);
     }
 
 
