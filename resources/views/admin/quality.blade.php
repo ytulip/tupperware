@@ -37,12 +37,12 @@
 
                 <div class="form-group">
                     <label for="name">产品</label>
-                    <select class="form-control" name="classify">
+                    <select class="form-control" name="product">
                         <option value="">
                             请选择
                         </option>
                         @foreach($classify as $key=>$item)
-                            <option value="{{$item['item_value']}}">
+                            <option value="{{$item['item_name']}}" {{($record->product == $item['item_name'] )?'selected':''}}>
                                 {{$item['item_name']}}
                             </option>
                         @endforeach
@@ -183,6 +183,7 @@
                     color:$('input[name="color"]').val(),
                     seri_no:$('input[name="seri_no"]').val(),
                     quality_year:$('input[name="quality_year"]').val(),
+                    product: $('select[name="product"]').val(),
                     content:ue.getContent()
                 };
             },

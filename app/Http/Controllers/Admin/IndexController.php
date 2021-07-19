@@ -408,6 +408,7 @@ class IndexController extends Controller
         $essay->color = Request::input('color');
         $essay->seri_no = Request::input('seri_no');
         $essay->quality_year = Request::input('quality_year');
+        $essay->product = Request::input('product');
         $essay->content = Request::input('content');
 
         $essay->save();
