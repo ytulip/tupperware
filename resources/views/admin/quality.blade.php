@@ -35,6 +35,20 @@
                     <input type="text" value="{{$record->part}}" name="part" class="form-control" id="name" placeholder="请输入">
                 </div>
 
+                <div class="form-group">
+                    <label for="name">产品</label>
+                    <select class="form-control" name="classify">
+                        <option value="">
+                            请选择
+                        </option>
+                        @foreach($classify as $key=>$item)
+                            <option value="{{$item['item_value']}}">
+                                {{$item['item_name']}}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
 
                 <div class="form-group">
                     <label for="name">车膜颜色</label>
