@@ -321,10 +321,22 @@ class IndexController extends Controller
 
     }
 
+    public function anyDeleteQuality()
+    {
+        Quality::where('id', Request::input('id'))->delete();
+        return $this->jsonReturn(1);
+    }
+
 
     public function anyQualitys()
     {
         $query = Quality::orderBy('id', 'desc');
+
+
+        # 搜素过滤
+        Kit::equalQuery($query, ["brand_card"=>Request::input('keyword')]);
+
+
         $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
         return view('admin.qualitys')->with('paginate',$paginate);
     }
