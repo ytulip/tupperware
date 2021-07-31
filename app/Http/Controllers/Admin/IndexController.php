@@ -334,7 +334,9 @@ class IndexController extends Controller
 
 
         # 搜素过滤
-        Kit::equalQuery($query, ["brand_card"=>Request::input('keyword')]);
+        if( Request::input('keyword') ) {
+            $query->where('brand_card', 'like', '%' . Request::input('keyword') . '%');
+        }
 
 
         $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
