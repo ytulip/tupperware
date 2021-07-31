@@ -48,6 +48,7 @@
         @endif
 
         {{--<div class="block-card">--}}
+        {{$paginate->lastPage()}}
         @if($paginate->lastPage() > 1)
             <div class="tr-border" style="overflow: hidden;margin-top: -1px;">
                 <div class="fl-r"><?php echo $paginate->appends(\Illuminate\Support\Facades\Request::all())->render(); ?></div>
