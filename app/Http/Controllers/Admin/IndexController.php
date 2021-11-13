@@ -199,6 +199,16 @@ class IndexController extends Controller
         return $this->jsonReturn(1);
     }
 
+
+    public function anySetClassifyYear()
+    {
+        $id = Request::input('id');
+        $price = CodeLibrary::where('id', intval($id))->first();
+        $price->year = Request::input('price_type');
+        $price->save();
+        return $this->jsonReturn(1);
+    }
+
     public function getClassifyPrice()
     {
         $id = Request::input('id');

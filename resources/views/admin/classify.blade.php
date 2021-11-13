@@ -17,16 +17,18 @@
 
         <div class="tr-border fs-14-fc-4E5761 fn-fa bg-fc" style="margin-top: -1px;">
             <div class="row">
-                <div class="col-md-6 col-lg-6">产品名称</div>
-                <div class="col-md-6 col-lg-6">操作</div>
+                <div class="col-md-4 col-lg-4">产品名称</div>
+                <div class="col-md-4 col-lg-4">质保年限</div>
+                <div class="col-md-4 col-lg-4">操作</div>
             </div>
         </div>
 
         {{--<div class="block-card">--}}
         @foreach($paginate as $item)
             <div class="tr-border fs-14-fc-4E5761 fn-fa" style="margin-top: -1px;"><div class="row">
-                    <div class="col-md-6 col-lg-6" style="line-height: 64px;">{{$item->item_name}}</div>
-                    <div class="col-md-6 col-lg-6" style="line-height: 64px;"><a href="classify-price?id={{$item->item_value}}">编辑报价</a></div>
+                    <div class="col-md-4 col-lg-4" style="line-height: 64px;">{{$item->item_name}}</div>
+                    <div class="col-md-4 col-lg-4" style="line-height: 64px;">{{$item->year}}年</div>
+                    <div class="col-md-4 col-lg-4" style="line-height: 64px;"><a href="javascript:setType({{$item->item_value}})" style="margin-right: 36px;">编辑质保年限</a>  <a href="classify-price?id={{$item->item_value}}">编辑报价</a></div>
                 </div></div>
         @endforeach
         {{--</div>--}}
@@ -56,6 +58,57 @@
 
 @section('script')
     <script>
+
+
+        function setType(id)
+        {
+            layer.prompt({title: '设置年限', formType: 2}, function(pass, index){
+                $.ajax({
+                    data:{
+                        id: id,
+                        price_type: pass
+                    },
+                    url: '/admin/index/set-classify-year',
+                    type:'post',
+                    dataType:'json',
+                    success:function(data){
+                        location.reload()
+                        // $('input[name="images[]"]').replaceWith('<input type="file" name="images[]"  style="display: none" accept="image/gif,image/jpeg,image/png"/>');
+                        // if(data.status) {
+                        //     $('.essay_img').find('img').attr('src',data.data[0]);
+                        // } else {
+                        //     alert(data.desc);
+                        // }
+                    }
+                });
+                // alert(pass)
+                // layer.closeAll();
+                // layer.prompt({title: '随便写点啥，并确认', formType: 2}, function(text, index){
+                //     layer.close(index);
+                //     // layer.msg('演示完毕！您的口令：'+ pass +'<br>您最后写下了：'+text);
+                // });
+            });
+            // $.ajax({
+            //     data:{
+            //         id: id,
+            //         type: status?'0':'1'
+            //     },
+            //     url: '/admin/index/car',
+            //     type:'post',
+            //     dataType:'json',
+            //     success:function(data){
+            //         // $('input[name="images[]"]').replaceWith('<input type="file" name="images[]"  style="display: none" accept="image/gif,image/jpeg,image/png"/>');
+            //         // if(data.status) {
+            //         //     $('.essay_img').find('img').attr('src',data.data[0]);
+            //         // } else {
+            //         //     alert(data.desc);
+            //         // }
+            //     }
+            // });
+        }
+
+
+
         function goDetail(id)
         {
             location.href = '/admin/index/record?id=' + id;
