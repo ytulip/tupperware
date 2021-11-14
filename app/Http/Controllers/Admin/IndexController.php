@@ -431,8 +431,11 @@ class IndexController extends Controller
         $essay->part = Request::input('part');
         $essay->color = Request::input('color');
         $essay->seri_no = Request::input('seri_no');
-        $essay->quality_year = Request::input('quality_year');
+//        $essay->quality_year = Request::input('quality_year');
         $essay->product = Request::input('product');
+
+        //根据product来获取quality_year
+        $essay->quality_year = CodeLibrary::where('item_name', $essay->product)->first()->year;
         $essay->content = Request::input('content');
 
         $essay->save();
