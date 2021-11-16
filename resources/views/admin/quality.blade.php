@@ -42,7 +42,7 @@
                             请选择
                         </option>
                         @foreach($classify as $key=>$item)
-                            <option value="{{$item['item_name']}}" {{($record->product == $item['item_name'] )?'selected':''}}>
+                            <option year="{{$item['year']}}" value="{{$item['item_name']}}" {{($record->product == $item['item_name'] )?'selected':''}}>
                                 {{$item['item_name']}}-(质保{{$item['year']}}年)
                             </option>
                         @endforeach
@@ -61,10 +61,10 @@
                     <input type="text" value="{{$record->seri_no}}" name="seri_no" class="form-control" id="name" placeholder="请输入">
                 </div>
 
-{{--                <div class="form-group">--}}
-{{--                    <label for="name">施工质保年限</label>--}}
-{{--                    <input type="text" value="{{$record->quality_year}}" name="quality_year" class="form-control" id="name" placeholder="请输入">--}}
-{{--                </div>--}}
+                <div class="form-group">
+                    <label for="name">施工质保年限</label>
+                    <input type="text" value="{{$record->quality_year}}" name="quality_year" class="form-control" id="name" placeholder="请输入">
+                </div>
 
                 <div class="form-group">
                     <label for="inputfile">施工图</label>
@@ -158,11 +158,11 @@
                     return;
                 }
 
-                // if ( !$('input[name="quality_year"]').val() )
-                // {
-                //     mAlert('施工质保年限不能为空');
-                //     return;
-                // }
+                if ( !$('input[name="quality_year"]').val() )
+                {
+                    mAlert('施工质保年限不能为空');
+                    return;
+                }
 
                 var content = ue.getContent();
                 if( content.length == 0 ) {
@@ -195,6 +195,13 @@
         function uploadCover(){
             $('input[name="images[]"]').click();
         }
+        $('select[name="product"]').change(function(){
+            // console.log('产品值变化')
+            // console.log($(this))
+            // console.log($(this).val())
+
+            $('input[name="quality_year"]').val($(this).find("option:selected").attr('year'))
+        })
 
 
         $('body').on('change','input[name="images[]"]',function(){
