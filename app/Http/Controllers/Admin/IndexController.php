@@ -443,7 +443,7 @@ class IndexController extends Controller
         $essay->save();
 
         //TODO 发送短信通知
-        if( Request::input('id') && $essay->mobile && env('QUALITY_SMS'))
+        if( !Request::input('id') && $essay->mobile && env('QUALITY_SMS'))
         {
             Kit::sendInsureSms($essay->mobile, $essay->brand_card);
         }
