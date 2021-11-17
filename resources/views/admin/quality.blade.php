@@ -7,6 +7,14 @@
     <div style="">
         <div style="width: 640px;margin: 0 auto;margin-top: 24px;">
             <form role="form" id="data-form">
+
+                <div class="form-group">
+                    <label for="name">质保手机号（非必填）</label>
+                    <input type="text" value="{{$record->mobile}}" name="mobile" class="form-control" id="name" placeholder="输入手机号后，质保信息将以短信形式发送给客户">
+                </div>
+
+
+
                 <div class="form-group">
                     <label for="name">车牌号码</label>
                     <input type="text" value="{{$record->brand_card}}" name="brand_card" class="form-control" id="name" placeholder="请输入">
@@ -175,6 +183,7 @@
             data:function(){
                 //获得data-form的值
                 return {
+                    mobile: $('input[name="mobile"]').val(),
                     brand_card:$('input[name="brand_card"]').val(),
                     car_type:$('input[name="car_type"]').val(),
                     valid_date:$('input[name="valid_date"]').val(),
@@ -188,7 +197,7 @@
                 };
             },
             callback:function(el,val){
-                location.href = '/admin/index/quality?id='  + val.data
+                // location.href = '/admin/index/quality?id='  + val.data
             }
         });
 

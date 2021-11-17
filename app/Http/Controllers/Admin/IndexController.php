@@ -31,6 +31,7 @@ use App\Util\Kit;
 use App\Util\OrderStatical;
 use App\Util\SmsTemplate;
 use App\Util\TotalStatical;
+use http\Env;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Request;
@@ -424,6 +425,7 @@ class IndexController extends Controller
             $essay = new Quality();
         }
 
+        $essay->mobile = Request::input('mobile', '');
         $essay->brand_card = Request::input('brand_card');
         $essay->car_type = Request::input('car_type');
         $essay->valid_date = Request::input('valid_date');
@@ -439,6 +441,14 @@ class IndexController extends Controller
         $essay->content = Request::input('content');
 
         $essay->save();
+
+        //TODO 发送短信通知
+        if( Request::input('id') && $essay->mobile && env('QUALITY_SMS'))
+        {
+            Kit::sendInsureSms($essay->mobile, $essay->brand_card);
+        }
+
+
         return $this->jsonReturn(1, $essay->id);
     }
 }
