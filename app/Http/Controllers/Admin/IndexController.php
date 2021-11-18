@@ -423,6 +423,19 @@ class IndexController extends Controller
         $essay = Quality::find(Request::input('id'));
         if (!$essay) {
             $essay = new Quality();
+
+            //质保单号
+            while(true) {
+                $number = 'APAPPF' . rand(107, 140) . rand(1000, 9999) . rand(100, 999);
+                $tmp_quality = Quality::where('number', $number)->first();
+                if( $tmp_quality instanceof  Quality)
+                {
+                    continue;
+                }
+                $essay->number = $number;
+                break;
+            }
+
         }
 
         $essay->mobile = Request::input('mobile', '');
@@ -436,6 +449,7 @@ class IndexController extends Controller
         $essay->quality_year = Request::input('quality_year');
         $essay->product = Request::input('product');
 
+
         //根据product来获取quality_year
 //        $essay->quality_year = CodeLibrary::where('item_name', $essay->product)->first()->year;
         $essay->content = Request::input('content');
@@ -445,7 +459,7 @@ class IndexController extends Controller
         //TODO 发送短信通知
         if( !Request::input('id') && $essay->mobile && env('QUALITY_SMS'))
         {
-            Kit::sendInsureSms($essay->mobile, $essay->brand_card);
+            Kit::sendInsureSms($essay->mobile, $essay->number);
         }
 
 

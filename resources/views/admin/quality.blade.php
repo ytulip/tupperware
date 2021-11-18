@@ -197,7 +197,7 @@
                 };
             },
             callback:function(el,val){
-                // location.href = '/admin/index/quality?id='  + val.data
+                location.href = '/admin/index/quality?id='  + val.data
             }
         });
 
