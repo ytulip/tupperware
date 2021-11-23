@@ -124,6 +124,13 @@
 
 
                 <li id="menu-academico"><a href="/admin/index/cars" class="@if( isset($block) && ($block == 7)) menu-a-active @endif"><i class="fa fa-envelope nav_icon menu-fa"></i><span>车型管理</span><div class="clearfix"></div></a></li>
+
+
+                <li id="menu-academico"><a href="/admin/index/dealer" class="@if( isset($block) && ($block == 8)) menu-a-active @endif"><i class="fa fa-envelope nav_icon menu-fa"></i><span>经销商管理</span><div class="clearfix"></div></a></li>
+
+
+                <li id="menu-academico"><a href="/admin/index/media" class="@if( isset($block) && ($block == 9)) menu-a-active @endif"><i class="fa fa-envelope nav_icon menu-fa"></i><span>视频案例</span><div class="clearfix"></div></a></li>
+
             </ul>
                 @endif
         </div>

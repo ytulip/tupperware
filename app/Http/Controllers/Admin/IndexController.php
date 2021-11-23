@@ -10,8 +10,10 @@ use App\Model\CardBrand;
 use App\Model\CashStream;
 use App\Model\ClassifyPrice;
 use App\Model\CodeLibrary;
+use App\Model\Dealer;
 use App\Model\Essay;
 use App\Model\InvitedCodes;
+use App\Model\Media;
 use App\Model\Message;
 use App\Model\MonthGetGood;
 use App\Model\Order;
@@ -465,4 +467,88 @@ class IndexController extends Controller
 
         return $this->jsonReturn(1, $essay->id);
     }
+
+
+    public function getDealer(){
+        return view('admin.dealer');
+    }
+
+    public function getDealerList(){
+
+        $page = $_REQUEST['pageNo'];
+        $page_size = $_REQUEST['pageSize'];
+        $resp = [];
+
+        //分页获取经销商列表
+        $total = DB::table('dealer')->count();
+        $data = DB::table('dealer')->skip(($page - 1) * $page_size)->take($page_size)->get();
+//        $data =
+        $resp['result'] = ['data'=>$data, 'pageSize'=>$page_size, 'pageNo'=>$page, 'totalCount'=>$total];
+        return  $this->jsonReturn(1, $resp);
+    }
+
+    public function postDealer()
+    {
+        $essay = Dealer::find(Request::input('id'));
+        if (!$essay) {
+            $essay = new Dealer();
+            //质保单号
+        }
+
+        $essay->name = Request::input('name');
+        $essay->mobile = Request::input('mobile');
+
+        if( Request::input('password') )
+        {
+            $essay->password = Request::input('password');
+        }
+        $essay->status = Request::input('status', 0);
+        $essay->save();
+        return  $this->jsonReturn(1);
+    }
+
+
+    public function getMedia(){
+        return view('admin.media');
+    }
+
+
+    public function getMediaList(){
+
+        $page = $_REQUEST['pageNo'];
+        $page_size = $_REQUEST['pageSize'];
+        $resp = [];
+
+        //分页获取经销商列表
+        $total = DB::table('media')->count();
+        $data = DB::table('media')->skip(($page - 1) * $page_size)->take($page_size)->get();
+//        $data =
+        $resp['result'] = ['data'=>$data, 'pageSize'=>$page_size, 'pageNo'=>$page, 'totalCount'=>$total];
+        return  $this->jsonReturn(1, $resp);
+    }
+
+    public function postMedia()
+    {
+        $essay = Media::find(Request::input('id'));
+        if (!$essay) {
+            $essay = new Media();
+            //质保单号
+        }
+
+        $essay->title = Request::input('title');
+        $essay->url = Request::input('url');
+
+        $essay->save();
+        return  $this->jsonReturn(1);
+    }
+
+
+    public function postDeleteMedia()
+    {
+        $essay = Media::find(Request::input('id'));
+        $essay->delete();
+        return  $this->jsonReturn(1);
+    }
+
+
 }
