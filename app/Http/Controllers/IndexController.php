@@ -453,6 +453,56 @@ class IndexController extends Controller
     }
 
 
+    public function anyAddQua()
+    {
+        $essay = Quality::find(\Illuminate\Support\Facades\Request::input('id'));
+        if (!$essay) {
+            $essay = new Quality();
+
+            //质保单号
+            while(true) {
+                $number = 'APAPPF' . rand(107, 140) . rand(1000, 9999) . rand(100, 999);
+                $tmp_quality = Quality::where('number', $number)->first();
+                if( $tmp_quality instanceof  Quality)
+                {
+                    continue;
+                }
+                $essay->number = $number;
+                break;
+            }
+        }
+
+        $essay->mobile = Request::input('mobile', '');
+        $essay->brand_card = Request::input('brand_card');
+        $essay->car_type = Request::input('car_type');
+        $essay->valid_date = Request::input('date');
+        $essay->store = Request::input('store');
+        $essay->part = Request::input('part');
+        $essay->color = Request::input('color');
+        $essay->seri_no = Request::input('seri_no');
+        $essay->product = Request::input('product');
+
+        $quality_year = Request::input('quality_year', '');
+        if( $quality_year )
+        {
+            $essay->quality_year = CodeLibrary::where('item_name', $essay->product)->first()->year;
+        }
+
+
+//        $essay->quality_year = Request::input('quality_year');
+//        $essay->product = Request::input('product');
+
+        //根据product来获取quality_year
+//        $essay->quality_year = CodeLibrary::where('item_name', $essay->product)->first()->year;
+        $essay->content = Request::input('content');
+        $essay->status = 1;
+        $essay->save();
+
+
+        return $this->jsonReturn(1, $essay->id);
+    }
+
+
     /**
      * 精品案例
      */
@@ -567,6 +617,52 @@ class IndexController extends Controller
         }
 
     }
+
+
+
+
+    public function anyAlbumImageMedia()
+    {
+        $files = \Illuminate\Support\Facades\Request::file('picture');
+
+        $count = count($files);
+        if ($count != 1) {
+            return json_encode(["status" => 0, "desc" => "文件个数异常"], JSON_UNESCAPED_UNICODE);
+        }
+
+        $imagesInfo = [];
+        foreach ($files as $key => $file) {
+            $imageExtension = $file->getClientOriginalExtension(); //上传文件的后缀
+            //文件后缀转小写
+            $imageExtension = strtolower($imageExtension);
+            if (!in_array($imageExtension, ['mp4', 'avi', 'mkv'])) {
+                return json_encode(['status' => 0, 'desc' => '文件格式异常'], JSON_UNESCAPED_UNICODE);
+            }
+            $imagesInfo[] = $imageSaveName = bin2hex(base64_encode(time() . $key)) . '.' . $imageExtension; //文件保存的名字
+        }
+
+        $res = [];
+        $result = false;
+        foreach ($files as $key => $file) {
+            //$iamgeTempPath = $file->getRealPath(); //临时文件的绝对路径
+            if ($file->move('imgsys', $imagesInfo[$key])) {
+                $result = true;
+                $res[] = '/imgsys/' . $imagesInfo[$key];
+            } else {
+                $result = false;
+                break;
+            }
+        }
+        if ($result) {
+            return json_encode(['status' => 1, 'data' => $res]);
+        } else {
+            return json_encode(['status' => 0, 'desc' => "上传异常"], JSON_UNESCAPED_UNICODE);
+        }
+
+    }
+
+
+
 
     public function anyDelete()
     {
