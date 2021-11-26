@@ -472,17 +472,17 @@ class IndexController extends Controller
             }
         }
 
-        $essay->mobile = Request::input('mobile', '');
-        $essay->brand_card = Request::input('brand_card');
-        $essay->car_type = Request::input('car_type');
-        $essay->valid_date = Request::input('date');
-        $essay->store = Request::input('store');
-        $essay->part = Request::input('part');
-        $essay->color = Request::input('color');
-        $essay->seri_no = Request::input('seri_no');
-        $essay->product = Request::input('product');
+        $essay->mobile = \Illuminate\Support\Facades\Request::input('mobile', '');
+        $essay->brand_card = \Illuminate\Support\Facades\Request::input('brand_card');
+        $essay->car_type = \Illuminate\Support\Facades\Request::input('car_type');
+        $essay->valid_date = \Illuminate\Support\Facades\Request::input('date');
+        $essay->store = \Illuminate\Support\Facades\Request::input('store');
+        $essay->part = \Illuminate\Support\Facades\Request::input('part');
+        $essay->color = \Illuminate\Support\Facades\Request::input('color');
+        $essay->seri_no = \Illuminate\Support\Facades\Request::input('seri_no');
+        $essay->product = \Illuminate\Support\Facades\Request::input('product');
 
-        $quality_year = Request::input('quality_year', '');
+        $quality_year = \Illuminate\Support\Facades\Request::input('quality_year', '');
         if( $quality_year )
         {
             $essay->quality_year = CodeLibrary::where('item_name', $essay->product)->first()->year;
@@ -494,7 +494,7 @@ class IndexController extends Controller
 
         //根据product来获取quality_year
 //        $essay->quality_year = CodeLibrary::where('item_name', $essay->product)->first()->year;
-        $essay->content = Request::input('content');
+        $essay->content = \Illuminate\Support\Facades\Request::input('content');
         $essay->status = 1;
         $essay->save();
 
