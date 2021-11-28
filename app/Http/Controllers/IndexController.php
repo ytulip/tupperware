@@ -6,6 +6,7 @@ use App\Http\Requests\Request;
 use App\Model\Article;
 use App\Model\CardBrand;
 use App\Model\ClassifyPrice;
+use App\Model\Dealer;
 use App\Model\DomainExpires;
 use App\Model\SubCarBrand;
 use App\Model\CodeLibrary;
@@ -708,5 +709,59 @@ class IndexController extends Controller
         //系列列表
         $list = CodeLibrary::where('type', 'classify')->get();
         return $this->jsonReturn(1, ['car_list'=>$carList, 'classify'=>$list]);
+    }
+
+
+    /*供应商信息*/
+    public function anyDealerInfo()
+    {
+        $dealer_id = $_REQUEST['dealer_id'];
+        $dealer = Dealer::where('id', $dealer_id)->first();
+        return $this->jsonReturn(1);
+    }
+
+
+    public function anyDealerLogin()
+    {
+        $deader = Dealer::where('mobile', $_REQUEST['mobile'])->first();
+        if( !($deader instanceof  Dealer) )
+        {
+            return $this->jsonReturn(0, '手机号不存在');
+        }
+
+        if( $deader->password != $_REQUEST['password'] )
+        {
+            return $this->jsonReturn(0, '密码不存在');
+        }
+
+        if( !$deader->status )
+        {
+            return $this->jsonReturn(0, '已被禁用');
+        }
+
+        return $this->jsonReturn(1, $deader->id);
+    }
+
+    public function anyDealerQualiInfo(){
+        $dealer_id = $_REQUEST['dealer_id'];
+        $dealer = Dealer::where('id', $dealer_id)->first();
+
+//            this.pending_total_amount = res.data.pending_total_amount
+//          this.amount_all = res.data.amount_all;
+//          this.count_all = res.data.count_all;
+//          this.count_current_month = res.data.count_current_month;
+//          Toast.clear()
+
+
+        return $this->jsonReturn(1,[
+            'audit'=> Quality::where('dealer_id', $dealer_id)->where('status', 0)->count(),
+            'total'=> Quality::where('dealer_id', $dealer_id)->where('status', 1)->count(),
+            'month_total'=> Quality::where('dealer_id', $dealer_id)->where('status', 1)->where('valid_date', '>=', date('Y-m-01'))->count(),
+            'year_total'=> Quality::where('dealer_id', $dealer_id)->where('status', 1)->where('valid_date', '>=', date('Y-01-01'))->count(),
+            'list'=>Quality::where('dealer_id', $dealer_id)->get()
+        ]);
+
+
+
     }
 }

@@ -162,6 +162,13 @@ class IndexController extends Controller
     }
 
 
+    public function postDeleteRecord()
+    {
+        Article::where('id',Request::input('id'))->delete();
+        return $this->jsonReturn(1);
+    }
+
+
     public function getBanner()
     {
         if( Request::input('type') == 'add' )
