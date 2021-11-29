@@ -754,6 +754,7 @@ class IndexController extends Controller
 
 
         return $this->jsonReturn(1,[
+            'dealer'=> $dealer,
             'audit'=> Quality::where('dealer_id', $dealer_id)->where('status', 0)->count(),
             'total'=> Quality::where('dealer_id', $dealer_id)->where('status', 1)->count(),
             'month_total'=> Quality::where('dealer_id', $dealer_id)->where('status', 1)->where('valid_date', '>=', date('Y-m-01'))->count(),
