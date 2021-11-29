@@ -525,7 +525,7 @@ class IndexController extends Controller
         return $this->jsonReturn(1, $detail);
     }
 
-    public function getQuality()
+    public function anyQuality()
     {
         $keyword = $id = \Illuminate\Support\Facades\Request::input('keyword');
         $list = Quality::where('mobile', '=' ,"$keyword")->orWhere('brand_card', '=' ,"$keyword")->orWhere('id', '=', $keyword)->orderBy('id', 'desc')->get();
