@@ -760,7 +760,7 @@ class IndexController extends Controller
             'total'=> Quality::where('dealer_id', $dealer_id)->where('status', 1)->count(),
             'month_total'=> Quality::where('dealer_id', $dealer_id)->where('status', 1)->where('valid_date', '>=', date('Y-m-01'))->count(),
             'year_total'=> Quality::where('dealer_id', $dealer_id)->where('status', 1)->where('valid_date', '>=', date('Y-01-01'))->count(),
-            'list'=>Quality::where('dealer_id', $dealer_id)->get()
+            'list'=>Quality::where('dealer_id', $dealer_id)->orderBy('id', 'desc')->get()
         ]);
 
 
