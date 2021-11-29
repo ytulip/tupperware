@@ -496,7 +496,8 @@ class IndexController extends Controller
         //根据product来获取quality_year
 //        $essay->quality_year = CodeLibrary::where('item_name', $essay->product)->first()->year;
         $essay->content = \Illuminate\Support\Facades\Request::input('content');
-        $essay->status = 1;
+        $essay->status = 0;
+        $essay->dealer_id = \Illuminate\Support\Facades\Request::input('dealer_id');
         $essay->save();
 
 
