@@ -514,6 +514,36 @@ class IndexController extends Controller
         return  $this->jsonReturn(1);
     }
 
+    public function getAudit(){
+        return view('admin.audit');
+    }
+
+    public function anyDoAudit()
+    {
+//        var_dump($_REQUEST);
+        $quality = Quality::where('id', $_REQUEST['id'])->first();
+        if( $_REQUEST['status'] == '0' )
+        {
+            $quality->remark = $_REQUEST['remark'];
+        }
+        $quality->status = $_REQUEST['status'];
+        $quality->save();
+        return $this->jsonReturn(1);
+    }
+
+    public function anyAuditList(){
+        $page = $_REQUEST['pageNo'];
+        $page_size = $_REQUEST['pageSize'];
+        $resp = [];
+
+        //分页获取经销商列表
+        $total = DB::table('quality')->where('quality.status', '0')->count();
+        $data = DB::table('quality')->leftJoin('dealer', 'dealer.id', '=', 'quality.dealer_id')->selectRaw('quality.*, name')->skip(($page - 1) * $page_size)->where('quality.status', '0')->take($page_size)->get();
+//        $data =
+        $resp['result'] = ['data'=>$data, 'pageSize'=>$page_size, 'pageNo'=>$page, 'totalCount'=>$total];
+        return  $this->jsonReturn(1, $resp);
+    }
+
 
     public function getMedia(){
         return view('admin.media');

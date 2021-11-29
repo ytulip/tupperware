@@ -762,8 +762,16 @@ class IndexController extends Controller
             'year_total'=> Quality::where('dealer_id', $dealer_id)->where('status', 1)->where('valid_date', '>=', date('Y-01-01'))->count(),
             'list'=>Quality::where('dealer_id', $dealer_id)->orderBy('id', 'desc')->get()
         ]);
+    }
 
+    public function anyQualityInfo()
+    {
+        $id = \Illuminate\Support\Facades\Request::input('id');
+        $list = Quality::where('id', '=', $id)->first();
 
+        //文章图片路径替换
+//        $detail->content = str_replace('/ueditor/php', env('IMAGE_PREFIX'). '/ueditor/php', $detail->content);
 
+        return $this->jsonReturn(1, $list);
     }
 }
