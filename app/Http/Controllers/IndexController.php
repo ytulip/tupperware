@@ -456,7 +456,7 @@ class IndexController extends Controller
 
     public function anyAddQua()
     {
-        $essay = Quality::find(\Illuminate\Support\Facades\Request::input('id'));
+        $essay = Quality::find(\Illuminate\Support\Facades\Request::input('quality_id'));
         if (!$essay) {
             $essay = new Quality();
 
@@ -489,6 +489,16 @@ class IndexController extends Controller
             $essay->quality_year = CodeLibrary::where('item_name', $essay->product)->first()->year;
         }
 
+        $imgs = json_decode($_REQUEST['imgs']);
+        $save_imgs = [];
+        foreach( $imgs as $item)
+        {
+            $save_imgs[] = $item->path;
+        }
+
+        $essay->imgs = json_encode($save_imgs);
+        $essay->img_type = 1;
+
 
 //        $essay->quality_year = Request::input('quality_year');
 //        $essay->product = Request::input('product');
@@ -498,6 +508,7 @@ class IndexController extends Controller
         $essay->content = \Illuminate\Support\Facades\Request::input('content');
         $essay->status = 0;
         $essay->dealer_id = \Illuminate\Support\Facades\Request::input('dealer_id');
+        $essay->remark = '';
         $essay->save();
 
 
