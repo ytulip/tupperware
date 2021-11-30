@@ -571,11 +571,16 @@ class IndexController extends Controller
             $essay = new Media();
             //质保单号
         }
-
         $essay->title = Request::input('title');
         $essay->url = Request::input('url');
-
+        $essay->is_main = (Request::input('is_main') == 1)?1:0;
         $essay->save();
+
+        if( $essay->is_main == 1)
+        {
+            Media::whereNotIn('id', [$essay->id])->update(['is_main'=>0]);
+        }
+
         return  $this->jsonReturn(1);
     }
 

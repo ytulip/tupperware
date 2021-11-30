@@ -8,6 +8,7 @@ use App\Model\CardBrand;
 use App\Model\ClassifyPrice;
 use App\Model\Dealer;
 use App\Model\DomainExpires;
+use App\Model\Media;
 use App\Model\SubCarBrand;
 use App\Model\CodeLibrary;
 use App\Model\Quality;
@@ -430,7 +431,14 @@ class IndexController extends Controller
             $item->cover_img = env('IMAGE_PREFIX') . $item->cover_img;;
         }
 
-        return $this->jsonReturn(1, ["banners"=>$banners, "recommend_case"=>$cases, 'news'=>$news]);
+        $media = Media::where('is_main', 1)->first();
+        $video_url = '';
+        if( $media instanceof  Media )
+        {
+            $video_url = env('IMAGE_PREFIX') . $media->url;
+        }
+
+        return $this->jsonReturn(1, ["banners"=>$banners, "recommend_case"=>$cases, 'news'=>$news, 'video'=>$video_url]);
     }
 
     public function getAllCases()

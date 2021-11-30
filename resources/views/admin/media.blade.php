@@ -43,6 +43,16 @@
                     </form-item>
 
 
+                    <form-item label="是否主视频：" class="required-item">
+                        <div class="form-value" >
+                            <i-select  style="width:260px" v-model="is_main">
+                                <i-option value="1">是</i-option>
+                                <i-option value="0">否</i-option>
+                            </i-select>
+                        </div>
+                    </form-item>
+
+
 
 
 
@@ -94,6 +104,20 @@
                         key: 'title',
                     },
                     {
+                        title: '是否主视频',
+                        key: 'is_main',
+                        render: (h, params) => {
+
+
+
+                            params.row.is_main
+
+
+                            return h('div', {}, params.row.is_main?'是':'');
+
+                        }
+                    },
+                    {
                         title: '操作',
                         render: (h, params) => {
 
@@ -132,7 +156,8 @@
                         return res.data.result
                     })
                 },
-                url: ''
+                url: '',
+                is_main: ''
             },
             methods:{
 
@@ -143,6 +168,7 @@
                     this.title = record.title
                     // this.mobile = record.mobile
                     this.id = record.id
+                    this.is_main = (record.is_main == '1')?'1':'0'
                     this.$refs.upload.setValue(record.url)
                     // this.url = record.url
                     // this.status = record.status.toString()
@@ -172,6 +198,7 @@
                     this.title = ''
                     // this.url = ''
                     this.id = ''
+                    this.is_main = '0'
                     this.$refs.upload.setValue('')
                     this.editor_flag = true
                 },
@@ -196,7 +223,8 @@
                     return new Fly().post('/admin/index/media', Object.assign({}, {
                         id: this.id,
                         title: this.title,
-                        url: this.url
+                        url: this.url,
+                        is_main: this.is_main
                     })).then((res)=>{
                         res = JSON.parse(res.data)
 
