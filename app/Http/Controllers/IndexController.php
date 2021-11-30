@@ -797,15 +797,14 @@ class IndexController extends Controller
 
     public function getMediaList(){
 
-        $page = $_REQUEST['pageNo'];
-        $page_size = $_REQUEST['pageSize'];
+//        $page = $_REQUEST['pageNo'];
+//        $page_size = $_REQUEST['pageSize'];
         $resp = [];
 
         //分页获取经销商列表
-        $total = DB::table('media')->count();
-        $data = DB::table('media')->orderBy('id', 'desc')->skip(($page - 1) * $page_size)->take($page_size)->get();
+//        $total = DB::table('media')->count();
+        $data = DB::table('media')->orderBy('id', 'desc')->get();
 //        $data =
-        $resp['result'] = ['data'=>$data, 'pageSize'=>$page_size, 'pageNo'=>$page, 'totalCount'=>$total];
-        return  $this->jsonReturn(1, $resp);
+        return  $this->jsonReturn(1, $data);
     }
 }
