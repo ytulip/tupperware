@@ -805,6 +805,10 @@ class IndexController extends Controller
 //        $total = DB::table('media')->count();
         $data = DB::table('media')->orderBy('id', 'desc')->get();
 //        $data =
+        foreach( $data as $item)
+        {
+            $item->url = env('IMAGE_PREFIX') . $item->url;
+        }
         return  $this->jsonReturn(1, $data);
     }
 }
