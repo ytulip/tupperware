@@ -88,7 +88,7 @@
 
 
                     <form-item label="质保年限：" class="required-item">
-                        <div class="form-value" v-html="record.year">>
+                        <div class="form-value" v-html="record.quality_year">>
 
                         </div>
                     </form-item>
