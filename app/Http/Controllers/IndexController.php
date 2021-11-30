@@ -484,7 +484,7 @@ class IndexController extends Controller
         $essay->product = \Illuminate\Support\Facades\Request::input('product');
 
         $quality_year = \Illuminate\Support\Facades\Request::input('quality_year', '');
-        if( $quality_year )
+        if( !$quality_year )
         {
             $essay->quality_year = CodeLibrary::where('item_name', $essay->product)->first()->year;
         }

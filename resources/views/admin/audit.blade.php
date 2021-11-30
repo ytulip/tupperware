@@ -77,8 +77,18 @@
                         </div>
                     </form-item>
 
-                    <form-item label="质保年限：" class="required-item">
+
+
+
+                    <form-item label="膜批次号：" class="required-item">
                         <div class="form-value" v-html="record.seri_no">>
+
+                        </div>
+                    </form-item>
+
+
+                    <form-item label="质保年限：" class="required-item">
+                        <div class="form-value" v-html="record.year">>
 
                         </div>
                     </form-item>
