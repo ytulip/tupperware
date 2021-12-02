@@ -811,4 +811,13 @@ class IndexController extends Controller
         }
         return  $this->jsonReturn(1, $data);
     }
+
+
+    public function anyLogo()
+    {
+        //返回logo
+        header('Content-Type: image/png');//发送头信息
+        echo file_get_contents(env('LOGO_PATH') );
+        exit;
+    }
 }
