@@ -61,6 +61,21 @@ class Kit
         }
     }
 
+    static public function likeQuery($query,$arr){
+        $arr = array_filter($arr,function($val){
+
+            if( $val == "全部") return false;
+
+            if($val === '0' || $val === 0){
+                return true;
+            }
+            return $val?true:false;
+        });
+        if($arr){
+            $query->where($arr);
+        }
+    }
+
     public static function compareBelowZeroQuery($query,$arr)
     {
         $arr = array_filter($arr,function($val){
@@ -195,9 +210,19 @@ class Kit
         curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt ( $ch, CURLOPT_POSTFIELDS, $data );
         $res = curl_exec($ch);
-        Log::info('返回数据');
-        Log::info($res);
+//        var_dump($res);
         return $res;
+    }
+
+
+    public static function sendInsureSms($mobile, $brand)
+    {
+        self::curl_post('https://api.mysubmail.com/message/send', [
+            "appid"=>"62753",
+            "to"=>$mobile,
+            "content"=>"【APAPPF】感谢您选用APAPPF车衣，您的质保单号为 ".$brand." ，更多资讯，请微信搜索 APAPPF 小程序！退订回N",
+            "signature"=>"134b1fa3ce6d16b2ee27dec867a3f079"
+        ]);
     }
 
 }
