@@ -429,6 +429,8 @@ class IndexController extends Controller
         if( !$quality_year )
         {
             $essay->quality_year = CodeLibrary::where('item_name', $essay->product)->first()->year;
+        }else{
+            $essay->quality_year = $quality_year;
         }
 
         $imgs = json_decode($_REQUEST['imgs']);
@@ -757,7 +759,6 @@ class IndexController extends Controller
 
     public function anyWechatSignPackage()
     {
-
         $wechat = new \App\Util\WechatCallback();
         return $this->jsonReturn(1, $wechat->getSignPackage3($_REQUEST['url']));
     }
