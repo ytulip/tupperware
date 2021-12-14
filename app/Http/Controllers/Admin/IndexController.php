@@ -435,7 +435,7 @@ class IndexController extends Controller
 
             //质保单号
             while(true) {
-                $number = 'APAPPF' . rand(107, 140) . rand(1000, 9999) . rand(100, 999);
+                $number = env('TITLE')  . rand(107, 140) . rand(1000, 9999) . rand(100, 999);
                 $tmp_quality = Quality::where('number', $number)->first();
                 if( $tmp_quality instanceof  Quality)
                 {
