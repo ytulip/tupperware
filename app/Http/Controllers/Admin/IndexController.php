@@ -530,6 +530,15 @@ class IndexController extends Controller
         }
         $quality->status = $_REQUEST['status'];
         $quality->save();
+
+        //如果status为1，发送短信
+        //TODO 发送短信通知
+        if( $quality->mobile && env('QUALITY_SMS') && ($quality->status == 1) )
+        {
+            Kit::sendInsureSms($quality->mobile, $quality->number);
+        }
+
+
         return $this->jsonReturn(1);
     }
 
