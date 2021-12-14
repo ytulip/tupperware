@@ -762,4 +762,11 @@ class IndexController extends Controller
         $wechat = new \App\Util\WechatCallback();
         return $this->jsonReturn(1, $wechat->getSignPackage3($_REQUEST['url']));
     }
+
+    public function anyMiniWechatPic()
+    {
+        header('Content-Type: image/png');//发送头信息
+        echo file_get_contents(env('MINI_WECHAT_PATH') );
+        exit;
+    }
 }
