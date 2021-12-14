@@ -486,7 +486,7 @@ class IndexController extends Controller
         $page_size = $_REQUEST['pageSize'];
         $resp = [];
 
-        //分页获取经销商列表
+        //分页获取授权店列表
         $total = DB::table('dealer')->count();
         $data = DB::table('dealer')->skip(($page - 1) * $page_size)->take($page_size)->get();
 //        $data =
@@ -547,7 +547,7 @@ class IndexController extends Controller
         $page_size = $_REQUEST['pageSize'];
         $resp = [];
 
-        //分页获取经销商列表
+        //分页获取授权店列表
         $total = DB::table('quality')->where('quality.status', '0')->count();
         $data = DB::table('quality')->leftJoin('dealer', 'dealer.id', '=', 'quality.dealer_id')->selectRaw('quality.*, name')->skip(($page - 1) * $page_size)->where('quality.status', '0')->take($page_size)->get();
 //        $data =
@@ -567,7 +567,7 @@ class IndexController extends Controller
         $page_size = $_REQUEST['pageSize'];
         $resp = [];
 
-        //分页获取经销商列表
+        //分页获取授权店列表
         $total = DB::table('media')->count();
         $data = DB::table('media')->skip(($page - 1) * $page_size)->take($page_size)->get();
 //        $data =

@@ -13,10 +13,10 @@
 
 @section('left_content')
    <div id="vue_target" style="margin-top: 24px;">
-       <Card title="经销商管理">
+       <Card title="授权店管理">
 
            <div style="text-align: right;margin-bottom: 24px;">
-               <i-button type="primary" @click="add">新增经销商</i-button>
+               <i-button type="primary" @click="add">新增授权店</i-button>
            </div>
 
            <s-table :columns="columns" :data="loadData" ref="table">
@@ -37,20 +37,20 @@
            <div>
                <i-form ref="formValidate" :label-width="103" >
 
-                   <form-item label="经销商名称：" class="required-item">
+                   <form-item label="授权店名称：" class="required-item">
                        <div class="form-value" >
                            <i-input placeholder="" style="display: inline-block" v-model="name"/>
                        </div>
                    </form-item>
 
-                   <form-item label="经销商电话：" class="required-item">
+                   <form-item label="授权店电话：" class="required-item">
                        <div class="form-value" >
                            <i-input placeholder="" style="display: inline-block" v-model="mobile">
                        </div>
                    </form-item>
 
 
-                   <form-item label="经销商地址：" class="required-item">
+                   <form-item label="授权店地址：" class="required-item">
                        <div class="form-value" >
                            <i-input placeholder="" type="textarea" :rows="4" style="display: inline-block" v-model="address" />
                        </div>
@@ -63,7 +63,7 @@
                    </form-item>
 
 
-                   <form-item label="经销商头像：" class="required-item">
+                   <form-item label="授权店头像：" class="required-item">
                        <div class="form-value" >
                            <upload-block v-model="header_img" ref="upload"></upload-block>
                        </div>
@@ -126,19 +126,19 @@
                 header_img: '',
                 columns: [
                     {
-                        title: '经销商名称',
+                        title: '授权店名称',
                         key: 'name',
                     },
                     {
-                        title: '经销商手机号',
+                        title: '授权店手机号',
                         key: 'mobile',
                     },
                     {
-                        title: '经销商地址',
+                        title: '授权店地址',
                         key: 'address',
                     },
                     {
-                        title: '经销商头像',
+                        title: '授权店头像',
                         key: 'header_img',
                         render: (h, params) => {
 
@@ -256,13 +256,13 @@
                     if( !this.name )
                     {
 
-                        this.$Message.error('请输入经销商名称');
+                        this.$Message.error('请输入授权店名称');
                         return
                     }
 
                     if( !this.mobile )
                     {
-                        this.$Message.error('请输入经销商电话');
+                        this.$Message.error('请输入授权店电话');
                         return
                     }
 
@@ -299,9 +299,9 @@
                 title:function(){
                     if( this.id )
                     {
-                        return '修改经销商'
+                        return '修改授权店'
                     }else{
-                        return '新增经销商'
+                        return '新增授权店'
                     }
                 }
             }

@@ -737,7 +737,7 @@ class IndexController extends Controller
 //        $page_size = $_REQUEST['pageSize'];
         $resp = [];
 
-        //分页获取经销商列表
+        //分页获取授权店列表
 //        $total = DB::table('media')->count();
         $data = DB::table('media')->orderBy('id', 'desc')->get();
 //        $data =

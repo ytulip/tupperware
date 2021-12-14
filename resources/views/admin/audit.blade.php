@@ -165,7 +165,7 @@
                 imgs: [],
                 columns: [
                     {
-                        title: '经销商名称',
+                        title: '授权店名称',
                         key: 'name',
                     },
                     {
@@ -256,7 +256,7 @@
                     //
                     // if( !this.mobile )
                     // {
-                    //     this.$Message.error('请输入经销商电话');
+                    //     this.$Message.error('请输入授权店电话');
                     //     return
                     // }
 
