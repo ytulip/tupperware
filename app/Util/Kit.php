@@ -217,12 +217,23 @@ class Kit
 
     public static function sendInsureSms($mobile, $brand)
     {
-        self::curl_post('https://api.mysubmail.com/message/send', [
-            "appid"=>"62753",
-            "to"=>$mobile,
-            "content"=>"【APAPPF】感谢您选用APAPPF车衣，您的质保单号为 ".$brand." ，更多资讯，请微信搜索 APAPPF 小程序！退订回N",
-            "signature"=>"134b1fa3ce6d16b2ee27dec867a3f079"
-        ]);
+        //选择短信
+        if( env('DB_DATABASE') == 'apa' )
+        {
+            self::curl_post('https://api.mysubmail.com/message/send', [
+                "appid" => "62753",
+                "to" => $mobile,
+                "content" => "【APA】感谢您选用APA车身改色膜，您的质保单号为 " . $brand . " ，更多资讯，请微信搜索 APAFILM 小程序！退订回N",
+                "signature" => "134b1fa3ce6d16b2ee27dec867a3f079"
+            ]);
+        }else {
+            self::curl_post('https://api.mysubmail.com/message/send', [
+                "appid" => "62753",
+                "to" => $mobile,
+                "content" => "【APAPPF】感谢您选用APAPPF车衣，您的质保单号为 " . $brand . " ，更多资讯，请微信搜索 APAPPF 小程序！退订回N",
+                "signature" => "134b1fa3ce6d16b2ee27dec867a3f079"
+            ]);
+        }
     }
 
 }
