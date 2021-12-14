@@ -1,6 +1,14 @@
 @extends('admin.master',['headerTitle'=>'','block'=>'8'])
 @section('style')
     <link rel="stylesheet" href="//unpkg.com/view-design/dist/styles/iview.css">
+    <style>
+        .header_img{
+            margin: 6px 0;
+            width: 48px;
+            height: 48px;
+            border-radius: 100%;
+        }
+    </style>
 @stop
 
 @section('left_content')
@@ -31,7 +39,7 @@
 
                    <form-item label="经销商名称：" class="required-item">
                        <div class="form-value" >
-                           <i-input placeholder="" style="display: inline-block" v-model="name">
+                           <i-input placeholder="" style="display: inline-block" v-model="name"/>
                        </div>
                    </form-item>
 
@@ -41,9 +49,23 @@
                        </div>
                    </form-item>
 
+
+                   <form-item label="经销商地址：" class="required-item">
+                       <div class="form-value" >
+                           <i-input placeholder="" type="textarea" :rows="4" style="display: inline-block" v-model="address" />
+                       </div>
+                   </form-item>
+
                    <form-item label="密码：" class="required-item">
                        <div class="form-value" >
                            <i-input placeholder="" style="display: inline-block"  type="password" v-model="password">
+                       </div>
+                   </form-item>
+
+
+                   <form-item label="经销商头像：" class="required-item">
+                       <div class="form-value" >
+                           <upload-block v-model="header_img" ref="upload"></upload-block>
                        </div>
                    </form-item>
 
@@ -90,15 +112,18 @@
         let target_vue = new Vue({
             el: '#vue_target',
             components:{
-                's-table': 'url:/vue/s-table.vue?v=66'
+                's-table': 'url:/vue/s-table.vue?v=66',
+                'upload-block': 'url:/vue/uploadblocknewheader.vue?v=78'
             },
             data: {
                 name: '',
                 mobile: '',
                 password: '',
+                address: '',
                 status: '',
                 loading: true,
                 id: '',
+                header_img: '',
                 columns: [
                     {
                         title: '经销商名称',
@@ -107,6 +132,39 @@
                     {
                         title: '经销商手机号',
                         key: 'mobile',
+                    },
+                    {
+                        title: '经销商地址',
+                        key: 'address',
+                    },
+                    {
+                        title: '经销商头像',
+                        key: 'header_img',
+                        render: (h, params) => {
+
+
+                            // console.log('操作值加密')
+                            // console.log(params.row)
+                            // let encode_str = $.base64.encode(encodeURIComponent(JSON.stringify(params.row)))
+
+                            // let  txt = (params.row.status ==
+                            // 1)?'启用':'禁用';
+
+                            console.log('头像地址')
+                            console.log(params.row.header_img)
+
+
+                            return h('div', [
+                                h('img', {
+                                    attrs: {
+                                        src: params.row.header_img,
+                                        class: 'header_img'
+                                    }
+                                }, '')
+
+                            ]);
+
+                        }
                     },
                     {
                         title: '状态',
@@ -173,7 +231,10 @@
                     console.log(record)
                     this.name = record.name
                     this.mobile = record.mobile
+                    this.address = record.address
                     this.id = record.id
+                    this.header_img = record.header_img
+                    this.$refs.upload.setValue(this.header_img)
                     this.status = record.status.toString()
                     this.editor_flag = true
                 },
@@ -183,6 +244,9 @@
                     this.mobile = ''
                     this.id = ''
                     this.status = ''
+                    this.address = ''
+                    this.header_img = ''
+                    this.$refs.upload.deleteImg()
                     this.editor_flag = true
                 },
 
@@ -214,7 +278,9 @@
                         name: this.name,
                         mobile: this.mobile,
                         password: this.password,
-                        status: this.status
+                        address: this.address,
+                        status: this.status,
+                        header_img: this.header_img
                     })).then((res)=>{
                         res = JSON.parse(res.data)
 
