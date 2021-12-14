@@ -504,6 +504,8 @@ class IndexController extends Controller
 
         $essay->name = Request::input('name');
         $essay->mobile = Request::input('mobile');
+        $essay->address = Request::input('address');
+        $essay->header_img = Request::input('header_img');
 
         if( Request::input('password') )
         {
