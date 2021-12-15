@@ -419,7 +419,14 @@ class IndexController extends Controller
         $essay->brand_card = \Illuminate\Support\Facades\Request::input('brand_card');
         $essay->car_type = \Illuminate\Support\Facades\Request::input('car_type');
         $essay->valid_date = \Illuminate\Support\Facades\Request::input('date');
-        $essay->store = \Illuminate\Support\Facades\Request::input('store');
+
+
+        //根据授权门店去获取门店
+        $essay->store = Dealer::where('id', \Illuminate\Support\Facades\Request::input('dealer_id'))->first()->name;
+
+
+
+//        $essay->store = \Illuminate\Support\Facades\Request::input('store');
         $essay->part = \Illuminate\Support\Facades\Request::input('part');
         $essay->color = \Illuminate\Support\Facades\Request::input('color');
         $essay->seri_no = \Illuminate\Support\Facades\Request::input('seri_no');
