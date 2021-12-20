@@ -43,7 +43,7 @@ class Handler extends ExceptionHandler
     {
         /* 错误页面 */
         if ($e) {
-            if( !Kit::isWechat() )
+            if( Kit::isWechat() )
             {
                 return Response::view('errors.customer');
             }else{
