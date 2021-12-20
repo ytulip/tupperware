@@ -2,7 +2,9 @@
 
 namespace App\Exceptions;
 
+use App\Util\Kit;
 use Exception;
+use Illuminate\Support\Facades\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
@@ -39,6 +41,16 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        /* 错误页面 */
+        if ($e) {
+            if( !Kit::isWechat() )
+            {
+                return Response::view('errors.customer');
+            }else{
+                return parent::render($request, $e);
+            }
+        }
         return parent::render($request, $e);
+
     }
 }
