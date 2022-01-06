@@ -1,7 +1,7 @@
 
 @extends('admin.master',['headerTitle'=>'','block'=>'10'])
 @section('style')
-    <link rel="stylesheet" href="//unpkg.com/view-design/dist/styles/iview.css">
+    <link rel="stylesheet" href="/admin/css/iview.css">
 @stop
 
 @section('left_content')
@@ -138,7 +138,7 @@
     <!-- 编辑器源码文件 -->
     <script type="text/javascript" src="/admin/js/ueditor/ueditor.all.js"></script>
     <script type="text/javascript" src="/admin/js/vue.js"></script>
-    <script src="//unpkg.com/view-design/dist/iview.min.js"></script>
+    <script src="/admin/js/iview.min.js"></script>
     <script src="/admin/js/httpVueLoader.js"></script>
     <script src="/admin/js/fly.min.js"></script>
     <script src="/admin/js/jquery.base64.js"></script>
