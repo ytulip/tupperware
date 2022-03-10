@@ -142,3 +142,15 @@ function commonDownload()
     // location.href = '';
     location.href = location.href + ((location.href.indexOf('?') === -1)?'?':'&') + 'download=1';
 }
+
+
+function flyPost(url, data)
+{
+
+    let form = new FormData();
+    for( let i in data )
+    {
+        form.append(i, data[i])
+    }
+    return new Fly().post(url, form)
+}
