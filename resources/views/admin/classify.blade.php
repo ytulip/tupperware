@@ -1,6 +1,19 @@
 @extends('admin.master',['headerTitle'=>'','block'=>'5'])
+
+@section('style')
+    <link rel="stylesheet" href="/admin/css/iview.css">
+    <style>
+        .header_img{
+            margin: 6px 0;
+            width: 48px;
+            height: 48px;
+            border-radius: 100%;
+        }
+    </style>
+@stop
+
 @section('left_content')
-    <div class="mt-32 padding-col">
+    <div class="mt-32 padding-col" id="vue_target">
 
 
         <div class="tr-border fs-14-fc-4E5761 fn-fa" style="margin-top: 24px;">
@@ -10,7 +23,7 @@
                     <input style="background: #FCFCFC;border: 1px solid #EAEEF7;border-radius: 100px;padding: 8px 12px;" class="fs-14-fc-93989e fn-fa" value="{{\Illuminate\Support\Facades\Request::input('work_no')}}" name="work_no" placeholder="输入关键字搜索"/>
                     <a style="position: absolute;right: 10px;top:9px;" class="search_btn"><img src="/images/icon_search_nor@3x.png" width="14px"/></a>
                 </div>
-{{--                <a class="btn-new search_btn_download" style="margin-left: 16px;">导出</a>--}}
+              <a class="btn-new" style="margin-left: 16px;">新增</a>
             </div>
         </div>
 
@@ -28,7 +41,12 @@
             <div class="tr-border fs-14-fc-4E5761 fn-fa" style="margin-top: -1px;"><div class="row">
                     <div class="col-md-4 col-lg-4" style="line-height: 64px;">{{$item->item_name}}</div>
                     <div class="col-md-4 col-lg-4" style="line-height: 64px;">{{$item->year}}年</div>
-                    <div class="col-md-4 col-lg-4" style="line-height: 64px;"><a href="javascript:setType({{$item->item_value}})" style="margin-right: 36px;">编辑质保年限</a>  <a href="classify-price?id={{$item->item_value}}">编辑报价</a></div>
+                    <div class="col-md-4 col-lg-4" style="line-height: 64px;"><a @click="setItem({{$item->id}}, '{{$item->item_name}}', '{{$item->year}}')" style="margin-right: 36px;">编辑</a>  
+                    <a href="classify-price?id={{$item->item_value}}" style="margin-right: 36px;">编辑报价</a>
+
+
+                    <a @click="deleteItem({{$item->id}})">删除</a>
+                </div>
                 </div></div>
         @endforeach
         {{--</div>--}}
@@ -53,11 +71,137 @@
         @endif
         {{--</div>--}}
 
+
+        <Modal
+                    v-model="add_flag"
+                    :title="add_flag_title"
+                    footer-hide="true"
+        
+
+            >
+            <div>
+                <i-form>
+            <form-item label="名称：" :label-width="140" class="required-item">
+                                <div>
+                                    <i-input style="width: 320px;" size="small" v-model="item_value"></i-input>
+                                </div>
+                            </form-item>
+
+
+                            <form-item label="质保年限：" :label-width="140" class="required-item">
+                                <div>
+                                    <i-input style="width: 320px;" size="small" v-model="year"></i-input>
+                                </div>
+                            </form-item>
+
+                </i-form>
+
+
+                <div style="text-align: center;">
+                                <i-button type="primary" @click="nextStep">提交</i-button>
+                            </div>
+
+            </div>
+        </Modal>
+
     </div>
 @stop
 
 @section('script')
+
+
+<script src="/admin/js/iview.min.js"></script>
+    <script src="/admin/js/httpVueLoader.js"></script>
+    <script src="/admin/js/fly.min.js"></script>
+
     <script>
+
+
+        Vue.use(httpVueLoader);
+
+
+        let target_vue = new Vue({
+            el: '#vue_target',
+            data: {
+                add_flag: false,
+                name: '', 
+                year: '',
+                item_id: '',
+                item_value: '',
+                year: ''
+            },
+            computed:{
+                add_flag_title(){
+                    if( this.item_id )
+                    {
+                        return '修改产品系列';
+                    }else{
+                        return '新增产品系列';
+                    }
+                }
+            },
+            methods:{
+
+                deleteItem(id){
+                    //删除产品系列
+                    this.$Modal.confirm({
+                        'title': '操作确认',
+                        'content': '是否确定删除该产品系列',
+                        'onOk':function(){
+                            flyPost('/admin/index/delete-classify', Object.assign(  {}, {
+                                id: id
+                            })).then((res)=>{
+                                location.reload()
+                            })
+                        }
+                    })
+                }, 
+
+                addNew(){
+                    this.item_id = ''
+                    this.item_value = ''
+                    this.year = ''
+                    this.add_flag = true
+                },
+                setItem(id, name, year )
+                {
+
+                    this.item_id = id
+                    this.item_value = name
+                    this.year = year
+                    this.add_flag = true
+
+                },
+                nextStep()
+                {
+                    if( !this.item_value )
+                    {
+                        this.$Message.error('产品名称必须填写');
+                        return
+                    }
+
+
+                    if( !this.year )
+                    {
+                        this.$Message.error('质保年限必须填写');
+                        return
+                    }
+
+
+                    this.submit_loading = true
+
+                    flyPost('/admin/index/add-or-save-classify', Object.assign(  {}, {
+                        item_name: this.item_value,
+                        year: this.year,
+                        id: this.item_id
+                    })).then((res)=>{
+                        location.reload()
+                    })
+
+
+                }
+            }
+        });
 
 
         function setType(id)

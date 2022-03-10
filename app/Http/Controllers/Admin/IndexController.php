@@ -191,6 +191,33 @@ class IndexController extends Controller
         return view('admin.records')->with('paginate',$paginate);
     }
 
+    public function anyAddOrSaveClassify()
+    {
+        $id = Request::input('id', '');
+        if( $id )
+        {
+            $item = CodeLibrary::where('id', intval($id))->first();
+        }else{
+            $item = new CodeLibrary();
+            $item->type = 'classify';
+            $item->save();
+            $item->item_value = $item->id;
+        }
+
+        $item->item_name = Request::input('item_name');
+        $item->year = Request::input('year');
+        $item->save();
+
+        return $this->jsonReturn(1);
+    }
+
+    public function anyDeleteClassify()
+    {
+        $id = Request::input('id', '');
+        CodeLibrary::where('id', $id)->delete();
+        return $this->jsonReturn(1);
+    }
+
 
     public function getClassify()
     {
@@ -381,8 +408,14 @@ class IndexController extends Controller
             $brand->save();
             return $this->jsonReturn(1);
         } else {
-            $query = CardBrand::orderBy('id', 'asc');
-            $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
+            $query = CardBrand::where('id', '>', 1);
+            $paginate = $query->where(function($query){
+
+                if( Request::input('keyword') ) {
+                    $query->where('car_brand', 'like', '%' . Request::input('keyword') . '%');
+                }
+
+            })->orderBy('id', 'asc')->paginate(env('ADMIN_PAGE_LIMIT'));
             return view('admin.cars')->with('paginate', $paginate);
         }
     }
@@ -601,6 +634,30 @@ class IndexController extends Controller
         $essay = Media::find(Request::input('id'));
         $essay->delete();
         return  $this->jsonReturn(1);
+    }
+
+    public function anyAddNewBrand()
+    {
+        //新增汽车品牌
+
+        //step1 排重处理
+        $name = Request::input('name');
+
+        $brand = CardBrand::where('car_brand', $name)->first();
+        if( $brand instanceof CardBrand )
+        {
+            return $this->jsonReturn(0, '该品牌已存在');
+        }
+
+        $new = new CardBrand();
+        $new->car_brand = $name;
+        $new->status = 0;
+        $new->save();
+
+        $new->brand_id = $new->id;
+        $new->save();
+
+        return $this->jsonReturn(1);
     }
 
 
