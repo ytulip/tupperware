@@ -23,7 +23,7 @@
                     <input style="background: #FCFCFC;border: 1px solid #EAEEF7;border-radius: 100px;padding: 8px 12px;" class="fs-14-fc-93989e fn-fa" value="{{\Illuminate\Support\Facades\Request::input('work_no')}}" name="work_no" placeholder="输入关键字搜索"/>
                     <a style="position: absolute;right: 10px;top:9px;" class="search_btn"><img src="/images/icon_search_nor@3x.png" width="14px"/></a>
                 </div>
-              <a class="btn-new" style="margin-left: 16px;">新增</a>
+              <a class="btn-new" style="margin-left: 16px;" @click="addNew">新增</a>
             </div>
         </div>
 
