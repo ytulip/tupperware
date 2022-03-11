@@ -30,22 +30,21 @@
 
         <div class="tr-border fs-14-fc-4E5761 fn-fa bg-fc" style="margin-top: -1px;">
             <div class="row">
-                <div class="col-md-4 col-lg-4">产品名称</div>
-                <div class="col-md-4 col-lg-4">质保年限</div>
-                <div class="col-md-4 col-lg-4">操作</div>
+                <div class="col-md-4 col-lg-3">产品名称</div>
+                <div class="col-md-4 col-lg-3">质保年限</div>
+                <div class="col-md-4 col-lg-3">状态</div>
+                <div class="col-md-4 col-lg-3">操作</div>
             </div>
         </div>
 
         {{--<div class="block-card">--}}
         @foreach($paginate as $item)
             <div class="tr-border fs-14-fc-4E5761 fn-fa" style="margin-top: -1px;"><div class="row">
-                    <div class="col-md-4 col-lg-4" style="line-height: 64px;">{{$item->item_name}}</div>
-                    <div class="col-md-4 col-lg-4" style="line-height: 64px;">{{$item->year}}年</div>
-                    <div class="col-md-4 col-lg-4" style="line-height: 64px;"><a @click="setItem({{$item->id}}, '{{$item->item_name}}', '{{$item->year}}')" style="margin-right: 36px;">编辑</a>  
+                    <div class="col-md-4 col-lg-3" style="line-height: 64px;">{{$item->item_name}}</div>
+                    <div class="col-md-4 col-lg-3" style="line-height: 64px;">{{$item->year}}年</div>
+                    <div class="col-md-4 col-lg-3" style="line-height: 64px;">{{($item->status == 1)?'使用中': '已禁用'}}</div>
+                    <div class="col-md-4 col-lg-3" style="line-height: 64px;"><a @click="setItem({{$item->id}}, '{{$item->item_name}}', '{{$item->year}}', {{$item->status}})" style="margin-right: 36px;">编辑</a>  
                     <a href="classify-price?id={{$item->item_value}}" style="margin-right: 36px;">编辑报价</a>
-
-
-                    <a @click="deleteItem({{$item->id}})">删除</a>
                 </div>
                 </div></div>
         @endforeach
@@ -94,6 +93,16 @@
                                 </div>
                             </form-item>
 
+
+                            <form-item label="状态：" :label-width="140" class="required-item">
+                                <div>
+                                <i-select v-model="status" size="small">
+                                <i-option value="1">使用中</i-option>
+                                <i-option value="0">已禁用</i-option>
+                            </i-select>
+                                </div>
+                            </form-item>
+
                 </i-form>
 
 
@@ -128,7 +137,8 @@
                 year: '',
                 item_id: '',
                 item_value: '',
-                year: ''
+                year: '',
+                status: ''
             },
             computed:{
                 add_flag_title(){
@@ -161,14 +171,16 @@
                     this.item_id = ''
                     this.item_value = ''
                     this.year = ''
+                    this.status = ''
                     this.add_flag = true
                 },
-                setItem(id, name, year )
+                setItem(id, name, year, status )
                 {
 
                     this.item_id = id
                     this.item_value = name
                     this.year = year
+                    this.status = status.toString()
                     this.add_flag = true
 
                 },
@@ -188,12 +200,20 @@
                     }
 
 
+                    if( this.status == '' )
+                    {
+                        this.$Message.error('状态必须选择');
+                        return
+                    }
+
+
                     this.submit_loading = true
 
                     flyPost('/admin/index/add-or-save-classify', Object.assign(  {}, {
                         item_name: this.item_value,
                         year: this.year,
-                        id: this.item_id
+                        id: this.item_id,
+                        status: this.status
                     })).then((res)=>{
                         location.reload()
                     })

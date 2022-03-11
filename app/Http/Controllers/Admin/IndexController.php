@@ -206,6 +206,7 @@ class IndexController extends Controller
 
         $item->item_name = Request::input('item_name');
         $item->year = Request::input('year');
+        $item->status = Request::input('status');
         $item->save();
 
         return $this->jsonReturn(1);

@@ -270,7 +270,7 @@ class IndexController extends Controller
             $brank[] = (Object)[ 'text'=>$item->car_brand,  'value'=> $item->id ];
         }
         //系列列表
-        $classifyList = CodeLibrary::where('type', 'classify')->get();
+        $classifyList = CodeLibrary::where('type', 'classify')->where('status', 1)->get();
 //        return $this->jsonReturn(1, ['car_list'=>$carList, 'classify'=>$list]);
 
         foreach ( $classifyList as $key=>$item)
