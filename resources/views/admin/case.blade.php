@@ -27,7 +27,7 @@
                            </option>
                            @foreach($classify as $key=>$item)
                                <option value="{{$item['item_value']}}" {{($record->classify == $item['item_value'] )?'selected':''}}>
-                                   {{$item['item_name']}}
+                                   {{$item['item_name']}}{{($item['status'] == 0)?'-已弃用':''}}
                                </option>
                            @endforeach
                        </select>

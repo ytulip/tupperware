@@ -280,7 +280,7 @@ class IndexController extends Controller
     {
         if( Request::input('type') == 'add' )
         {
-            return view('admin.case')->with('record', (Object)['title'=>'', 'cover_img'=>'', 'content'=>'', 'classify'=>''])->with('classify', CodeLibrary::where('type', 'classify')->get());
+            return view('admin.case')->with('record', (Object)['title'=>'', 'cover_img'=>'', 'content'=>'', 'classify'=>''])->with('classify', CodeLibrary::where('type', 'classify')->where('status', 1)->get());
         }
         $record = Article::find(Request::input('id'));
         if( !($record instanceof  Article) )
@@ -288,7 +288,7 @@ class IndexController extends Controller
             dd('无效记录');
         }
 
-        return view('admin.case')->with('record',$record)->with('classify', CodeLibrary::where('type', 'classify')->get());
+        return view('admin.case')->with('record',$record)->with('classify', CodeLibrary::where('type', 'classify')->orderBy('status', 'desc')->get());
     }
 
     public function getCases()
