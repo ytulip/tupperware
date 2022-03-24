@@ -51,7 +51,7 @@
                         </option>
                         @foreach($classify as $key=>$item)
                             <option year="{{$item['year']}}" value="{{$item['item_name']}}" {{($record->product == $item['item_name'] )?'selected':''}}>
-                                {{$item['item_name']}}-(质保{{$item['year']}}年)
+                                {{$item['item_name']}}-(质保{{$item['year']}}年){{($item['status'] == 0)?'-已弃用':''}}
                             </option>
                         @endforeach
                     </select>

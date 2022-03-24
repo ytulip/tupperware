@@ -450,14 +450,16 @@ class IndexController extends Controller
     {
         if( Request::input('type') == 'add' )
         {
-            return view('admin.quality')->with('record', (Object)['brand_card'=>'', 'car_type'=>'', 'valid_date'=>'', 'store'=>'', 'part'=>'', 'color'=>'', 'seri_no'=>'', 'quality_year'=>'', 'product'=>'', 'mobile'=>''])->with('classify', CodeLibrary::where('type', 'classify')->get());
+            return view('admin.quality')->with('record', (Object)['brand_card'=>'', 'car_type'=>'', 'valid_date'=>'', 'store'=>'', 'part'=>'', 'color'=>'', 'seri_no'=>'', 'quality_year'=>'', 'product'=>'', 'mobile'=>''])->with('classify', CodeLibrary::where('type', 'classify')->where('status', 1)->get());
         }
         $record = Quality::find(Request::input('id'));
         if( !($record instanceof  Quality) )
         {
             dd('无效记录');
         }
-        return view('admin.quality')->with('record',$record)->with('classify', CodeLibrary::where('type', 'classify')->get());
+
+
+        return view('admin.quality')->with('record',$record)->with('classify', CodeLibrary::where('type', 'classify')->orderBy('status', 'desc')->get());
     }
 
 
