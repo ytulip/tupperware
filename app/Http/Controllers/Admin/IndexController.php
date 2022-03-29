@@ -191,6 +191,67 @@ class IndexController extends Controller
         return view('admin.records')->with('paginate',$paginate);
     }
 
+
+    public function anyAddOrSaveBrand(){
+        $id = Request::input('id', '');
+        if( $id )
+        {
+            $item = CardBrand::where('id', intval($id))->first();
+        }else{
+
+
+            //TODO 名字查重
+            if( CardBrand::where('car_brand', Request::input('item_name'))->count() )
+            {
+
+                return $this->jsonReturn(0, '该车型已存在，请核对后再添加');
+            }
+
+            $item = new CardBrand();
+            $item->save();
+            $item->brand_id = $item->id;
+        }
+
+        $item->car_brand = Request::input('item_name');
+        $item->status = Request::input('status');
+        $item->save();
+
+        return $this->jsonReturn(1);
+    }
+
+
+
+    public function anyAddOrSaveSubBrand(){
+        $id = Request::input('id', '');
+        if( $id )
+        {
+            $item = SubCarBrand::where('id', intval($id))->first();
+        }else{
+
+
+            //TODO 名字查重
+            if( SubCarBrand::where('car_brand', Request::input('item_name'))->count() )
+            {
+
+                return $this->jsonReturn(0, '该车型已存在，请核对后再添加');
+            }
+
+            $item = new SubCarBrand();
+            $item->save();
+            $item->brand_id = $_REQUEST['brand_id'];
+        }
+
+        $item->car_brand = Request::input('item_name');
+        $item->sub_card_brand = Request::input('item_name');
+        $item->status = Request::input('status');
+        $item->price_type = Request::input('price_type');
+        $item->save();
+
+        return $this->jsonReturn(1);
+    }
+
+
+
     public function anyAddOrSaveClassify()
     {
         $id = Request::input('id', '');
@@ -442,7 +503,7 @@ class IndexController extends Controller
         } else {
             $query = SubCarBrand::where('brand_id', Request::input('id'));
             $paginate = $query->paginate(env('ADMIN_PAGE_LIMIT'));
-            return view('admin.car')->with('paginate', $paginate)->with('car', CardBrand::where('brand_id', Request::input('id'))->first());
+            return view('admin.car')->with('paginate', $paginate)->with('car', CardBrand::where('brand_id', Request::input('id'))->first())->with('brand_id', CardBrand::where('brand_id', Request::input('id'))->first()->brand_id);
         }
     }
 
