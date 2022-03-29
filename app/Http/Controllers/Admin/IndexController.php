@@ -209,7 +209,7 @@ class IndexController extends Controller
 
             $item = new CardBrand();
             $item->save();
-            $item->brand_id = $item->id;
+            $item->brand_id = 10000 + $item->id;
         }
 
         $item->car_brand = Request::input('item_name');
