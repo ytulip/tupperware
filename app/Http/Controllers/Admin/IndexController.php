@@ -554,6 +554,7 @@ class IndexController extends Controller
         $essay->seri_no = Request::input('seri_no');
         $essay->quality_year = Request::input('quality_year');
         $essay->product = Request::input('product');
+        $essay->imgs = Request::input('imgs');
 
 
         //根据product来获取quality_year

@@ -1,4 +1,7 @@
 @extends('admin.master',['headerTitle'=>'','block'=>'6'])
+@section('style')
+    <link rel="stylesheet" href="/admin/css/iview.css">
+@stop
 @section('left_content')
     <div class="row header-title" style="margin-top: -1px;height: 56px;padding-top: 16px;padding-bottom: 25px;">
         <div class="fs-14-fc-4E5661">案例详情/编辑</div>
@@ -74,6 +77,16 @@
                     <input type="text" value="{{$record->quality_year}}" name="quality_year" class="form-control" id="name" placeholder="请输入">
                 </div>
 
+
+
+                <div class="form-group">
+                    <label for="inputfile">施工图（新）</label>
+                    <div id="vue_target">
+                        <upload-block-list v-model="imgs"></upload-block-list>
+                    </div>
+                </div>
+
+
                 <div class="form-group">
                     <label for="inputfile">施工图</label>
                     <script id="container" name="content" type="text/plain">
@@ -98,7 +111,29 @@
     <script type="text/javascript" src="/admin/js/ueditor/ueditor.config.js"></script>
     <!-- 编辑器源码文件 -->
     <script type="text/javascript" src="/admin/js/ueditor/ueditor.all.js"></script>
+    <script type="text/javascript" src="/admin/js/vue.js"></script>
+    <script src="/admin/js/iview.min.js"></script>
+
+    <script src="/admin/js/httpVueLoader.js"></script>
+    <script src="/admin/js/fly.min.js"></script>
+
     <script>
+
+
+Vue.use(httpVueLoader);
+
+        let target_vue = new Vue({
+            el: '#vue_target',
+            data:{
+                imgs: {!! (isset($record->imgs) && $record->imgs)?$record->imgs:'[]' !!}
+            },
+            components:{
+                's-table': 'url:/vue/s-table.vue?v=66',
+                'upload-block-list': 'url:/vue/uploadblocklist.vue?v=66'
+            },
+        })
+
+
 
         var pageConfig = {
             content: '{!! isset($record->content)?$record->content:'' !!}'
@@ -172,11 +207,11 @@
                     return;
                 }
 
-                var content = ue.getContent();
-                if( content.length == 0 ) {
-                    mAlert('施工图不能为空');
-                    return;
-                }
+                // var content = ue.getContent();
+                // if( content.length == 0 ) {
+                //     mAlert('施工图不能为空');
+                //     return;
+                // }
 
                 return true;
             },
@@ -193,7 +228,8 @@
                     seri_no:$('input[name="seri_no"]').val(),
                     quality_year:$('input[name="quality_year"]').val(),
                     product: $('select[name="product"]').val(),
-                    content:ue.getContent()
+                    content:ue.getContent(),
+                    imgs: JSON.stringify(target_vue.imgs)
                 };
             },
             callback:function(el,val){
@@ -213,26 +249,26 @@
         })
 
 
-        $('body').on('change','input[name="images[]"]',function(){
-            if(this.value){
-                var formData = new FormData($("#data-form")[0]);
-                $.ajax({
-                    url:'/index/album-image',
-                    data:formData,
-                    type:'post',
-                    contentType: false,
-                    processData: false,
-                    dataType:'json',
-                    success:function(data){
-                        $('input[name="images[]"]').replaceWith('<input type="file" name="images[]"  style="display: none" accept="image/gif,image/jpeg,image/png"/>');
-                        if(data.status) {
-                            $('.essay_img').find('img').attr('src',data.data[0]);
-                        } else {
-                            alert(data.desc);
-                        }
-                    }
-                });
-            }
-        });
+        // $('body').on('change','input[name="images[]"]',function(){
+        //     if(this.value){
+        //         var formData = new FormData($("#data-form")[0]);
+        //         $.ajax({
+        //             url:'/index/album-image',
+        //             data:formData,
+        //             type:'post',
+        //             contentType: false,
+        //             processData: false,
+        //             dataType:'json',
+        //             success:function(data){
+        //                 $('input[name="images[]"]').replaceWith('<input type="file" name="images[]"  style="display: none" accept="image/gif,image/jpeg,image/png"/>');
+        //                 if(data.status) {
+        //                     $('.essay_img').find('img').attr('src',data.data[0]);
+        //                 } else {
+        //                     alert(data.desc);
+        //                 }
+        //             }
+        //         });
+        //     }
+        // });
     </script>
 @stop
