@@ -490,7 +490,15 @@ class IndexController extends Controller
     public function anyQuality()
     {
         $keyword = $id = \Illuminate\Support\Facades\Request::input('keyword');
-        $list = Quality::where('mobile', '=' ,"$keyword")->orWhere('brand_card', '=' ,"$keyword")->orWhere('id', '=', $keyword)->orderBy('id', 'desc')->get();
+        $list = Quality::where(function($query) {
+            $keyword = $id = \Illuminate\Support\Facades\Request::input('keyword');
+            $query->where('mobile', '=' ,"$keyword")->orWhere('brand_card', '=' ,"$keyword")->orWhere('id', '=', $keyword)->orderBy('id', 'desc');
+        })->where(function($query){
+            $status = \Illuminate\Support\Facades\Request::input('status');
+            if( $status == 1 ){
+                $query->where('status', 1);
+            }
+        })->get();
 
 
         //文章图片路径替换
