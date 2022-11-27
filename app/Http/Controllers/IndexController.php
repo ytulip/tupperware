@@ -567,7 +567,7 @@ class IndexController extends Controller
             if (!in_array($imageExtension, ['jpg', 'png', 'gif', 'jpeg'])) {
                 return json_encode(['status' => 0, 'desc' => '文件格式异常'], JSON_UNESCAPED_UNICODE);
             }
-            $imagesInfo[] = $imageSaveName = bin2hex(base64_encode(time() . $key)) . '.' . $imageExtension; //文件保存的名字
+            $imagesInfo[] = $imageSaveName = bin2hex(base64_encode(\App\Util\Kit::getMillisecondPrecise() . $key)) . '.' . $imageExtension; //文件保存的名字
         }
 
         $res = [];

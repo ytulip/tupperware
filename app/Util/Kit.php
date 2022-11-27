@@ -6,6 +6,17 @@ use Illuminate\Support\Facades\Log;
 
 class Kit
 {
+
+    /**
+     * 获取毫秒级时间戳  精度13位
+     * @author Justin20171226
+     * @return string
+     */
+    public static function getMillisecondPrecise() {
+        list($s1, $s2) = explode(' ', microtime());
+        return sprintf('%.0f', (floatval($s1) + floatval($s2)) * 1000);
+    }
+
     public static function phoneHide($phone)
     {
         return substr_replace($phone,'****',3,4);
