@@ -34,10 +34,10 @@ if ( isset($_SERVER['SERVER_NAME']) && strpos($_SERVER['SERVER_NAME'], 'ppf') !=
     Dotenv::load($app['path.base'], 'ppf.env');
 }else if( isset($_SERVER['SERVER_NAME']) && strpos($_SERVER['SERVER_NAME'], 'apa') !== false ){
     Dotenv::load($app['path.base'], 'apa.env');;
-}else if( isset($_SERVER['SERVER_NAME']) && strpos($_SERVER['SERVER_NAME'], 'vkool') !== false ){
-    Dotenv::load($app['path.base'], 'vkool.env');;
+}else if( isset($_SERVER['SERVER_NAME']) && strpos($_SERVER['SERVER_NAME'], 'aili') !== false ){
+    Dotenv::load($app['path.base'], '.env');;
 }else{
-    Dotenv::load($app['path.base'], $app->environmentFile());
+    Dotenv::load($app['path.base'], '.env.example');
 }
 
 
