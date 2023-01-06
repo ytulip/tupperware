@@ -767,8 +767,24 @@ class IndexController extends Controller
     public function anyLogo()
     {
         //返回logo
-        header('Content-Type: image/png');//发送头信息
-        echo file_get_contents(env('LOGO_PATH') );
+        // header('Content-Type: image/png');//发送头信息
+        // echo file_get_contents(env('LOGO_PATH') );
+
+        if ( isset($_SERVER['SERVER_NAME']) && strpos($_SERVER['SERVER_NAME'], 'ppf') !== false )
+        {
+            // Dotenv::load($app['path.base'], 'ppf.env');
+            echo file_get_contents( 'https://aili.zhuyan.me/images/apa_ppf_logo.png' );
+        }else if( isset($_SERVER['SERVER_NAME']) && strpos($_SERVER['SERVER_NAME'], 'apa') !== false ){
+            // Dotenv::load($app['path.base'], 'apa.env');;
+            echo file_get_contents( 'https://aili.zhuyan.me/images/apa_logo.png' );
+        }else if( isset($_SERVER['SERVER_NAME']) && strpos($_SERVER['SERVER_NAME'], 'aili') !== false ){
+            // Dotenv::load($app['path.base'], '.env');;
+            echo file_get_contents( 'https://aili.zhuyan.me/images/logo-clean.png' );
+        }else{
+            // Dotenv::load($app['path.base'], '.env.example');
+        }
+
+
         exit;
     }
 
