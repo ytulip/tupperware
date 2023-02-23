@@ -101,6 +101,13 @@
                     </form-item>
 
 
+                    <form-item label="价格：" class="required-item">
+                        <div class="form-value" v-html="record.price">>
+
+                        </div>
+                    </form-item>
+
+
 
                     <form-item label="状态：" class="required-item">
                         <div class="form-value" >

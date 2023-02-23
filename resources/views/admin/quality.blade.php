@@ -11,8 +11,14 @@
         <div style="width: 640px;margin: 0 auto;margin-top: 24px;">
             <form role="form" id="data-form">
 
+
                 <div class="form-group">
-                    <label for="name">质保手机号（非必填）</label>
+                    <label for="name">车主姓名（非必填）</label>
+                    <input type="text" value="{{$record->name}}" name="name" class="form-control" id="name" placeholder="请输入">
+                </div>
+
+                <div class="form-group">
+                    <label for="name">联系电话（非必填）</label>
                     <input type="text" value="{{$record->mobile}}" name="mobile" class="form-control" id="name" placeholder="输入手机号后，质保信息将以短信形式发送给客户">
                 </div>
 
@@ -20,12 +26,18 @@
 
                 <div class="form-group">
                     <label for="name">车牌号码</label>
-                    <input type="text" value="{{$record->brand_card}}" name="brand_card" class="form-control" id="name" placeholder="请输入">
+                    <input type="text" value="{{$record->brand_card}}" name="brand_card" class="form-control" id="name" placeholder="车牌号码和车架号任意填一个即可">
+                </div>
+
+
+                <div class="form-group">
+                    <label for="name">车架号</label>
+                    <input type="text" value="{{$record->vin}}" name="vin" class="form-control" id="vin" placeholder="车牌号码和车架号任意填一个即可">
                 </div>
 
                 <div class="form-group">
-                    <label for="name">被保车型</label>
-                    <input type="text" value="{{$record->car_type}}" name="car_type" class="form-control" id="name" placeholder="请输入">
+                    <label for="name">品牌车型</label>
+                    <input type="text" value="{{$record->car_type}}" name="car_type" class="form-control" id="name" placeholder="比如奥迪A4L">
                 </div>
 
 
@@ -47,7 +59,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="name">产品</label>
+                    <label for="name">原车颜色</label>
+                    <input type="text" value="{{$record->car_color}}" name="car_color" class="form-control" id="car_color" placeholder="请输入">
+                </div>
+
+
+                <div class="form-group">
+                    <label for="name">车膜系列</label>
                     <select class="form-control" name="product">
                         <option value="">
                             请选择
@@ -68,13 +86,20 @@
 
 
                 <div class="form-group">
-                    <label for="name">膜批号</label>
+                    <label for="name">车膜批号</label>
                     <input type="text" value="{{$record->seri_no}}" name="seri_no" class="form-control" id="name" placeholder="请输入">
                 </div>
 
                 <div class="form-group">
-                    <label for="name">施工质保年限</label>
-                    <input type="text" value="{{$record->quality_year}}" name="quality_year" class="form-control" id="name" placeholder="请输入">
+                    <label for="name">质保年限</label>
+                    <input value="{{$record->quality_year}}" name="quality_year" class="form-control" id="name" placeholder="请输入" type="number">
+                </div>
+
+
+
+                <div class="form-group">
+                    <label for="name">价格(0表示不填)</label>
+                    <input  value="{{$record->price}}" name="price" class="form-control" id="price" placeholder="请输入(非必填)" type="number">
                 </div>
 
 
@@ -86,13 +111,14 @@
                     </div>
                 </div>
 
-
+              
                 <div class="form-group">
                     <label for="inputfile">施工图</label>
                     <script id="container" name="content" type="text/plain">
 这里写你的初始化内容
 </script>
                 </div>
+               
             </form>
 
             <a style="display:inline-block;padding: 8px 18px;border-radius: 4px; background-color: #1889f9;color: #ffffff;" id="do_publish">提交</a>
@@ -158,15 +184,15 @@ Vue.use(httpVueLoader);
             selectorStr:"#do_publish",
             prepositionJudge:function(){
 
-                if ( !$('input[name="brand_card"]').val() )
+                if ( !$('input[name="brand_card"]').val()  && !$('input[name="vin"]').val() )
                 {
-                    mAlert('车牌号码不能为空');
+                    mAlert('车牌号码和车架号需要任意填一个');
                     return;
                 }
 
                 if ( !$('input[name="car_type"]').val() )
                 {
-                    mAlert('被保车型不能为空');
+                    mAlert('品牌车型不能为空');
                     return;
                 }
 
@@ -228,8 +254,12 @@ Vue.use(httpVueLoader);
                     seri_no:$('input[name="seri_no"]').val(),
                     quality_year:$('input[name="quality_year"]').val(),
                     product: $('select[name="product"]').val(),
-                    content:ue.getContent(),
-                    imgs: JSON.stringify(target_vue.imgs)
+                    content: ue?ue.getContent():'',
+                    price: $('input[name="price"]').val(),
+                    imgs: JSON.stringify(target_vue.imgs),
+                    name: $('input[name="price"]').val(),
+                    vin: $('input[name="vin"]').val(),
+                    car_color: $('input[name="car_color"]').val(),
                 };
             },
             callback:function(el,val){

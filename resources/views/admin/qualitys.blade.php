@@ -17,20 +17,24 @@
 
         <div class="tr-border fs-14-fc-4E5761 fn-fa bg-fc" style="margin-top: -1px;">
             <div class="row">
-                <div class="col-md-4 col-lg-4">车牌号码</div>
-                <div class="col-md-4 col-lg-4">质保年限</div>
-                <div class="col-md-4 col-lg-4">操作</div>
+                <div class="col-md-3 col-lg-3">车牌号码</div>
+                <div class="col-md-3 col-lg-3">车架号</div>
+                <div class="col-md-3 col-lg-3">质保年限</div>
+                <div class="col-md-3 col-lg-3">操作</div>
             </div>
         </div>
 
         {{--<div class="block-card">--}}
         @foreach($paginate as $item)
             <div class="tr-border fs-14-fc-4E5761 fn-fa" style="margin-top: -1px;"><div class="row">
-                    <div class="col-md-4 col-lg-4">
+                    <div class="col-md-3 col-lg-3">
                         {{$item->brand_card}}
                     </div>
-                    <div class="col-md-4 col-lg-4" style="line-height: 24px;">{{$item->quality_year}}年</div>
-                    <div class="col-md-4 col-lg-4" style="line-height: 24px;"><a onclick="goDetail({{$item->id}})">编辑</a> <a style="margin-left: 24px;" onclick="deleteQuality({{$item->id}})">删除</a></div>
+                    <div class="col-md-3 col-lg-3">
+                        {{$item->vin}}
+                    </div>
+                    <div class="col-md-3 col-lg-3" style="line-height: 24px;">{{$item->quality_year}}年</div>
+                    <div class="col-md-3 col-lg-3" style="line-height: 24px;"><a onclick="goDetail({{$item->id}})">编辑</a> <a style="margin-left: 24px;" onclick="deleteQuality({{$item->id}})">删除</a></div>
                 </div></div>
         @endforeach
         {{--</div>--}}

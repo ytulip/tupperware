@@ -511,7 +511,7 @@ class IndexController extends Controller
     {
         if( Request::input('type') == 'add' )
         {
-            return view('admin.quality')->with('record', (Object)['brand_card'=>'', 'car_type'=>'', 'valid_date'=>'', 'store'=>'', 'part'=>'', 'color'=>'', 'seri_no'=>'', 'quality_year'=>'', 'product'=>'', 'mobile'=>''])->with('classify', CodeLibrary::where('type', 'classify')->where('status', 1)->get());
+            return view('admin.quality')->with('record', (Object)['brand_card'=>'', 'car_type'=>'', 'valid_date'=>'', 'store'=>'', 'part'=>'', 'color'=>'', 'seri_no'=>'', 'quality_year'=>'', 'product'=>'', 'mobile'=>'', 'price'=>'', 'name'=>'', 'vin'=>'', 'car_color'=>''])->with('classify', CodeLibrary::where('type', 'classify')->where('status', 1)->get());
         }
         $record = Quality::find(Request::input('id'));
         if( !($record instanceof  Quality) )
@@ -545,6 +545,7 @@ class IndexController extends Controller
         }
 
         $essay->mobile = Request::input('mobile', '');
+        $essay->name = Request::input('name', '');
         $essay->brand_card = Request::input('brand_card');
         $essay->car_type = Request::input('car_type');
         $essay->valid_date = Request::input('valid_date');
@@ -555,6 +556,11 @@ class IndexController extends Controller
         $essay->quality_year = Request::input('quality_year');
         $essay->product = Request::input('product');
         $essay->imgs = Request::input('imgs');
+        $essay->price = Request::input('price', 0);
+
+        $essay->name = Request::input('name', '');
+        $essay->vin = Request::input('vin', '');
+        $essay->car_color = Request::input('car_color', '');
 
 
         //根据product来获取quality_year

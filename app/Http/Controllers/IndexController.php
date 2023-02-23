@@ -492,7 +492,7 @@ class IndexController extends Controller
         $keyword = $id = \Illuminate\Support\Facades\Request::input('keyword');
         $list = Quality::where(function($query) {
             $keyword = $id = \Illuminate\Support\Facades\Request::input('keyword');
-            $query->where('mobile', '=' ,"$keyword")->orWhere('brand_card', '=' ,"$keyword")->orWhere('id', '=', $keyword)->orderBy('id', 'desc');
+            $query->where('mobile', '=' ,"$keyword")->orWhere('brand_card', '=' ,"$keyword")->orWhere('vin', '=', "$keyword")->orWhere('id', '=', $keyword)->orderBy('id', 'desc');
         })->where(function($query){
             $status = \Illuminate\Support\Facades\Request::input('status');
             if( $status == 1 ){
