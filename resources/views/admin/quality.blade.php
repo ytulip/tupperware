@@ -257,7 +257,7 @@ Vue.use(httpVueLoader);
                     content: ue?ue.getContent():'',
                     price: $('input[name="price"]').val(),
                     imgs: JSON.stringify(target_vue.imgs),
-                    name: $('input[name="price"]').val(),
+                    name: $('input[name="name"]').val(),
                     vin: $('input[name="vin"]').val(),
                     car_color: $('input[name="car_color"]').val(),
                 };
