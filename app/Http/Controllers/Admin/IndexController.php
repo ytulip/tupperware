@@ -653,7 +653,7 @@ class IndexController extends Controller
 
         //分页获取授权店列表
         $total = DB::table('quality')->where('quality.status', '0')->count();
-        $data = DB::table('quality')->leftJoin('dealer', 'dealer.id', '=', 'quality.dealer_id')->selectRaw('quality.*, name')->skip(($page - 1) * $page_size)->where('quality.status', '0')->take($page_size)->get();
+        $data = DB::table('quality')->leftJoin('dealer', 'dealer.id', '=', 'quality.dealer_id')->selectRaw('quality.*, dealer.name as dealer_name')->skip(($page - 1) * $page_size)->where('quality.status', '0')->take($page_size)->get();
 //        $data =
         $resp['result'] = ['data'=>$data, 'pageSize'=>$page_size, 'pageNo'=>$page, 'totalCount'=>$total];
         return  $this->jsonReturn(1, $resp);

@@ -420,6 +420,10 @@ class IndexController extends Controller
         $essay->car_type = \Illuminate\Support\Facades\Request::input('car_type');
         $essay->valid_date = \Illuminate\Support\Facades\Request::input('date');
 
+        $essay->name = \Illuminate\Support\Facades\Request::input('name', '');
+        $essay->vin = \Illuminate\Support\Facades\Request::input('vin', '');
+        $essay->car_color = \Illuminate\Support\Facades\Request::input('car_color', '');
+
 
         //根据授权门店去获取门店
         $essay->store = Dealer::where('id', \Illuminate\Support\Facades\Request::input('dealer_id'))->first()->name;

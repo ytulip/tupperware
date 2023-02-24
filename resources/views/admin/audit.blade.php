@@ -27,8 +27,13 @@
 
 
 
+                <form-item label="车主姓名：" class="required-item">
+                        <div class="form-value" v-html="record.name">
 
-                    <form-item label="质保手机号：" class="required-item">
+                        </div>
+                    </form-item>
+
+                    <form-item label="联系电话：" class="required-item">
                         <div class="form-value" v-html="record.mobile">
 
                         </div>
@@ -40,7 +45,13 @@
                         </div>
                     </form-item>
 
-                    <form-item label="被保车型：" class="required-item">
+                    <form-item label="车架号：" class="required-item">
+                        <div class="form-value" v-html="record.vin">>
+
+                        </div>
+                    </form-item>
+
+                    <form-item label="品牌车型：" class="required-item">
                         <div class="form-value" v-html="record.car_type">>
 
                         </div>
@@ -64,7 +75,13 @@
                         </div>
                     </form-item>
 
-                    <form-item label="产品：" class="required-item">
+                    <form-item label="原车颜色：" class="required-item">
+                        <div class="form-value" v-html="record.car_color">>
+
+                        </div>
+                    </form-item>
+
+                    <form-item label="车膜系列：" class="required-item">
                         <div class="form-value" v-html="record.product">>
 
                         </div>
@@ -80,7 +97,7 @@
 
 
 
-                    <form-item label="膜批次号：" class="required-item">
+                    <form-item label="车膜批号：" class="required-item">
                         <div class="form-value" v-html="record.seri_no">>
 
                         </div>
@@ -173,14 +190,18 @@
                 columns: [
                     {
                         title: '授权店名称',
-                        key: 'name',
+                        key: 'dealer_name',
                     },
                     {
-                        title: '车牌',
+                        title: '车牌号码',
                         key: 'brand_card',
                     },
                     {
-                        title: '手机号',
+                        title: '车架号',
+                        key: 'vin',
+                    },
+                    {
+                        title: '联系电话',
                         key: 'mobile'
                     },
                     {
