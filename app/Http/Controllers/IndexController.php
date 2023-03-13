@@ -421,7 +421,7 @@ class IndexController extends Controller
         $essay->valid_date = \Illuminate\Support\Facades\Request::input('date');
 
         $essay->name = \Illuminate\Support\Facades\Request::input('name', '');
-        $essay->vin = \Illuminate\Support\Facades\Request::input('vin', '');
+        $essay->vin = \Illuminate\Support\Facades\Request::input('vin', ''); 
         $essay->car_color = \Illuminate\Support\Facades\Request::input('car_color', '');
 
 
@@ -493,20 +493,16 @@ class IndexController extends Controller
 
     public function anyQuality()
     {
-        $keyword = $id = \Illuminate\Support\Facades\Request::input('keyword');
         $list = Quality::where(function($query) {
-            $keyword = $id = \Illuminate\Support\Facades\Request::input('keyword');
-            $query->where('mobile', '=' ,"$keyword")->orWhere('brand_card', '=' ,"$keyword")->orWhere('vin', '=', "$keyword")->orWhere('id', '=', $keyword)->orderBy('id', 'desc');
+            $keyword = \Illuminate\Support\Facades\Request::input('keyword');
+            $query->where('mobile', '=' ,"$keyword")->orWhere('brand_card', '=' ,"$keyword")->orWhere('vin', '=', "$keyword")->orWhere('id', '=', $keyword);
         })->where(function($query){
             $status = \Illuminate\Support\Facades\Request::input('status');
             if( $status == 1 ){
                 $query->where('status', 1);
             }
-        })->get();
+        })->orderBy('id', 'desc')->get();
 
-
-        //文章图片路径替换
-//        $detail->content = str_replace('/ueditor/php', env('IMAGE_PREFIX'). '/ueditor/php', $detail->content);
 
         foreach ($list as $key=>$detail)
         {
