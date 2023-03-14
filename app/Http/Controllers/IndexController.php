@@ -800,4 +800,9 @@ class IndexController extends Controller
         echo file_get_contents(env('MINI_WECHAT_PATH') );
         exit;
     }
+
+    public function anyXcxconfig(){
+        return  $this->jsonReturn(1, ["media_config"=>env('MEDIA_CONFIG')]);
+        exit;
+    }
 }
