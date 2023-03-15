@@ -818,14 +818,14 @@ class IndexController extends Controller
         $save_imgs = [];
         foreach( $imgs as $item)
         {
-            $save_imgs[] = $item->path;
+            $save_imgs[] = $item;
         }
         $essay->imgs = json_encode($save_imgs);
         $essay->img_type = 2;
 
 
         $essay->title =  \Illuminate\Support\Facades\Request::input('title', '');
-        $essay->car_type = \Illuminate\Support\Facades\Request::input('car_type');
+        $essay->classify = \Illuminate\Support\Facades\Request::input('classify');
         $essay->msg_type = 2;
         $essay->save();
 
