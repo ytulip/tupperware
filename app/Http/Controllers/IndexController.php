@@ -805,4 +805,30 @@ class IndexController extends Controller
         return  $this->jsonReturn(1, ["media_config"=>env('MEDIA_CONFIG')]);
         exit;
     }
+
+    public function anyAddOrModifyCase()
+    {
+        $essay = Article::find(\Illuminate\Support\Facades\Request::input('id'));
+        if (!$essay) {
+            $essay = new Article();
+        }
+
+       
+        $imgs = json_decode($_REQUEST['imgs']);
+        $save_imgs = [];
+        foreach( $imgs as $item)
+        {
+            $save_imgs[] = $item->path;
+        }
+        $essay->imgs = json_encode($save_imgs);
+        $essay->img_type = 2;
+
+
+        $essay->title =  \Illuminate\Support\Facades\Request::input('title', '');
+        $essay->msg_type = 2;
+        $essay->save();
+
+
+        return $this->jsonReturn(1, $essay->id);
+    }
 }
