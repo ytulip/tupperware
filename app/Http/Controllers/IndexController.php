@@ -825,6 +825,7 @@ class IndexController extends Controller
 
 
         $essay->title =  \Illuminate\Support\Facades\Request::input('title', '');
+        $essay->car_type = \Illuminate\Support\Facades\Request::input('car_type');
         $essay->msg_type = 2;
         $essay->save();
 
